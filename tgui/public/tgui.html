@@ -33,14 +33,6 @@
   // Backwards compatibility
   window.__windowId__ = Byond.windowId;
 
-  // Trident engine version
-  Byond.TRIDENT = (function () {
-    var groups = navigator.userAgent.match(/Trident\/(\d+).+?;/i);
-    var majorVersion = groups && groups[1];
-    return majorVersion
-      ? parseInt(majorVersion, 10)
-      : null;
-  })();
   // Blink engine version
   Byond.BLINK = (function () {
     let groups = navigator.userAgent.match(/Chrome\/(\d+)\./);
@@ -57,10 +49,6 @@
 
   // Version constants
   Byond.IS_BYOND = isByond;
-  Byond.IS_LTE_IE8 = Byond.TRIDENT !== null && Byond.TRIDENT <= 4;
-  Byond.IS_LTE_IE9 = Byond.TRIDENT !== null && Byond.TRIDENT <= 5;
-  Byond.IS_LTE_IE10 = Byond.TRIDENT !== null && Byond.TRIDENT <= 6;
-  Byond.IS_LTE_IE11 = Byond.BLINK !== null;
 
   // Strict mode flag
   Byond.strictMode = Boolean(Number(parseMetaTag('tgui:strictMode')));
