@@ -324,11 +324,13 @@ export class TguiSay extends Component<{}, State> {
               {this.state.buttonContent}
             </button>
             <textarea
+              autoCorrect="off"
               className={`textarea textarea-${theme}`}
               maxLength={this.maxLength}
               onInput={this.handleInput}
               onKeyDown={this.handleKeyDown}
               ref={this.innerRef}
+              spellCheck={false}
             />
           </div>
           <Dragzone position="right" theme={theme} />

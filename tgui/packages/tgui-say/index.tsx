@@ -12,17 +12,21 @@ function renderApp() {
     reactRoot = createRoot(root!);
   }
 
+  // reactRoot.render(<div>React is working</div>);
   reactRoot.render(<TguiSay />);
 }
 
 const setupApp = () => {
   // Delay setup
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setupApp);
-    return;
-  }
+  // if (document.readyState === 'loading') {
+  //   document.addEventListener('DOMContentLoaded', setupApp);
+  //   return;
+  // }
+  setTimeout(() => {
+    renderApp();
+  }, 1000);
 
-  renderApp();
+  // renderApp();
 };
 
 setupApp();
