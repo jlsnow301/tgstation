@@ -33,8 +33,8 @@
 
   // Blink engine version
   Byond.BLINK = (function () {
-    let groups = navigator.userAgent.match(/Chrome\/(\d+)\./);
-    let majorVersion = groups && groups[1];
+    var groups = navigator.userAgent.match(/Chrome\/(\d+)\./);
+    var majorVersion = groups && groups[1];
     return majorVersion ? parseInt(majorVersion, 10) : null;
   })();
 
@@ -570,7 +570,6 @@ blink {
 <!-- tgui:inline-css -->
 </head>
 <body>
-
 <!-- tgui:assets -->
 <!-- tgui:inline-html-start -->
 <!-- tgui:inline-html -->
@@ -615,6 +614,5 @@ Thank you for your cooperation.
 // Signal tgui that we're ready to receive updates
 Byond.sendMessage('ready');
 </script>
-test
 </body>
 </html>

@@ -99,35 +99,25 @@ $scrollbar-color-multiplier: 1;
   .Layout,
   .Layout * {
     // Fancy scrollbar
-    scrollbar-base-color: color.scale(
-      $light-gray,
-      $lightness: -25% * $scrollbar-color-multiplier
-    );
-    scrollbar-face-color: color.scale(
-      $light-gray,
-      $lightness: 10% * $scrollbar-color-multiplier
-    );
+    &::-webkit-scrollbar {
+      width: 12px;
+    }
 
-    scrollbar-3dlight-color: color.scale(
-      $light-gray,
-      $lightness: 0% * $scrollbar-color-multiplier
-    );
-    scrollbar-highlight-color: color.scale(
-      $light-gray,
-      $lightness: 0% * $scrollbar-color-multiplier
-    );
-    scrollbar-track-color: color.scale(
-      $light-gray,
-      $lightness: -25% * $scrollbar-color-multiplier
-    );
-    scrollbar-arrow-color: color.scale(
-      $light-gray,
-      $lightness: 50% * $scrollbar-color-multiplier
-    );
-    scrollbar-shadow-color: color.scale(
-      $light-gray,
-      $lightness: 10% * $scrollbar-color-multiplier
-    );
+    &::-webkit-scrollbar-track {
+      background: color.scale(
+        $light-gray,
+        $lightness: -25% * $scrollbar-color-multiplier
+      );
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: color.scale(
+        $light-gray,
+        $lightness: 10% * $scrollbar-color-multiplier
+      );
+      border: 1px solid
+        color.scale($light-gray, $lightness: 50% * $scrollbar-color-multiplier);
+    }
   }
 
   .Tab {
