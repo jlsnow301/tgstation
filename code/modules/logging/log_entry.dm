@@ -81,6 +81,7 @@ GENERAL_PROTECT_DATUM(/datum/log_entry)
 
 /// Converts the log entry to a JSON string.
 /datum/log_entry/proc/to_json_text()
+	return
 	// I do not trust byond's json encoder, and need to ensure the order doesn't change.
 	var/list/json_entries = list()
 	MANUAL_JSON_ENTRY(json_entries, LOG_ENTRY_KEY_TIMESTAMP, timestamp)
