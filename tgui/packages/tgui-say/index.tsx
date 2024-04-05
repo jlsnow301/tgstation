@@ -1,12 +1,19 @@
 import './styles/main.scss';
 
-import { createRenderer } from 'tgui/renderer';
+import { createRoot, Root } from 'react-dom/client';
 
 import { TguiSay } from './TguiSay';
 
-const renderApp = createRenderer(() => {
-  return <TguiSay />;
-});
+let reactRoot: Root | null = null;
+
+function renderApp() {
+  if (!reactRoot) {
+    const root = document.getElementById('react-root');
+    reactRoot = createRoot(root!);
+  }
+
+  reactRoot.render(<TguiSay />);
+}
 
 const setupApp = () => {
   // Delay setup

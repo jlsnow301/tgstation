@@ -6,7 +6,7 @@
 
 import { EventEmitter } from 'common/events';
 import { classes } from 'common/react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Tooltip } from 'tgui/components';
 import { createLogger } from 'tgui/logging';
 
@@ -115,6 +115,8 @@ const updateMessageBadge = (message) => {
     node.appendChild(badge);
   }
 };
+
+let reactRoot;
 
 class ChatRenderer {
   constructor() {
@@ -413,14 +415,18 @@ class ChatRenderer {
             childNode.removeChild(childNode.firstChild);
           }
           const Element = TGUI_CHAT_COMPONENTS[targetName];
+          if (!reactRoot) {
+            const element = document.getElementById('react-root');
+            reactRoot = createRoot(element);
+          }
+
           /* eslint-disable react/no-danger */
-          render(
+          reactRoot.render(
             <Element {...outputProps}>
               <span dangerouslySetInnerHTML={oldHtml} />
             </Element>,
             childNode,
           );
-          /* eslint-enable react/no-danger */
         }
 
         // Highlight text
