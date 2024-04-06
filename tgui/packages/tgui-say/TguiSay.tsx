@@ -339,7 +339,7 @@ export class TguiSay extends Component<{}, State> {
               onKeyDown={this.handleKeyDown}
               ref={this.innerRef}
               spellCheck={false}
-              rows={ROWS[this.state.size]}
+              rows={ROWS[this.state.size] || 1}
             />
           </div>
           <Dragzone position="right" theme={theme} />

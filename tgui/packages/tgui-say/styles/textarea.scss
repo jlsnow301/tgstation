@@ -1,10 +1,32 @@
+@use 'sass:color';
+@use './colors.scss';
+
+* {
+  &::-webkit-scrollbar {
+    width: 0.8rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: color.scale(
+      colors.$button,
+      $lightness: -25% * colors.$scrollbar-color-multiplier
+    );
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: color.scale(
+      colors.$button,
+      $lightness: 10% * colors.$scrollbar-color-multiplier
+    );
+  }
+}
+
 .textarea {
   background: transparent;
   border: none;
+  flex-grow: 8;
   font-family: inherit;
   font-size: 1.1rem;
   outline: none;
   resize: none;
-  height: 100%;
-  flex-grow: 8;
 }
