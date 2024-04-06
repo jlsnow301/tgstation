@@ -116,8 +116,6 @@ const updateMessageBadge = (message) => {
   }
 };
 
-let reactRoot;
-
 class ChatRenderer {
   constructor() {
     /** @type {HTMLElement} */
@@ -415,10 +413,7 @@ class ChatRenderer {
             childNode.removeChild(childNode.firstChild);
           }
           const Element = TGUI_CHAT_COMPONENTS[targetName];
-          if (!reactRoot) {
-            const element = document.getElementById('react-root');
-            reactRoot = createRoot(element);
-          }
+          const reactRoot = createRoot(childNode);
 
           /* eslint-disable react/no-danger */
           reactRoot.render(
