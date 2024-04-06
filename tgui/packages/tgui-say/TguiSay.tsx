@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-state */
 import { KEY } from 'common/keys';
 import { BooleanLike } from 'common/react';
 import { Component, createRef, RefObject } from 'react';
@@ -24,6 +25,13 @@ type State = {
 };
 
 const CHANNEL_REGEX = /^:\w\s/;
+
+const ROWS: Record<keyof typeof WINDOW_SIZES, number> = {
+  small: 1,
+  medium: 2,
+  large: 3,
+  width: 1, // not used
+} as const;
 
 export class TguiSay extends Component<{}, State> {
   private channelIterator: ChannelIterator;
@@ -331,6 +339,7 @@ export class TguiSay extends Component<{}, State> {
               onKeyDown={this.handleKeyDown}
               ref={this.innerRef}
               spellCheck={false}
+              rows={ROWS[this.state.size]}
             />
           </div>
           <Dragzone position="right" theme={theme} />

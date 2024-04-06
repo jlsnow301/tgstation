@@ -45,9 +45,6 @@
  * the window to listen for open commands.
  */
 /datum/tgui_say/proc/initialize()
-	set waitfor = FALSE
-	// Sleep to defer initialization to after client constructor
-	sleep(3 SECONDS)
 	window.initialize(
 			strict_mode = TRUE,
 			fancy = TRUE,
@@ -112,6 +109,10 @@
 		return TRUE
 	if (type == "open")
 		open(payload)
+		return TRUE
+
+	if(type == "check")
+		to_chat(world, payload["msg"])
 		return TRUE
 	if (type == "close")
 		close()
