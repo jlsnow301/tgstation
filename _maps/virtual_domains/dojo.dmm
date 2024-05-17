@@ -1,0 +1,261 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/landmark/bitrunning/hololadder_spawn,
+/obj/structure/sign/poster/contraband/cybersun_six_hundred/directional/south,
+/turf/open/floor/pod,
+/area/virtual_domain/safehouse)
+"e" = (
+/obj/structure/rack,
+/obj/item/katana{
+	pixel_x = 6
+	},
+/obj/item/katana{
+	pixel_y = 6
+	},
+/obj/item/katana,
+/turf/open/floor/bamboo,
+/area/virtual_domain/safehouse)
+"f" = (
+/obj/effect/landmark/bitrunning/hololadder_spawn,
+/obj/machinery/light/small/directional/east,
+/obj/structure/sign/poster/contraband/cybersun_six_hundred/directional/south,
+/turf/open/floor/pod,
+/area/virtual_domain/safehouse)
+"k" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/table/wood,
+/obj/item/kirbyplants/organic/plant21{
+	pixel_y = 18;
+	pixel_x = -1
+	},
+/obj/item/clothing/neck/heretic_focus{
+	pixel_y = 3;
+	pixel_x = -1
+	},
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = -11;
+	pixel_y = 2;
+	icon_state = "candle2_lit"
+	},
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = 11;
+	pixel_y = 2;
+	icon_state = "candle3_lit"
+	},
+/obj/item/wallframe/painting/large{
+	pixel_y = 32
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain/safehouse)
+"o" = (
+/obj/structure/grille,
+/obj/structure/window/bronze/spawner/directional/north,
+/obj/structure/window/bronze/spawner/directional/south,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/safehouse)
+"r" = (
+/obj/structure/window/bronze/spawner/directional/east,
+/obj/structure/window/bronze/spawner/directional/west,
+/obj/structure/grille,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/safehouse)
+"s" = (
+/turf/closed/wall/mineral/bamboo,
+/area/virtual_domain/safehouse)
+"u" = (
+/obj/machinery/light/small/directional/west,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/closet/cabinet,
+/obj/item/clothing/mask/kitsune,
+/obj/item/clothing/head/costume/rice_hat,
+/obj/item/clothing/head/costume/tmc,
+/obj/item/nullrod/claymore/bostaff,
+/obj/item/wallframe/painting/large{
+	pixel_y = 32
+	},
+/obj/item/clothing/suit/chaplainsuit/shrinehand,
+/obj/item/clothing/suit/hooded/cultrobes/eldritch,
+/obj/item/clothing/suit/chaplainsuit/monkrobeeast,
+/turf/open/floor/wood/large,
+/area/virtual_domain/safehouse)
+"v" = (
+/obj/structure/railing/corner/end,
+/obj/structure/railing/corner/end/flip,
+/turf/open/floor/bamboo/tatami/black,
+/area/virtual_domain/safehouse)
+"w" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/item/pillow{
+	pixel_y = 8
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain/safehouse)
+"y" = (
+/obj/structure/fans/tiny,
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/mineral_door/paperframe,
+/turf/open/floor/wood/large,
+/area/virtual_domain/safehouse)
+"z" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/obj/effect/turf_decal/loading_area,
+/turf/open/floor/bitrunning_transport,
+/area/virtual_domain/safehouse)
+"A" = (
+/obj/effect/landmark/bitrunning/hololadder_spawn,
+/obj/structure/sign/poster/contraband/shamblers_juice/directional/south,
+/turf/open/floor/pod,
+/area/virtual_domain/safehouse)
+"B" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/item/reagent_containers/cup/bucket/wooden{
+	pixel_y = -4;
+	pixel_x = -9
+	},
+/obj/item/throwing_star{
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain/safehouse)
+"C" = (
+/obj/structure/window/bronze/spawner/directional/west,
+/obj/structure/window/bronze/spawner/directional/east,
+/obj/structure/grille,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain/safehouse)
+"E" = (
+/obj/item/storage/bag/quiver,
+/obj/item/gun/ballistic/bow/longbow,
+/obj/item/ammo_casing/arrow,
+/turf/open/floor/bamboo,
+/area/virtual_domain/safehouse)
+"F" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain/safehouse)
+"H" = (
+/obj/structure/fans/tiny,
+/obj/structure/mineral_door/paperframe,
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain/safehouse)
+"I" = (
+/obj/modular_map_connector,
+/turf/closed/wall/mineral/bamboo,
+/area/virtual_domain/safehouse)
+"P" = (
+/turf/open/floor/bamboo,
+/area/virtual_domain/safehouse)
+"S" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/item/throwing_star{
+	pixel_x = -8;
+	pixel_y = 7
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain/safehouse)
+"T" = (
+/turf/open/floor/bamboo/tatami/black,
+/area/virtual_domain/safehouse)
+"U" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/obj/effect/turf_decal/loading_area,
+/turf/open/floor/bitrunning_transport,
+/area/virtual_domain/safehouse)
+"Z" = (
+/obj/item/clothing/shoes/sandal{
+	pixel_y = 11
+	},
+/obj/item/clothing/shoes/sandal{
+	pixel_y = 2
+	},
+/turf/open/floor/bamboo/tatami/black,
+/area/virtual_domain/safehouse)
+
+(1,1,1) = {"
+s
+s
+C
+C
+s
+I
+"}
+(2,1,1) = {"
+s
+u
+B
+S
+a
+s
+"}
+(3,1,1) = {"
+y
+Z
+T
+v
+U
+s
+"}
+(4,1,1) = {"
+o
+E
+e
+P
+A
+s
+"}
+(5,1,1) = {"
+H
+Z
+T
+v
+z
+s
+"}
+(6,1,1) = {"
+s
+k
+w
+F
+f
+s
+"}
+(7,1,1) = {"
+s
+s
+r
+r
+s
+s
+"}

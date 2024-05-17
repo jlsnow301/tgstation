@@ -1,0 +1,2837 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/item/target,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"am" = (
+/obj/effect/turf_decal/siding/wideplating_new/corner{
+	dir = 1
+	},
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/open/floor/stone,
+/area/virtual_domain)
+"aq" = (
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = 9;
+	pixel_y = 10;
+	icon_state = "candle3_lit"
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 10
+	},
+/turf/open/floor/engine/cult,
+/area/virtual_domain)
+"aX" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = -11;
+	pixel_y = 2;
+	icon_state = "candle2_lit"
+	},
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = 11;
+	pixel_y = 2;
+	icon_state = "candle3_lit"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/item/kirbyplants/organic/plant21{
+	pixel_y = 13;
+	pixel_x = -1
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"aZ" = (
+/obj/structure/flora/bush/grassy/style_3,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"be" = (
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = -2;
+	pixel_y = 2;
+	icon_state = "candle2_lit"
+	},
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor5-old"
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 5
+	},
+/turf/open/floor/engine/cult,
+/area/virtual_domain)
+"bf" = (
+/obj/structure/stone_tile/block,
+/obj/structure/flora/bush/sparsegrass/style_3,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"br" = (
+/obj/structure/railing/wooden_fence,
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"bv" = (
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_y = 14;
+	icon_state = "candle2_lit"
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 8
+	},
+/turf/open/floor/engine/cult,
+/area/virtual_domain)
+"bz" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/virtual_domain)
+"bQ" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/template_noop,
+/area/space)
+"bW" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/flora/bush/sparsegrass,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"cx" = (
+/obj/structure/flora/bush/lavendergrass/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"cI" = (
+/obj/structure/flora/bush/generic/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"cV" = (
+/obj/modular_map_root/safehouse{
+	key = "dojo"
+	},
+/turf/template_noop,
+/area/space)
+"cW" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"db" = (
+/obj/structure/flora/bush/stalky/style_3,
+/turf/open/water/jungle,
+/area/virtual_domain)
+"df" = (
+/turf/open/floor/bamboo/tatami/black,
+/area/virtual_domain)
+"dw" = (
+/obj/item/clothing/head/costume/rice_hat,
+/obj/structure/flora/rock/pile/jungle/style_2,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"dD" = (
+/obj/item/cultivator/rake,
+/obj/structure/flora/rock/pile/style_2,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"ed" = (
+/obj/structure/statue/bone/rib{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/end{
+	dir = 4
+	},
+/turf/open/floor/engine/cult,
+/area/virtual_domain)
+"fl" = (
+/obj/structure/fake_stairs/stone,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"fo" = (
+/obj/item/ammo_casing/arrow,
+/obj/structure/stone_tile/block,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"fw" = (
+/obj/structure/mineral_door/paperframe,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"fE" = (
+/obj/structure/flora/bush/sunny{
+	pixel_y = 6;
+	pixel_x = -7
+	},
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"fI" = (
+/obj/structure/flora/rock/pile/style_2,
+/obj/effect/decal/cleanable/generic,
+/turf/open/misc/dirt/dark/jungle,
+/area/virtual_domain)
+"fW" = (
+/turf/template_noop,
+/area/space)
+"ge" = (
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = -5;
+	pixel_y = 13;
+	icon_state = "candle3_lit"
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/turf/open/floor/engine/cult,
+/area/virtual_domain)
+"ht" = (
+/obj/structure/fake_stairs/stone{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/mob_spawn/corpse/human/pirate,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"hv" = (
+/obj/structure/statue/bone/rib{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/bamboo,
+/area/virtual_domain)
+"hz" = (
+/obj/item/food/grown/wheat{
+	pixel_y = 13;
+	pixel_x = -11
+	},
+/obj/item/food/grown/wheat{
+	pixel_y = 2;
+	pixel_x = -9
+	},
+/obj/item/food/grown/wheat{
+	pixel_y = 9
+	},
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"hC" = (
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"ib" = (
+/obj/structure/table/wood,
+/obj/item/food/nigiri_sushi{
+	pixel_y = 5;
+	pixel_x = -7
+	},
+/obj/item/food/nigiri_sushi,
+/obj/structure/sign/poster/contraband/shamblers_juice/directional/west,
+/obj/machinery/light/directional/west,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"ii" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/fake_stairs/stone,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"il" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor6-old"
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"iH" = (
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor7-old"
+	},
+/turf/open/floor/bamboo,
+/area/virtual_domain)
+"jj" = (
+/obj/item/grown/log/tree,
+/turf/open/misc/dirt/dark/jungle,
+/area/virtual_domain)
+"jk" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/item/pillow{
+	pixel_y = -8
+	},
+/obj/effect/mob_spawn/corpse/human/pirate,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"jr" = (
+/obj/structure/flora/rock/style_2,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"ju" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"jH" = (
+/turf/open/water/jungle,
+/area/virtual_domain)
+"jL" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-10";
+	pixel_y = 16
+	},
+/obj/structure/flora/bush/sparsegrass,
+/turf/open/misc/dirt/dark/jungle,
+/area/virtual_domain)
+"kB" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"kD" = (
+/obj/item/cultivator/rake,
+/obj/structure/flora/rock/pile/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"kG" = (
+/obj/structure/flora/bush/reed/style_3{
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/turf/open/water/jungle,
+/area/virtual_domain)
+"kR" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"lf" = (
+/obj/structure/table/wood,
+/obj/item/food/sashimi{
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"lk" = (
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/item/pillow,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"ls" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-10";
+	pixel_y = 16
+	},
+/turf/open/misc/dirt/dark/jungle,
+/area/virtual_domain)
+"lE" = (
+/obj/structure/flora/bush/sunny/style_3{
+	pixel_x = -9;
+	pixel_y = 2
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"lR" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = -4;
+	pixel_y = -6;
+	icon_state = "candle4"
+	},
+/obj/structure/fake_stairs/stone,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"lS" = (
+/obj/structure/flora/bush/grassy/style_4,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"mt" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/item/pillow{
+	pixel_y = 8
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"mx" = (
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor6-old"
+	},
+/turf/open/floor/bamboo,
+/area/virtual_domain)
+"mG" = (
+/obj/structure/flora/bush/generic/style_3,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"mL" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/open/floor/stone,
+/area/virtual_domain)
+"nc" = (
+/obj/structure/flora/tree/jungle/style_random,
+/turf/open/misc/dirt/dark/jungle,
+/area/virtual_domain)
+"ns" = (
+/obj/item/reagent_containers/cup/bucket/wooden{
+	pixel_x = 8;
+	pixel_y = 15
+	},
+/obj/structure/flora/rock/pile/jungle/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"nC" = (
+/obj/structure/spider/stickyweb,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"nI" = (
+/obj/structure/flora/bush/sparsegrass,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"on" = (
+/obj/structure/trap/cult,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"oq" = (
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/destructible/cult/pants_altar,
+/obj/item/cursed_katana,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"ox" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/item/food/vegetariansushislice{
+	pixel_y = 9;
+	pixel_x = 5
+	},
+/obj/item/food/vegetariansushislice{
+	pixel_y = 5
+	},
+/obj/item/food/vegetariansushislice{
+	pixel_x = -5
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"oD" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/virtual_domain)
+"oY" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"pv" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/fake_stairs/stone,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"pB" = (
+/obj/effect/temp_visual/drawing_heretic_rune{
+	pixel_y = 0
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/turf/open/floor/engine/cult,
+/area/virtual_domain)
+"pJ" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"pK" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/dirt,
+/obj/item/seeds/wheat/rice,
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"pY" = (
+/obj/structure/flora/bush/generic/style_random,
+/turf/open/misc/dirt/dark/jungle,
+/area/virtual_domain)
+"qg" = (
+/obj/structure/flora/rock,
+/turf/open/misc/dirt/dark/jungle,
+/area/virtual_domain)
+"qu" = (
+/obj/structure/flora/bush/lavendergrass/style_random,
+/turf/open/misc/dirt/dark/jungle,
+/area/virtual_domain)
+"qx" = (
+/obj/structure/flora/bush/grassy/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"qD" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/sign/poster/contraband/cybersun_six_hundred/directional/south,
+/obj/machinery/light/directional/south,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"rh" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"ru" = (
+/obj/structure/flora/bush/reed/style_3{
+	pixel_x = -7
+	},
+/turf/open/water/jungle,
+/area/virtual_domain)
+"rx" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/obj/item/food/grown/wheat{
+	pixel_y = 13;
+	pixel_x = -11
+	},
+/obj/item/food/grown/wheat{
+	pixel_y = 2;
+	pixel_x = -9
+	},
+/obj/item/food/grown/wheat{
+	pixel_y = 9
+	},
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"rP" = (
+/obj/structure/flora/rock/pile/jungle/style_random,
+/obj/item/flashlight/lantern{
+	pixel_x = 4;
+	pixel_y = 17;
+	icon_state = "lantern-on"
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"sc" = (
+/obj/structure/table/wood,
+/obj/item/food/sashimi,
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"si" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/structure/rack,
+/obj/item/katana{
+	pixel_y = 6
+	},
+/obj/item/katana,
+/obj/item/katana{
+	pixel_x = 6
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"sp" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/obj/item/chair/stool/bamboo{
+	dir = 4
+	},
+/obj/item/fishing_rod{
+	pixel_x = 17;
+	pixel_y = 6
+	},
+/turf/open/floor/stone,
+/area/virtual_domain)
+"sL" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"sR" = (
+/obj/structure/flora/tree/jungle/small/style_3,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"sU" = (
+/obj/structure/statue/bone/rib{
+	dir = 8;
+	pixel_x = 3;
+	pixel_y = 7
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/end{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/engine/cult,
+/area/virtual_domain)
+"to" = (
+/obj/structure/water_source/puddle,
+/turf/open/water/jungle,
+/area/virtual_domain)
+"tr" = (
+/obj/structure/trap/cult,
+/turf/open/misc/dirt/dark/jungle,
+/area/virtual_domain)
+"tD" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/item/pillow{
+	pixel_y = -8
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"tN" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
+/obj/item/book,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"tS" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/item/pillow{
+	pixel_y = 8
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"tV" = (
+/obj/structure/flora/rock/pile/jungle/style_3,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"tW" = (
+/turf/open/misc/dirt/dark/jungle,
+/area/virtual_domain)
+"tX" = (
+/obj/structure/spider/stickyweb,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"ul" = (
+/obj/structure/table/wood,
+/obj/structure/sign/poster/contraband/shamblers_juice/directional/east,
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_y = -1;
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_y = 3;
+	pixel_x = 7
+	},
+/obj/item/reagent_containers/cup/glass/bottle/sake{
+	pixel_x = -6;
+	pixel_y = 17
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"uv" = (
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"uN" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/storage/bag/quiver,
+/obj/item/gun/ballistic/bow,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"vi" = (
+/mob/living/basic/spider/giant,
+/turf/open/floor/bamboo,
+/area/virtual_domain)
+"vj" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 8
+	},
+/turf/open/floor/stone,
+/area/virtual_domain)
+"vq" = (
+/obj/structure/flora/bush/sunny/style_2,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"vN" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/obj/structure/flora/bush/style_4{
+	pixel_y = 7
+	},
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"vP" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/floor/stone,
+/area/virtual_domain)
+"wh" = (
+/obj/structure/fake_stairs/stone{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"wn" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/bamboo,
+/area/virtual_domain)
+"xF" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/item/pillow{
+	pixel_y = -8
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"xJ" = (
+/obj/item/kirbyplants/organic/plant4{
+	pixel_y = 18
+	},
+/turf/open/misc/dirt/dark/jungle,
+/area/virtual_domain)
+"yd" = (
+/obj/item/gun/ballistic/bow/longbow,
+/obj/structure/flora/bush/sparsegrass/style_3,
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"yg" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 9
+	},
+/turf/open/floor/engine/cult,
+/area/virtual_domain)
+"yi" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = -8;
+	pixel_y = -7;
+	icon_state = "candle2_lit"
+	},
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = -3;
+	pixel_y = 10;
+	icon_state = "candle3_lit"
+	},
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor6-old"
+	},
+/turf/open/floor/stone,
+/area/virtual_domain)
+"ym" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/item/pillow{
+	pixel_y = -8
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"yt" = (
+/obj/structure/table/wood,
+/obj/item/kirbyplants/organic/plant21{
+	pixel_y = 13;
+	pixel_x = -1
+	},
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = -11;
+	pixel_y = 2;
+	icon_state = "candle2_lit"
+	},
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = 11;
+	pixel_y = 2;
+	icon_state = "candle3_lit"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"yx" = (
+/obj/structure/flora/rock/pile/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"yD" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = 6;
+	pixel_y = 1;
+	icon_state = "candle3_lit"
+	},
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor4-old"
+	},
+/turf/open/floor/stone,
+/area/virtual_domain)
+"zm" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"zr" = (
+/turf/closed/indestructible/wood,
+/area/virtual_domain)
+"zz" = (
+/obj/structure/fake_stairs/stone,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"As" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/bookcase/random/religion,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"AJ" = (
+/obj/structure/fake_stairs/stone{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/mob_spawn/corpse/human/pirate,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"BY" = (
+/obj/structure/fake_stairs/stone{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = -4;
+	pixel_y = -6;
+	icon_state = "candle4"
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"BZ" = (
+/obj/structure/flora/rock/style_3,
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = -2;
+	pixel_y = 12;
+	icon_state = "candle2_lit"
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"CA" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 4
+	},
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = 5;
+	pixel_y = 12;
+	icon_state = "candle2_lit"
+	},
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = 6;
+	pixel_y = -6;
+	icon_state = "candle4"
+	},
+/turf/open/floor/stone,
+/area/virtual_domain)
+"CC" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"CK" = (
+/obj/structure/flora/rock,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"CM" = (
+/obj/structure/flora/rock/pile,
+/obj/effect/decal/cleanable/generic,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"CN" = (
+/obj/structure/flora/bush/sparsegrass,
+/turf/open/misc/dirt/dark/jungle,
+/area/virtual_domain)
+"CR" = (
+/obj/item/ammo_casing/arrow,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"CS" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/item/pillow{
+	pixel_y = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Dd" = (
+/obj/structure/flora/bush/sunny/style_3{
+	pixel_y = 6;
+	pixel_x = -10
+	},
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"Dh" = (
+/obj/structure/flora/bush/large/style_2,
+/turf/open/misc/dirt/dark/jungle,
+/area/virtual_domain)
+"Dx" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/item/chair/stool/bamboo{
+	pixel_y = 19
+	},
+/obj/item/wallframe/painting/large{
+	pixel_y = 32
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"DI" = (
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = -16;
+	pixel_y = 2;
+	icon_state = "candle2_lit"
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 6
+	},
+/turf/open/floor/engine/cult,
+/area/virtual_domain)
+"DN" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/virtual_domain)
+"DT" = (
+/obj/structure/flora/bush/grassy/style_3{
+	pixel_x = 11
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"Eh" = (
+/turf/closed/indestructible/binary,
+/area/virtual_domain)
+"EF" = (
+/obj/structure/flora/rock/pile/style_3,
+/obj/effect/decal/cleanable/glass,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"EZ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Fh" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Fu" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/item/pillow{
+	pixel_y = 8
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Fx" = (
+/obj/structure/flora/rock/pile/jungle/style_random,
+/obj/structure/flora/bush/sparsegrass,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"FM" = (
+/obj/structure/flora/bush/sunny/style_2,
+/obj/structure/railing/wooden_fence,
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"FV" = (
+/obj/structure/flora/bush/lavendergrass,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"FW" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/structure/barricade/wooden,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Gh" = (
+/obj/structure/statue/bone/rib{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/turf/open/floor/bamboo,
+/area/virtual_domain)
+"Gz" = (
+/obj/structure/flora/rock/pile/style_2,
+/obj/structure/flora/bush/large/style_3,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"Hd" = (
+/obj/structure/flora/rock/style_4,
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = 6;
+	pixel_y = 12;
+	icon_state = "candle3_lit"
+	},
+/turf/open/misc/dirt/dark/jungle,
+/area/virtual_domain)
+"Hi" = (
+/obj/structure/flora/rock/pile/jungle/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"HJ" = (
+/obj/structure/flora/bush/lavendergrass,
+/obj/structure/stone_tile/block,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"HR" = (
+/obj/structure/mineral_door/paperframe,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Ic" = (
+/obj/effect/turf_decal/siding/wideplating_new/corner,
+/obj/structure/railing/corner,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/stone,
+/area/virtual_domain)
+"Iv" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"IA" = (
+/obj/structure/flora/tree/jungle/small/style_5,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"IF" = (
+/obj/structure/flora/bush/large/style_3,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"IL" = (
+/obj/structure/stone_tile/burnt,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"IN" = (
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/rock/style_3,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"Jx" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Kg" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/obj/structure/flora/bush/style_4{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"KQ" = (
+/turf/closed/indestructible/rock,
+/area/virtual_domain)
+"KR" = (
+/obj/structure/railing/wooden_fence,
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"KS" = (
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/large/style_2,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"Lb" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 4
+	},
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = 6;
+	pixel_y = -6;
+	icon_state = "candle4"
+	},
+/turf/open/floor/stone,
+/area/virtual_domain)
+"LB" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor4-old"
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"LR" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/mob_spawn/corpse/human/pirate,
+/turf/open/floor/stone,
+/area/virtual_domain)
+"LU" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/item/chair/stool/bamboo{
+	pixel_y = 19
+	},
+/obj/item/wallframe/painting/large{
+	pixel_y = 32
+	},
+/obj/effect/mob_spawn/corpse/human/pirate,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Md" = (
+/obj/structure/flora/rock/pile/jungle/style_random,
+/obj/structure/flora/bush/sparsegrass,
+/turf/open/misc/dirt/dark/jungle,
+/area/virtual_domain)
+"Mp" = (
+/obj/structure/fake_stairs/stone{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"MN" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/structure/bookcase/random/religion,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Ne" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/item/pillow{
+	pixel_y = 8
+	},
+/obj/effect/mob_spawn/corpse/human/pirate,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Ny" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/fermenting_barrel,
+/obj/item/food/bait/worm{
+	pixel_x = 16;
+	pixel_y = -4
+	},
+/turf/open/floor/stone,
+/area/virtual_domain)
+"Oh" = (
+/obj/effect/spawner/structure/window/bronze,
+/obj/structure/curtain/bounty,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/bamboo/tatami/black{
+	dir = 4
+	},
+/area/virtual_domain)
+"Os" = (
+/obj/structure/flora/bush/sunny/style_2{
+	pixel_y = 10;
+	pixel_x = 2
+	},
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"ON" = (
+/obj/structure/flora/bush/grassy/style_3{
+	pixel_x = 11
+	},
+/obj/structure/fermenting_barrel/gunpowder{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/flashlight/lantern{
+	pixel_x = -6;
+	pixel_y = 15;
+	icon_state = "lantern-on"
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"OO" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 8
+	},
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = -8;
+	pixel_y = 11;
+	icon_state = "candle2_lit"
+	},
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = -6;
+	pixel_y = -1;
+	icon_state = "candle4"
+	},
+/turf/open/floor/stone,
+/area/virtual_domain)
+"OS" = (
+/turf/open/floor/bamboo,
+/area/virtual_domain)
+"OZ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Pt" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/cabinet,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Px" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"PA" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/virtual_domain)
+"PY" = (
+/obj/structure/statue/bone/rib{
+	dir = 8;
+	pixel_x = 3;
+	pixel_y = 7
+	},
+/turf/open/floor/bamboo,
+/area/virtual_domain)
+"Qc" = (
+/turf/template_noop,
+/area/template_noop)
+"QE" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 6
+	},
+/obj/item/chair/stool/bamboo{
+	dir = 4
+	},
+/obj/item/fishing_rod{
+	pixel_x = 17;
+	pixel_y = 6
+	},
+/turf/open/floor/stone,
+/area/virtual_domain)
+"Rh" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor5-old"
+	},
+/obj/structure/barricade/wooden,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Rw" = (
+/obj/structure/flora/tree/jungle/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"RE" = (
+/obj/structure/flora/bush/sparsegrass,
+/obj/item/flashlight/lantern{
+	pixel_x = -6;
+	pixel_y = 15;
+	icon_state = "lantern-on"
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"RN" = (
+/obj/item/reagent_containers/cup/bucket/wooden{
+	pixel_x = -8;
+	pixel_y = -6
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"RS" = (
+/obj/structure/flora/bush/sunny{
+	pixel_y = 8;
+	pixel_x = 4
+	},
+/obj/structure/railing/wooden_fence,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"Sa" = (
+/obj/structure/rack,
+/obj/item/throwing_star{
+	pixel_x = -6
+	},
+/obj/item/throwing_star{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/item/throwing_star{
+	pixel_y = 5
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Se" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/structure/rack,
+/obj/item/katana{
+	pixel_y = 6
+	},
+/obj/item/katana,
+/obj/item/katana{
+	pixel_x = 6
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Sq" = (
+/obj/structure/flora/rock/pile/style_3,
+/obj/effect/decal/cleanable/glass,
+/obj/structure/flora/bush/large/style_3,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"Sr" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/obj/item/bait_can{
+	pixel_y = 15;
+	pixel_x = -3
+	},
+/turf/open/floor/stone,
+/area/virtual_domain)
+"Sw" = (
+/obj/structure/flora/bush/large/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"SI" = (
+/obj/structure/flora/bush/sunny/style_2{
+	pixel_y = 4;
+	pixel_x = -3
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"Tg" = (
+/obj/structure/railing/wooden_fence,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/obj/structure/flora/bush/style_4{
+	pixel_y = 7
+	},
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"Tl" = (
+/obj/structure/flora/tree/jungle/small/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"Tx" = (
+/obj/structure/flora/bush/sunny/style_2{
+	pixel_y = 9
+	},
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"TL" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/sign/poster/contraband/cybersun_six_hundred/directional/north,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/directional/north,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"TY" = (
+/obj/structure/stone_tile/burnt{
+	dir = 4
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"Uj" = (
+/obj/structure/fake_stairs/stone{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = 9;
+	pixel_y = 11;
+	icon_state = "candle2_lit"
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"Uu" = (
+/obj/structure/spider/stickyweb,
+/turf/open/floor/bamboo,
+/area/virtual_domain)
+"UA" = (
+/obj/structure/flora/bush/sparsegrass,
+/obj/structure/flora/bush/large/style_3,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"US" = (
+/obj/structure/fermenting_barrel/gunpowder{
+	pixel_x = 5
+	},
+/obj/item/flashlight/lantern{
+	pixel_x = 4;
+	pixel_y = 17;
+	icon_state = "lantern-on"
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"UU" = (
+/obj/structure/flora/rock/pile/jungle/style_5,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"Vc" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Vd" = (
+/obj/structure/fake_stairs/stone{
+	dir = 1
+	},
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"Vj" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/floor/stone,
+/area/virtual_domain)
+"Vv" = (
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = 13;
+	icon_state = "candle3_lit"
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner,
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner{
+	dir = 4
+	},
+/turf/open/floor/engine/cult,
+/area/virtual_domain)
+"Vy" = (
+/obj/effect/spawner/structure/window/bronze,
+/obj/structure/curtain/bounty,
+/turf/open/floor/bamboo/tatami/black{
+	dir = 4
+	},
+/area/virtual_domain)
+"VS" = (
+/obj/structure/table/wood,
+/obj/item/food/nigiri_sushi{
+	pixel_y = 5;
+	pixel_x = -7
+	},
+/obj/item/food/nigiri_sushi,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"VX" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"VY" = (
+/obj/structure/railing/wooden_fence,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/obj/structure/flora/bush/style_3,
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"WJ" = (
+/obj/structure/flora/bush/sparsegrass,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"Xb" = (
+/obj/structure/flora/bush/style_2{
+	pixel_x = 9;
+	pixel_y = 12
+	},
+/turf/open/misc/dirt/station,
+/area/virtual_domain)
+"Xn" = (
+/obj/structure/spider/stickyweb,
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"XL" = (
+/obj/structure/flora/bush/sparsegrass,
+/obj/structure/flora/rock,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"XY" = (
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/turf/closed/indestructible/wood,
+/area/virtual_domain)
+"Yp" = (
+/obj/structure/flora/rock/pile/jungle/large/style_random,
+/turf/open/misc/grass/jungle,
+/area/virtual_domain)
+"Yq" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor7-old"
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Zb" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/sign/poster/contraband/cybersun_six_hundred/directional/north,
+/obj/machinery/light/directional/north,
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Zi" = (
+/obj/structure/flora/bush/reed/style_2{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/structure/flora/bush/stalky/style_2,
+/turf/open/water/jungle,
+/area/virtual_domain)
+"Zm" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/item/pillow{
+	pixel_y = 8
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Zx" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = -8;
+	pixel_y = -7;
+	icon_state = "candle2_lit"
+	},
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = -3;
+	pixel_y = 10;
+	icon_state = "candle3_lit"
+	},
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor5-old"
+	},
+/turf/open/floor/stone,
+/area/virtual_domain)
+"ZE" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/bottle/sake{
+	pixel_x = -6;
+	pixel_y = 17
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_y = 3;
+	pixel_x = 7
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_y = -1;
+	pixel_x = -3
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"ZF" = (
+/mob/living/basic/mega_arachnid,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/light_prism{
+	light_color = "#ac2a16";
+	color = "#ac2a16"
+	},
+/turf/open/floor/engine/cult,
+/area/virtual_domain)
+"ZJ" = (
+/obj/structure/mineral_door/paperframe,
+/obj/structure/barricade/wooden/crude,
+/obj/structure/spacevine{
+	can_spread = 0
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"ZQ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+
+(1,1,1) = {"
+Qc
+Qc
+Qc
+Qc
+Qc
+Qc
+Qc
+Qc
+Qc
+Qc
+Qc
+Qc
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Qc
+Qc
+Qc
+"}
+(2,1,1) = {"
+Qc
+Qc
+Qc
+Qc
+Qc
+Qc
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+KQ
+KQ
+KQ
+KQ
+KQ
+KQ
+KQ
+KQ
+KQ
+KQ
+Eh
+Eh
+KQ
+KQ
+KQ
+KQ
+KQ
+KQ
+KQ
+KQ
+Eh
+Eh
+Qc
+Qc
+"}
+(3,1,1) = {"
+Qc
+Qc
+Qc
+Qc
+Eh
+Eh
+Eh
+Eh
+KQ
+KQ
+KQ
+KQ
+KQ
+KQ
+hC
+Tl
+qx
+hC
+Sw
+hC
+cx
+hC
+KQ
+KQ
+KQ
+KQ
+KR
+kB
+RN
+vq
+ON
+VY
+KQ
+KQ
+Eh
+Qc
+Qc
+"}
+(4,1,1) = {"
+Qc
+Qc
+Eh
+Eh
+Eh
+KQ
+KQ
+KQ
+KQ
+hC
+hC
+Tl
+WJ
+tW
+hC
+cI
+WJ
+Yp
+Hi
+WJ
+hC
+tW
+tW
+Rw
+WJ
+zm
+br
+lE
+to
+hz
+tV
+RS
+bf
+KQ
+Eh
+Eh
+Qc
+"}
+(5,1,1) = {"
+Qc
+Eh
+Eh
+KQ
+KQ
+KQ
+hC
+hC
+Rw
+Hi
+tW
+cx
+hC
+tW
+CN
+cx
+tW
+tW
+hC
+Rw
+hC
+hC
+tW
+WJ
+cx
+nI
+bW
+Kg
+kD
+jH
+vN
+jH
+IL
+KQ
+KQ
+Eh
+Qc
+"}
+(6,1,1) = {"
+Qc
+Eh
+KQ
+KQ
+Sw
+hC
+hC
+tW
+cx
+WJ
+IF
+Md
+qx
+cx
+Hi
+IF
+CN
+Fx
+hC
+qx
+hC
+Yp
+hC
+tW
+Hi
+zm
+Hi
+UU
+Tx
+DT
+pK
+to
+uv
+CR
+KQ
+Eh
+Eh
+"}
+(7,1,1) = {"
+Qc
+Eh
+KQ
+WJ
+Hi
+qx
+pY
+tW
+zr
+Vy
+XY
+Vy
+zr
+hC
+zr
+Oh
+zr
+Vy
+zr
+IF
+hC
+hC
+hC
+tW
+tW
+Rw
+pJ
+to
+rx
+dw
+Dd
+dD
+Px
+FV
+KQ
+KQ
+Eh
+"}
+(8,1,1) = {"
+Qc
+Eh
+KQ
+hC
+Rw
+WJ
+cx
+XY
+zr
+jk
+tN
+CS
+XY
+zr
+zr
+jk
+aX
+Zm
+XY
+zr
+xJ
+CN
+jr
+hC
+hC
+hC
+zm
+Os
+jH
+Xb
+jH
+hz
+TY
+hC
+yd
+KQ
+Eh
+"}
+(9,1,1) = {"
+Eh
+Eh
+KQ
+hC
+tW
+hC
+IF
+Oh
+si
+il
+OS
+OZ
+ZE
+ib
+sc
+cW
+OS
+Xn
+FW
+fw
+wh
+Zx
+BY
+yx
+cI
+kR
+KR
+ju
+DT
+sL
+to
+FM
+HJ
+aa
+KQ
+KQ
+Eh
+"}
+(10,1,1) = {"
+Eh
+KQ
+KQ
+cx
+tW
+hC
+Fx
+zr
+Dx
+Uu
+OS
+wn
+OZ
+oY
+cW
+OS
+OS
+OS
+As
+fw
+Vd
+fI
+Vd
+on
+hC
+hC
+br
+SI
+US
+fE
+ns
+Tg
+fo
+KQ
+KQ
+Eh
+Eh
+"}
+(11,1,1) = {"
+Eh
+KQ
+Hi
+hC
+hC
+Tl
+CN
+Vy
+Sa
+Jx
+OS
+PY
+vi
+OS
+OS
+PY
+wn
+LB
+Pt
+ZJ
+ht
+Sq
+WJ
+nC
+hC
+hC
+fW
+fW
+fW
+fW
+fW
+cV
+KQ
+KQ
+Eh
+Eh
+Qc
+"}
+(12,1,1) = {"
+Eh
+KQ
+Rw
+tW
+hC
+cx
+IN
+zr
+zr
+TL
+OS
+mx
+OS
+sU
+OS
+OS
+OS
+qD
+zr
+zr
+jL
+BZ
+tW
+hC
+IF
+cI
+fW
+fW
+fW
+fW
+fW
+fW
+Eh
+Eh
+Eh
+Qc
+Qc
+"}
+(13,1,1) = {"
+Eh
+KQ
+cI
+tW
+hC
+ii
+bz
+lR
+HR
+Vc
+Fh
+tD
+yg
+bv
+aq
+tS
+Fh
+CC
+HR
+AJ
+OO
+wh
+yi
+BY
+tW
+hC
+fW
+fW
+fW
+fW
+fW
+fW
+Eh
+Qc
+Qc
+Qc
+Qc
+"}
+(14,1,1) = {"
+Eh
+KQ
+WJ
+hC
+cI
+fl
+LR
+fl
+HR
+df
+df
+df
+ge
+ZF
+pB
+df
+df
+df
+HR
+Vd
+Vj
+Vd
+Vj
+Vd
+WJ
+tW
+fW
+fW
+fW
+fW
+fW
+fW
+Eh
+Qc
+Qc
+Qc
+Qc
+"}
+(15,1,1) = {"
+Eh
+KQ
+hC
+Sw
+WJ
+pv
+Lb
+zz
+HR
+rh
+EZ
+ym
+be
+Vv
+DI
+Fu
+EZ
+VX
+HR
+Uj
+yD
+ht
+CA
+Mp
+tW
+CN
+fW
+fW
+fW
+fW
+fW
+fW
+Eh
+Qc
+Qc
+Qc
+Qc
+"}
+(16,1,1) = {"
+Eh
+KQ
+hC
+qx
+cx
+WJ
+CK
+zr
+zr
+Zb
+OS
+OS
+OS
+ed
+vi
+iH
+OS
+qD
+zr
+zr
+ls
+nC
+Hd
+hC
+IF
+hC
+fW
+fW
+fW
+fW
+fW
+fW
+Eh
+Eh
+Eh
+Qc
+Qc
+"}
+(17,1,1) = {"
+Eh
+KQ
+hC
+Rw
+tW
+tW
+Hi
+Vy
+Se
+Yq
+OS
+hv
+OS
+OS
+OS
+Gh
+wn
+OZ
+MN
+fw
+EF
+Gz
+hC
+cx
+WJ
+hC
+fW
+fW
+fW
+fW
+fW
+bQ
+KQ
+KQ
+Eh
+Eh
+Eh
+"}
+(18,1,1) = {"
+Eh
+KQ
+KQ
+cx
+Hi
+tW
+IF
+zr
+LU
+OS
+Uu
+OS
+ZQ
+tX
+Jx
+OS
+OS
+Uu
+Rh
+ZJ
+Vd
+tr
+CM
+hC
+hC
+hC
+cx
+Hi
+jj
+jH
+tW
+IA
+lk
+KQ
+KQ
+KQ
+Eh
+"}
+(19,1,1) = {"
+Eh
+Eh
+KQ
+hC
+hC
+hC
+WJ
+Oh
+uN
+Iv
+OS
+ZQ
+VS
+ul
+ox
+Jx
+OS
+ZQ
+Pt
+fw
+ht
+CA
+Mp
+qx
+hC
+hC
+sR
+tW
+jH
+jH
+tW
+KS
+cx
+oq
+lk
+KQ
+Eh
+"}
+(20,1,1) = {"
+Qc
+Eh
+KQ
+hC
+hC
+Rw
+tW
+XY
+zr
+xF
+yt
+mt
+zr
+zr
+XY
+xF
+lf
+Ne
+zr
+zr
+xJ
+qg
+WJ
+cx
+tW
+hC
+hC
+RE
+Ny
+Sr
+vP
+vj
+IF
+cx
+cx
+KQ
+Eh
+"}
+(21,1,1) = {"
+Qc
+Eh
+KQ
+hC
+WJ
+cx
+pY
+hC
+zr
+Vy
+XY
+Oh
+zr
+tW
+zr
+Oh
+zr
+Vy
+zr
+IF
+hC
+hC
+hC
+hC
+tW
+cI
+PA
+vj
+am
+Ic
+oD
+DN
+DN
+lk
+KQ
+KQ
+Eh
+"}
+(22,1,1) = {"
+Qc
+Eh
+Eh
+KQ
+hC
+hC
+Sw
+cx
+qx
+IF
+WJ
+Fx
+tW
+tW
+cx
+XL
+IF
+Fx
+cI
+hC
+Yp
+hC
+tW
+Rw
+hC
+hC
+hC
+mL
+sp
+QE
+kG
+WJ
+db
+KQ
+KQ
+Eh
+Eh
+"}
+(23,1,1) = {"
+Qc
+Qc
+Eh
+KQ
+KQ
+KQ
+hC
+Hi
+tW
+tW
+cI
+WJ
+hC
+hC
+Rw
+qx
+Hi
+hC
+hC
+WJ
+tW
+cx
+tW
+tW
+hC
+Yp
+hC
+aZ
+jH
+jH
+Zi
+ru
+tW
+rP
+KQ
+KQ
+Eh
+"}
+(24,1,1) = {"
+Qc
+Qc
+Eh
+Eh
+Eh
+KQ
+KQ
+KQ
+KQ
+WJ
+cx
+qx
+hC
+hC
+tW
+tW
+hC
+hC
+hC
+nc
+tW
+Hi
+WJ
+hC
+cx
+hC
+hC
+hC
+UA
+Hi
+jH
+jH
+jH
+jH
+lS
+KQ
+Eh
+"}
+(25,1,1) = {"
+Qc
+Qc
+Qc
+Qc
+Eh
+Eh
+Eh
+Eh
+KQ
+KQ
+KQ
+KQ
+KQ
+KQ
+hC
+qu
+Sw
+hC
+hC
+cx
+cI
+qx
+KQ
+KQ
+KQ
+KQ
+hC
+WJ
+hC
+mG
+jH
+Dh
+hC
+jH
+jH
+KQ
+Eh
+"}
+(26,1,1) = {"
+Qc
+Qc
+Qc
+Qc
+Qc
+Qc
+Qc
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+KQ
+KQ
+KQ
+KQ
+KQ
+KQ
+KQ
+KQ
+KQ
+KQ
+Eh
+Eh
+KQ
+KQ
+KQ
+KQ
+KQ
+KQ
+KQ
+KQ
+KQ
+KQ
+KQ
+Eh
+"}
+(27,1,1) = {"
+Qc
+Qc
+Qc
+Qc
+Qc
+Qc
+Qc
+Qc
+Qc
+Qc
+Qc
+Qc
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+Eh
+"}
