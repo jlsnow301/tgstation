@@ -30,6 +30,10 @@
 	},
 /turf/open/floor/engine/cult,
 /area/virtual_domain)
+"aS" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/indestructible/binary,
+/area/virtual_domain)
 "aX" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/flare/candle/infinite{
@@ -111,7 +115,7 @@
 "bQ" = (
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/template_noop,
-/area/space)
+/area/virtual_domain/safehouse)
 "bW" = (
 /obj/structure/stone_tile{
 	dir = 1
@@ -132,7 +136,7 @@
 	key = "dojo"
 	},
 /turf/template_noop,
-/area/space)
+/area/virtual_domain/safehouse)
 "cW" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -194,7 +198,7 @@
 /area/virtual_domain)
 "fW" = (
 /turf/template_noop,
-/area/space)
+/area/virtual_domain/safehouse)
 "ge" = (
 /obj/item/flashlight/flare/candle/infinite{
 	pixel_x = -5;
@@ -727,8 +731,14 @@
 /turf/open/floor/wood/large,
 /area/virtual_domain)
 "vi" = (
-/mob/living/basic/spider/giant,
-/turf/open/floor/bamboo,
+/obj/structure/fake_stairs/stone{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/mob_spawn/corpse/human/bitrunner,
+/turf/open/misc/grass/jungle,
 /area/virtual_domain)
 "vj" = (
 /obj/structure/railing{
@@ -922,7 +932,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/effect/mob_spawn/corpse/human/pirate,
+/obj/effect/mob_spawn/corpse/human/bitrunner,
 /turf/open/misc/grass/jungle,
 /area/virtual_domain)
 "BY" = (
@@ -1239,7 +1249,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
 	},
-/obj/effect/mob_spawn/corpse/human/pirate,
+/obj/effect/mob_spawn/corpse/human/bitrunner,
 /turf/open/floor/stone,
 /area/virtual_domain)
 "LU" = (
@@ -1281,7 +1291,7 @@
 /obj/item/pillow{
 	pixel_y = 8
 	},
-/obj/effect/mob_spawn/corpse/human/pirate,
+/obj/effect/mob_spawn/corpse/human/bitrunner,
 /turf/open/floor/wood/large,
 /area/virtual_domain)
 "Ny" = (
@@ -2014,7 +2024,7 @@ uv
 CR
 KQ
 Eh
-Eh
+aS
 "}
 (7,1,1) = {"
 Qc
@@ -2185,7 +2195,7 @@ Sa
 Jx
 OS
 PY
-vi
+OS
 OS
 OS
 PY
@@ -2350,7 +2360,7 @@ VX
 HR
 Uj
 yD
-ht
+vi
 CA
 Mp
 tW
@@ -2382,7 +2392,7 @@ OS
 OS
 OS
 ed
-vi
+OS
 iH
 OS
 qD
@@ -2505,7 +2515,7 @@ OS
 ZQ
 Pt
 fw
-ht
+vi
 CA
 Mp
 qx
