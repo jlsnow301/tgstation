@@ -8,3 +8,9 @@
 	key = "dojo_boss"
 	map_name = "dojo_boss"
 	reward_points = BITRUNNER_REWARD_MEDIUM
+	forbids_disk_items = TRUE
+	forbids_disk_spells = TRUE
+
+/mob/living/basic/mega_arachnid/dojo
+	name = "Dojo Sensei"
+

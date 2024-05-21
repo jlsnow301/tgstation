@@ -3518,6 +3518,7 @@
 #include "code\modules\bitrunning\virtual_domain\domains\colossus.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\dojo.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\gondola_asteroid.dm"
+#include "code\modules\bitrunning\virtual_domain\domains\grassland_hunt.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\hierophant.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\pipedream.dm"
 #include "code\modules\bitrunning\virtual_domain\domains\pirates.dm"

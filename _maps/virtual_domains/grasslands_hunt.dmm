@@ -29,6 +29,10 @@
 	},
 /turf/open/water,
 /area/virtual_domain/fullbright)
+"bG" = (
+/obj/effect/landmark/bitrunning/mob_segment,
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
 "bI" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
@@ -344,6 +348,11 @@
 /obj/structure/flora/bush/stalky/style_random,
 /turf/open/water,
 /area/virtual_domain/fullbright)
+"uh" = (
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/effect/landmark/bitrunning/mob_segment,
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
 "uk" = (
 /turf/open/water,
 /area/virtual_domain/fullbright)
@@ -414,6 +423,11 @@
 	dir = 1
 	},
 /obj/structure/flora/bush/lavendergrass/style_random,
+/turf/open/floor/grass,
+/area/virtual_domain/fullbright)
+"xE" = (
+/obj/structure/flora/bush/ferny/style_random,
+/obj/effect/landmark/bitrunning/mob_segment,
 /turf/open/floor/grass,
 /area/virtual_domain/fullbright)
 "yr" = (
@@ -2237,7 +2251,7 @@ fm
 aD
 aD
 aD
-pn
+xE
 iT
 pn
 aD
@@ -2339,7 +2353,7 @@ CH
 nn
 aD
 aD
-aD
+bG
 aD
 nn
 pn
@@ -3386,7 +3400,7 @@ fm
 aD
 aD
 Fm
-aD
+bG
 aD
 nn
 nn
@@ -4897,7 +4911,7 @@ yC
 yC
 KE
 aD
-aD
+bG
 aD
 aD
 nn
@@ -4925,7 +4939,7 @@ nn
 aD
 Fm
 CH
-aD
+bG
 aD
 HT
 HT
@@ -5886,7 +5900,7 @@ yC
 yC
 aD
 aD
-yC
+uh
 yC
 CH
 yC
@@ -6016,7 +6030,7 @@ yC
 yC
 yC
 yC
-yC
+uh
 yC
 nn
 aD
