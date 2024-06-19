@@ -382,6 +382,7 @@
 	pixel_x = 5;
 	pixel_y = 7
 	},
+/obj/effect/landmark/bitrunning/mob_segment,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "cK" = (
@@ -820,6 +821,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/effect/landmark/bitrunning/mob_segment,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "hd" = (
@@ -835,6 +837,10 @@
 	},
 /obj/structure/holosign/barrier,
 /turf/open/floor/iron,
+/area/virtual_domain)
+"hh" = (
+/obj/effect/landmark/bitrunning/cache_spawn,
+/turf/open/floor/carpet,
 /area/virtual_domain)
 "hi" = (
 /obj/structure/broken_flooring/pile/directional/west,
@@ -1224,6 +1230,10 @@
 	},
 /obj/structure/alien/weeds,
 /turf/open/floor/plating,
+/area/virtual_domain)
+"kI" = (
+/obj/effect/landmark/bitrunning/mob_segment,
+/turf/open/floor/iron,
 /area/virtual_domain)
 "kK" = (
 /obj/structure/sign/directions/command{
@@ -2220,6 +2230,10 @@
 /obj/item/stack/sheet/mineral/gold,
 /turf/open/floor/wood,
 /area/virtual_domain)
+"sA" = (
+/obj/effect/landmark/bitrunning/mob_segment,
+/turf/open/floor/carpet,
+/area/virtual_domain)
 "sB" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -3096,6 +3110,13 @@
 	pixel_x = 7
 	},
 /turf/open/floor/plating,
+/area/virtual_domain)
+"Ah" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/landmark/bitrunning/mob_segment,
+/turf/open/floor/iron,
 /area/virtual_domain)
 "Ao" = (
 /obj/structure/closet/firecloset,
@@ -4316,6 +4337,11 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/virtual_domain)
+"KW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/bitrunning/mob_segment,
+/turf/open/floor/iron,
+/area/virtual_domain)
 "Lg" = (
 /obj/item/radio/intercom/directional/west,
 /obj/effect/turf_decal/tile/neutral{
@@ -4344,7 +4370,7 @@
 /area/virtual_domain)
 "Ls" = (
 /obj/modular_map_root/safehouse{
-	key = "wood"
+	key = "shuttle_space"
 	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
@@ -4436,6 +4462,10 @@
 	},
 /obj/structure/holosign/barrier,
 /turf/open/floor/iron,
+/area/virtual_domain)
+"Mb" = (
+/obj/effect/landmark/bitrunning/mob_segment,
+/turf/open/floor/iron/dark,
 /area/virtual_domain)
 "Mj" = (
 /obj/effect/decal/cleanable/dirt,
@@ -4589,6 +4619,7 @@
 /obj/machinery/flasher/directional/east{
 	pixel_y = -26
 	},
+/obj/effect/landmark/bitrunning/mob_segment,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "Nh" = (
@@ -5519,6 +5550,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/effect/landmark/bitrunning/cache_spawn,
 /turf/open/floor/carpet,
 /area/virtual_domain)
 "UT" = (
@@ -5640,6 +5672,7 @@
 "Wt" = (
 /obj/structure/flora/grass/jungle/b/style_random,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/landmark/bitrunning/mob_segment,
 /turf/open/misc/dirt/jungle,
 /area/virtual_domain)
 "Wv" = (
@@ -5899,6 +5932,7 @@
 /obj/effect/decal/cleanable/blood{
 	icon_state = "floor1-old"
 	},
+/obj/effect/landmark/bitrunning/mob_segment,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "Yv" = (
@@ -6301,7 +6335,7 @@ Cn
 cK
 Uj
 vN
-nS
+Ah
 nP
 nS
 gk
@@ -6463,7 +6497,7 @@ uS
 uS
 uS
 pA
-Hd
+kI
 eZ
 eX
 uB
@@ -6583,7 +6617,7 @@ KP
 ps
 il
 TP
-dD
+KW
 fh
 uS
 Yf
@@ -7209,7 +7243,7 @@ SN
 kp
 zP
 xu
-JP
+Mb
 RJ
 JP
 YG
@@ -7308,7 +7342,7 @@ JP
 yh
 Hw
 wA
-db
+hh
 mb
 ps
 nw
@@ -7401,7 +7435,7 @@ Il
 kp
 BK
 di
-JP
+Mb
 Yd
 cO
 KQ
@@ -7490,7 +7524,7 @@ HM
 ps
 cx
 rj
-Hd
+kI
 ZY
 dE
 SN
@@ -7519,7 +7553,7 @@ TN
 ZM
 an
 sB
-Hd
+kI
 Hd
 Cg
 Za
@@ -7838,7 +7872,7 @@ ps
 xb
 XJ
 Iq
-db
+sA
 MJ
 SY
 tj
@@ -8114,7 +8148,7 @@ uz
 HM
 ps
 nO
-Hd
+kI
 nS
 FZ
 bw
@@ -8180,7 +8214,7 @@ zb
 vw
 Hd
 Hd
-Hd
+kI
 XL
 KT
 oS
