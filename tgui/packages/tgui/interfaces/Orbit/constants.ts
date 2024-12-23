@@ -4,13 +4,14 @@ export const ANTAG2COLOR = {
   Biohazards: 'brown',
   'Bounty Hunters': 'yellow',
   CentCom: 'teal',
+  'Deviant Crew': 'white',
   'Digital Anomalies': 'teal',
   'Emergency Response Team': 'teal',
   'Escaped Fugitives': 'orange',
-  'Xenomorph Infestation': 'violet',
-  'Spacetime Aberrations': 'white',
-  'Deviant Crew': 'white',
   'Invasive Overgrowth': 'green',
+  'Recovered Crew': 'blue',
+  'Spacetime Aberrations': 'white',
+  'Xenomorph Infestation': 'violet',
 } as const;
 
 type Department = {

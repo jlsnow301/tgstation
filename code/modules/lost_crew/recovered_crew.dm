@@ -8,3 +8,4 @@
 	silent = TRUE
 	block_midrounds = FALSE
 	show_in_roundend = FALSE
+	antagpanel_category = "Recovered Crew"
