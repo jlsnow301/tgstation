@@ -40,3 +40,15 @@
 	for(var/window_id in tgui_windows)
 		var/datum/tgui_window/window = tgui_windows[window_id]
 		window.reinitialize()
+
+/client/verb/send_howl()
+	set name = "Send Howl"
+	set category = "OOC"
+	set desc = "Sends a TTS howl to the panel"
+
+	if(!tgui_panel || !istype(tgui_panel))
+		log_tgui(src, "tgui_panel datum is missing",
+			context = "verb/fix_tgui_panel")
+		tgui_panel = new(src)
+
+	tgui_panel.send_howl()

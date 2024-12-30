@@ -24,6 +24,7 @@ import { setupPanelFocusHacks } from './panelFocus';
 import { pingMiddleware, pingReducer } from './ping';
 import { settingsMiddleware, settingsReducer } from './settings';
 import { telemetryMiddleware } from './telemetry';
+import { ttsMiddleware } from './tts';
 
 perf.mark('inception', window.performance?.timing?.navigationStart);
 perf.mark('init');
@@ -44,6 +45,7 @@ const store = configureStore({
       settingsMiddleware,
       audioMiddleware,
       gameMiddleware,
+      ttsMiddleware,
     ],
   },
 });

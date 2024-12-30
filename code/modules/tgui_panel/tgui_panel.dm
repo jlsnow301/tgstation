@@ -99,3 +99,16 @@
  */
 /datum/tgui_panel/proc/send_roundrestart()
 	window.send_message("roundrestart")
+
+
+/**
+ * public
+ *
+ * Sends a TTS sound for the panel to play.
+ */
+/datum/tgui_panel/proc/send_howl()
+	var/sound = "http://codeskulptor-demos.commondatastorage.googleapis.com/GalaxyInvaders/bonus.wav"
+
+	window.send_message("tts/play", list(
+		"url" = sound,
+	))
