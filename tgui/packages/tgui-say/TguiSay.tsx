@@ -5,7 +5,7 @@ import { BooleanLike } from 'tgui-core/react';
 
 import { Channel, ChannelIterator } from './ChannelIterator';
 import { ChatHistory } from './ChatHistory';
-import { LINE_LENGTHS, RADIO_PREFIXES, WINDOW_SIZES } from './constants';
+import { LineLength, RADIO_PREFIXES, WindowSize } from './constants';
 import { windowClose, windowOpen, windowSet } from './helpers';
 import { byondMessages } from './timers';
 
@@ -20,7 +20,7 @@ type ByondProps = {
 
 type State = {
   buttonContent: string | number;
-  size: WINDOW_SIZES;
+  size: WindowSize;
 };
 
 const CHANNEL_REGEX = /^[:.]\w\s/;
@@ -47,7 +47,7 @@ export class TguiSay extends Component<{}, State> {
     this.messages = byondMessages;
     this.state = {
       buttonContent: '',
-      size: WINDOW_SIZES.small,
+      size: WindowSize.Small,
     };
 
     this.handleArrowKeys = this.handleArrowKeys.bind(this);
@@ -217,7 +217,7 @@ export class TguiSay extends Component<{}, State> {
       Byond.sendMessage('thinking', { visible: false });
     }
 
-    this.channelIterator.set('Say');
+    this.channelIterator.set(Channel.Say);
     this.currentPrefix = prefix;
     this.setState({ buttonContent: RADIO_PREFIXES[prefix] });
     this.setValue(typed.slice(3));
@@ -284,14 +284,14 @@ export class TguiSay extends Component<{}, State> {
   }
 
   setSize(length = 0) {
-    let newSize: WINDOW_SIZES;
+    let newSize: WindowSize;
 
-    if (length > LINE_LENGTHS.medium) {
-      newSize = WINDOW_SIZES.large;
-    } else if (length <= LINE_LENGTHS.medium && length > LINE_LENGTHS.small) {
-      newSize = WINDOW_SIZES.medium;
+    if (length > LineLength.Medium) {
+      newSize = WindowSize.Large;
+    } else if (length <= LineLength.Medium && length > LineLength.Small) {
+      newSize = WindowSize.Medium;
     } else {
-      newSize = WINDOW_SIZES.small;
+      newSize = WindowSize.Small;
     }
 
     if (this.state.size !== newSize) {
@@ -342,7 +342,13 @@ export class TguiSay extends Component<{}, State> {
   }
 }
 
-const Dragzone = ({ theme, position }: { theme: string; position: string }) => {
+export const Dragzone = ({
+  theme,
+  position,
+}: {
+  theme: string;
+  position: string;
+}) => {
   // Horizontal or vertical?
   const location =
     position === 'left' || position === 'right' ? 'vertical' : 'horizontal';
