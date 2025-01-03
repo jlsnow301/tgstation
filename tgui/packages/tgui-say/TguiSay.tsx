@@ -252,12 +252,14 @@ export function TguiSay() {
     setValue('');
   }
 
+  /** Subscribe to Byond messages */
   useEffect(() => {
     Byond.subscribeTo('props', handleProps);
     Byond.subscribeTo('force', handleForceSay);
     Byond.subscribeTo('open', handleOpen);
   }, []);
 
+  /** Value has changed, we need to check if the size of the window is ok */
   useEffect(() => {
     const len = value?.length || 0;
 
