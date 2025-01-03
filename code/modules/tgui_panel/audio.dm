@@ -40,3 +40,19 @@
 	if(!is_ready())
 		return
 	window.send_message("audio/stopMusic")
+
+/**
+ * public
+ *
+ * Sends a TTS sound for the panel to play.
+ */
+/datum/tgui_panel/proc/send_howl()
+	var/sound = "http://codeskulptor-demos.commondatastorage.googleapis.com/GalaxyInvaders/bonus.wav"
+	var/list/from = list(300, 300)
+	var/list/to = list(295, 298)
+
+	window.send_message("tts/play", list(
+		"url" = sound,
+		"from" = from,
+		"to" = to,
+	))
