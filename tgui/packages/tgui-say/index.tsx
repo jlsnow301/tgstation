@@ -2,7 +2,7 @@ import './styles/main.scss';
 
 import { createRoot, Root } from 'react-dom/client';
 
-import { NewSay } from './NewSay';
+import { OldSay } from './OldSay';
 import { TguiSay } from './TguiSay';
 
 let reactRoot: Root | null = null;
@@ -16,8 +16,8 @@ document.onreadystatechange = function () {
   }
 
   if (Byond.BLINK) {
-    reactRoot.render(<NewSay />);
-  } else {
     reactRoot.render(<TguiSay />);
+  } else {
+    reactRoot.render(<OldSay />);
   }
 };
