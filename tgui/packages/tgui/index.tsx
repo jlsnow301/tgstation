@@ -34,6 +34,7 @@ import { setupHotReloading } from 'tgui-dev-server/link/client.mjs';
 import { App } from './App';
 import { setGlobalStore } from './backend';
 import { captureExternalLinks } from './links';
+import { storeDispatch } from './newStore';
 import { render } from './renderer';
 import { configureStore } from './store';
 
@@ -58,7 +59,10 @@ function setupApp() {
   store.subscribe(() => render(<App />));
 
   // Dispatch incoming messages as store actions
-  Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
+  Byond.subscribe((type, payload) => {
+    store.dispatch({ type, payload });
+    storeDispatch({ type, payload });
+  });
 
   // Enable hot module reloading
   if (import.meta.webpackHot) {

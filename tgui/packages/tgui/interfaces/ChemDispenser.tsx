@@ -46,6 +46,9 @@ export const ChemDispenser = (props) => {
   const { recipeReagents = [], recipes = [], beaker } = data;
   const [showPhCol, setShowPhCol] = useState(false);
 
+  // const { data: data2 } = useNewBackend();
+  // logger.log(data2);
+
   const beakerTransferAmounts = beaker ? beaker.transferAmounts : [];
   const recordedContents =
     recording &&
