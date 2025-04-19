@@ -26,6 +26,7 @@ import './styles/themes/syndicate.scss';
 import './styles/themes/wizard.scss';
 import './styles/themes/admin.scss';
 
+import { storeDispatch } from 'common/dispatch';
 import { perf } from 'common/perf';
 import { setupGlobalEvents } from 'tgui-core/events';
 import { setupHotKeys } from 'tgui-core/hotkeys';
@@ -33,8 +34,8 @@ import { setupHotReloading } from 'tgui-dev-server/link/client.mjs';
 
 import { App } from './App';
 import { setGlobalStore } from './backend';
+import { listeners } from './backend/listeners';
 import { captureExternalLinks } from './links';
-import { storeDispatch } from './newStore';
 import { render } from './renderer';
 import { configureStore } from './store';
 
@@ -61,7 +62,7 @@ function setupApp() {
   // Dispatch incoming messages as store actions
   Byond.subscribe((type, payload) => {
     store.dispatch({ type, payload });
-    storeDispatch({ type, payload });
+    storeDispatch({ type, payload }, listeners);
   });
 
   // Enable hot module reloading
