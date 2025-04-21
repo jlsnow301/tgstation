@@ -3,7 +3,6 @@
   "name": "tgui",
   "version": "6.0.0",
   "dependencies": {
-    "@zod/mini": "^4.0.0-beta.20250418T202744",
     "common": "workspace:*",
     "dateformat": "^5.0.3",
     "dompurify": "^3.2.5",

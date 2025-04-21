@@ -9,16 +9,21 @@ import {
   Table,
 } from 'tgui-core/components';
 
-import { useBackend } from '../backend';
+import { useNewBackend } from '../backend/newBackend';
 import { Window } from '../layouts';
+import { logger } from '../logging';
 
 type Data = {
   reflector_name: string;
   rotation_angle: number;
 };
+
 export const Reflector = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useNewBackend<Data>();
   const { reflector_name, rotation_angle } = data;
+
+  logger.log('Reflector data:', data);
+
   return (
     <Window title={reflector_name} height={200} width={219}>
       <Window.Content>

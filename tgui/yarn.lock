@@ -4496,22 +4496,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zod/core@npm:0.8.0":
-  version: 0.8.0
-  resolution: "@zod/core@npm:0.8.0"
-  checksum: 10c0/efbedaa9e9674c60318eef177df8525220654d737fd89fa354404346fd20435c58f2705ba8c9915dd4ab33862c28148a5bb88f3e64fe2925638b8c3d70d0e305
-  languageName: node
-  linkType: hard
-
-"@zod/mini@npm:^4.0.0-beta.20250418T202744":
-  version: 4.0.0-beta.20250418T202744
-  resolution: "@zod/mini@npm:4.0.0-beta.20250418T202744"
-  dependencies:
-    "@zod/core": "npm:0.8.0"
-  checksum: 10c0/3e7ff2a34d1a4c8351d5eb587d9c1b96c1437c330ee7c4945eb8787d093bc01aca75be04d744b5aefd947de7b52e75b6606b784a89913bffd12726ff571776ef
-  languageName: node
-  linkType: hard
-
 "abab@npm:^2.0.3, abab@npm:^2.0.5":
   version: 2.0.6
   resolution: "abab@npm:2.0.6"
@@ -19094,7 +19078,6 @@ __metadata:
     "@types/marked": "npm:4.3.2"
     "@types/react": "npm:^19.1.0"
     "@types/react-dom": "npm:^19.1.2"
-    "@zod/mini": "npm:^4.0.0-beta.20250418T202744"
     common: "workspace:*"
     dateformat: "npm:^5.0.3"
     dompurify: "npm:^3.2.5"
