@@ -11,6 +11,8 @@ type Action = {
 
 export const useSharedStore = create<SharedState & Action>()((set) => ({
   shared: {},
+
   updateShared: (shared) => set({ shared }),
+
   reset: () => set({ shared: {} }),
 }));

@@ -11,6 +11,8 @@ type Action = {
 
 export const useGameStore = create<GameState & Action>()((set) => ({
   data: {},
+
   updateData: (data) => set({ data }),
+
   reset: () => set({ data: {} as GameState['data'] }),
 }));

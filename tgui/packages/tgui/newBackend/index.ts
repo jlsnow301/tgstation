@@ -1,7 +1,7 @@
 import { sendAct } from '../backend';
+import { useChunkingStore } from './stores/chunking';
 import { useConfigStore } from './stores/config';
 import { useGameStore } from './stores/game';
-import { useChunkingStore } from './stores/queues';
 import { useSharedStore } from './stores/shared';
 import { useWindowStore } from './stores/window';
 
@@ -14,13 +14,6 @@ export function useNewBackend<TData extends Record<string, unknown>>() {
   const shared = useSharedStore((state) => state.shared);
   const suspending = useWindowStore((state) => state.suspending);
   const suspended = useWindowStore((state) => state.suspended);
-
-  // if (schema) {
-  //   const result = schema.safeParse(data);
-  //   if (!result.success) {
-  //     logger.log('Invalid data received from backend', result.error.message);
-  //   }
-  // }
 
   return {
     act: sendAct,
