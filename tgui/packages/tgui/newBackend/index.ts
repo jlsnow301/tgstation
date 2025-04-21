@@ -12,8 +12,8 @@ export function useNewBackend<TData extends Record<string, unknown>>() {
     (state) => state.outgoingPayloadQueues,
   );
   const shared = useSharedStore((state) => state.shared);
-  const suspending = useWindowStore((state) => state.window.suspending);
-  const suspended = useWindowStore((state) => state.window.suspended);
+  const suspending = useWindowStore((state) => state.suspending);
+  const suspended = useWindowStore((state) => state.suspended);
 
   // if (schema) {
   //   const result = schema.safeParse(data);

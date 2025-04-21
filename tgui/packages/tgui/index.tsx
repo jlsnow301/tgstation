@@ -34,8 +34,8 @@ import { setupHotReloading } from 'tgui-dev-server/link/client.mjs';
 
 import { App } from './App';
 import { setGlobalStore } from './backend';
-import { listeners } from './backend/listeners';
 import { captureExternalLinks } from './links';
+import { listeners } from './newBackend/listeners';
 import { render } from './renderer';
 import { configureStore } from './store';
 
@@ -69,7 +69,7 @@ function setupApp() {
   if (import.meta.webpackHot) {
     setupHotReloading();
     import.meta.webpackHot.accept(
-      ['./debug', './layouts', './routes', './App'],
+      ['./debug', './layouts', './routes', './App', './newBackend'],
       () => {
         render(<App />);
       },

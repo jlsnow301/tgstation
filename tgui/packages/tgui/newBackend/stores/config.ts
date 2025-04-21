@@ -36,15 +36,15 @@ type Config = {
   window: TguiWindow;
 };
 
-type State = {
+export type ConfigState = {
   config: Config;
 };
 
 type Action = {
-  updateConfig: (update: State['config']) => void;
+  updateConfig: (update: ConfigState['config']) => void;
 };
 
-export const useConfigStore = create<State & Action>()((set) => ({
+export const useConfigStore = create<ConfigState & Action>()((set) => ({
   config: {} as Config,
   updateConfig: (config) => set({ config }),
 }));
