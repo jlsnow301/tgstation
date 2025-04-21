@@ -26,7 +26,7 @@ import './styles/themes/syndicate.scss';
 import './styles/themes/wizard.scss';
 import './styles/themes/admin.scss';
 
-import { storeDispatch } from 'common/dispatch';
+import { Dispatch } from 'common/dispatch';
 import { perf } from 'common/perf';
 import { setupGlobalEvents } from 'tgui-core/events';
 import { setupHotKeys } from 'tgui-core/hotkeys';
@@ -43,6 +43,7 @@ perf.mark('inception', window.performance?.timeOrigin);
 perf.mark('init');
 
 const store = configureStore();
+export let newStore: Dispatch;
 
 function setupApp() {
   // Delay setup
@@ -50,6 +51,9 @@ function setupApp() {
     document.addEventListener('DOMContentLoaded', setupApp);
     return;
   }
+
+  newStore = new Dispatch();
+  newStore.subscribeAll(listeners);
 
   setGlobalStore(store);
 
@@ -62,7 +66,7 @@ function setupApp() {
   // Dispatch incoming messages as store actions
   Byond.subscribe((type, payload) => {
     store.dispatch({ type, payload });
-    storeDispatch({ type, payload }, listeners);
+    newStore.dispatch({ type, payload });
   });
 
   // Enable hot module reloading

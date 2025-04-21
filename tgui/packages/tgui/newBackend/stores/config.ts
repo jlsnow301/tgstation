@@ -42,9 +42,14 @@ export type ConfigState = {
 
 type Action = {
   updateConfig: (update: ConfigState['config']) => void;
+  reset: () => void;
 };
 
 export const useConfigStore = create<ConfigState & Action>()((set) => ({
   config: {} as Config,
   updateConfig: (config) => set({ config }),
+  reset: () =>
+    set((state) => ({
+      config: { ...state.config, title: '', status: 1 } as Config,
+    })),
 }));

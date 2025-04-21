@@ -1,14 +1,16 @@
 import { create } from 'zustand';
 
 export type QueueState = {
-  outgoingPayloadQueues: Record<string, any[]>;
+  outgoingPayloadQueues: Record<string, string[]>;
 };
 
 type Action = {
-  updatePayloadQues: (newQueue: QueueState['outgoingPayloadQueues']) => void;
+  updateQueue: (newQueue: QueueState['outgoingPayloadQueues']) => void;
+  reset: () => void;
 };
 
 export const useChunkingStore = create<QueueState & Action>()((set) => ({
   outgoingPayloadQueues: {},
-  updatePayloadQues: (newQueue) => set({ outgoingPayloadQueues: newQueue }),
+  updateQueue: (newQueue) => set({ outgoingPayloadQueues: newQueue }),
+  reset: () => set({ outgoingPayloadQueues: {} }),
 }));

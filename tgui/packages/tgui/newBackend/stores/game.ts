@@ -6,9 +6,11 @@ export type GameState = {
 
 type Action = {
   updateData: (update: GameState['data']) => void;
+  reset: () => void;
 };
 
 export const useGameStore = create<GameState & Action>()((set) => ({
   data: {},
   updateData: (data) => set({ data }),
+  reset: () => set({ data: {} as GameState['data'] }),
 }));

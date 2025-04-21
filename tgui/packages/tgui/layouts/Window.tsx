@@ -17,7 +17,6 @@ import { UI_DISABLED, UI_INTERACTIVE } from 'tgui-core/constants';
 import { BooleanLike, classes } from 'tgui-core/react';
 import { decodeHtmlEntities } from 'tgui-core/string';
 
-import { backendSuspendStart, globalStore, useBackend } from '../backend';
 import { useDebug } from '../debug';
 import {
   dragStartHandler,
@@ -26,6 +25,8 @@ import {
   setWindowKey,
 } from '../drag';
 import { createLogger } from '../logging';
+import { useNewBackend } from '../newBackend';
+import { useWindowStore } from '../newBackend/stores/window';
 import { Layout } from './Layout';
 import { TitleBar } from './TitleBar';
 
@@ -53,7 +54,8 @@ export const Window = (props: Props) => {
     height,
   } = props;
 
-  const { config, suspended } = useBackend();
+  const { config, suspended } = useNewBackend();
+  const updateSuspending = useWindowStore((state) => state.updateSuspending);
   const { debugLayout = false } = useDebug();
   const [isReadyToRender, setIsReadyToRender] = useState(false);
 
@@ -101,7 +103,6 @@ export const Window = (props: Props) => {
     }
   }, [isReadyToRender, width, height, scale]);
 
-  const dispatch = globalStore.dispatch;
   const fancy = config.window?.fancy;
 
   // Determine when to show dimmer
@@ -120,7 +121,7 @@ export const Window = (props: Props) => {
         onDragStart={dragStartHandler}
         onClose={() => {
           logger.log('pressed close');
-          dispatch(backendSuspendStart());
+          updateSuspending(1);
         }}
         canClose={canClose}
       >
