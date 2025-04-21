@@ -1,4 +1,3 @@
-import { ByondMessage } from 'common/dispatch';
 import { perf } from 'common/perf';
 import { deepEqual } from 'fast-equals';
 
@@ -9,7 +8,7 @@ import { type QueueState, useChunkingStore } from '../stores/chunking';
 import { type ConfigState, useConfigStore } from '../stores/config';
 import { type GameState, useGameStore } from '../stores/game';
 import { type SharedState, useSharedStore } from '../stores/shared';
-import { useWindowStore, type WindowState } from '../stores/window';
+import { useWindowStore, type WindowState } from '../stores/suspense';
 
 interface UpdatePayload
   extends ConfigState,
@@ -20,13 +19,10 @@ interface UpdatePayload
   static_data: Record<string, unknown>;
 }
 
-export function handleUpdate(message: ByondMessage<UpdatePayload>) {
-  const { payload } = message;
-  const { suspended } = useWindowStore.getState();
-
+export function update(payload: UpdatePayload) {
   setFancy(payload);
   updateData(payload);
-  if (suspended) {
+  if (useWindowStore.getState().suspended) {
     resume(payload);
   }
 }
@@ -44,7 +40,7 @@ function resume(payload: UpdatePayload) {
   setTimeout(() => {
     perf.mark('resume/start');
     // Doublecheck if we are not re-suspended.
-    const { suspended } = useWindowStore.getState();
+    const suspended = useWindowStore.getState().suspended;
     if (suspended) {
       return;
     }
@@ -67,7 +63,6 @@ function setFancy(payload: UpdatePayload) {
   const fancyState = useConfigStore.getState().config.window?.fancy;
 
   if (fancyState !== fancy) {
-    logger.log('changing fancy mode to', fancy);
     useConfigStore.getState().setFancy(fancy);
     Byond.winset(Byond.windowId, {
       titlebar: !fancy,
@@ -78,22 +73,26 @@ function setFancy(payload: UpdatePayload) {
 
 /** Delegates update data to the appropriate store */
 function updateData(payload: UpdatePayload) {
-  if (!deepEqual(payload.config, useConfigStore.getState().config)) {
-    useConfigStore.getState().updateConfig(payload.config);
+  const configState = useConfigStore.getState();
+  if (!deepEqual(payload.config, configState.config)) {
+    configState.updateConfig(payload.config);
   }
 
   const updateData = { ...payload.data, ...payload.static_data };
-  if (!deepEqual(updateData, useGameStore.getState().data)) {
-    useGameStore.getState().updateData(updateData);
+  const gameState = useGameStore.getState();
+  // If the data has changed, we update it in the game store.
+  if (!deepEqual(updateData, gameState.data)) {
+    gameState.updateData(updateData);
   }
 
+  const chunkingState = useChunkingStore.getState();
   if (
     !deepEqual(
       payload.outgoingPayloadQueues,
-      useChunkingStore.getState().outgoingPayloadQueues,
+      chunkingState.outgoingPayloadQueues,
     )
   ) {
-    useChunkingStore.getState().create(payload.outgoingPayloadQueues);
+    chunkingState.create(payload.outgoingPayloadQueues);
   }
 
   if (payload.shared) {
@@ -107,6 +106,6 @@ function updateData(payload: UpdatePayload) {
         newShared[key] = JSON.parse(value);
       }
     }
-    useSharedStore.setState(() => ({ shared: newShared }));
+    useSharedStore.getState().updateShared(newShared);
   }
 }

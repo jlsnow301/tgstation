@@ -1,18 +1,16 @@
-import { ByondMessage } from 'common/dispatch';
-
 import { useChunkingStore } from '../stores/chunking';
 
-type CreatePayload = {
+type CreateQueuePayload = {
   id: string;
   chunks: string[];
 };
 
-export function createQueue(message: ByondMessage<CreatePayload>) {
-  const {
-    payload: { id, chunks },
-  } = message;
+export function createQueue(payload: CreateQueuePayload) {
+  const { id, chunks } = payload;
 
-  useChunkingStore.getState().create({ [id]: chunks });
+  useChunkingStore.getState().create({
+    [id]: chunks,
+  });
 }
 
 type OversizePayload = {
@@ -20,10 +18,8 @@ type OversizePayload = {
   id: string;
 };
 
-export function oversizeResponse(message: ByondMessage<OversizePayload>) {
-  const {
-    payload: { allow, id },
-  } = message;
+export function oversizeResponse(payload: OversizePayload) {
+  const { allow, id } = payload;
 
   if (allow) {
     nextChunk(id);
@@ -32,10 +28,8 @@ export function oversizeResponse(message: ByondMessage<OversizePayload>) {
   }
 }
 
-export function acknowledgeChunk(message: ByondMessage<OversizePayload>) {
-  const {
-    payload: { id },
-  } = message;
+export function acknowledgeChunk(payload: OversizePayload) {
+  const { id } = payload;
 
   useChunkingStore.getState().dequeue(id);
   nextChunk(id);

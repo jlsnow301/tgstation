@@ -17,7 +17,7 @@ import { UI_DISABLED, UI_INTERACTIVE } from 'tgui-core/constants';
 import { BooleanLike, classes } from 'tgui-core/react';
 import { decodeHtmlEntities } from 'tgui-core/string';
 
-import { useDebug } from '../debug';
+import { bus } from '..';
 import {
   dragStartHandler,
   recallWindowGeometry,
@@ -26,7 +26,6 @@ import {
 } from '../drag';
 import { createLogger } from '../logging';
 import { useNewBackend } from '../newBackend';
-import { useWindowStore } from '../newBackend/stores/window';
 import { Layout } from './Layout';
 import { TitleBar } from './TitleBar';
 
@@ -54,9 +53,9 @@ export const Window = (props: Props) => {
     height,
   } = props;
 
-  const { config, suspended } = useNewBackend();
-  const updateSuspending = useWindowStore((state) => state.updateSuspending);
-  const { debugLayout = false } = useDebug();
+  const { config, suspended, debugLayout } = useNewBackend();
+  logger.log('update');
+
   const [isReadyToRender, setIsReadyToRender] = useState(false);
 
   // We need to set the window to be invisible before we can set its geometry
@@ -68,7 +67,7 @@ export const Window = (props: Props) => {
     setIsReadyToRender(true);
   }, []);
 
-  const { scale } = config.window;
+  const { scale } = config?.window || false;
 
   useEffect(() => {
     if (!suspended && isReadyToRender) {
@@ -96,11 +95,10 @@ export const Window = (props: Props) => {
       });
       logger.log('mounting');
       updateGeometry();
-
-      return () => {
-        logger.log('unmounting');
-      };
     }
+    return () => {
+      logger.log('unmounting');
+    };
   }, [isReadyToRender, width, height, scale]);
 
   const fancy = config.window?.fancy;
@@ -120,8 +118,9 @@ export const Window = (props: Props) => {
         fancy={fancy}
         onDragStart={dragStartHandler}
         onClose={() => {
-          logger.log('pressed close');
-          updateSuspending(1);
+          bus.dispatch({
+            type: 'suspendStart',
+          });
         }}
         canClose={canClose}
       >

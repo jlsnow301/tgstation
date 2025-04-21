@@ -10,17 +10,20 @@ export type WindowState = {
 type Action = {
   updateSuspending: (suspending: BinaryIO) => void;
   updateSuspended: (suspended: BinaryIO) => void;
-  reset: (timestamp: number) => void;
+  reset: () => void;
 };
 
 export const useWindowStore = create<WindowState & Action>()((set) => ({
   suspending: 0,
-  suspended: 0,
+  suspended: Date.now(),
+
   updateSuspending: (suspending) => set({ suspending }),
+
   updateSuspended: (suspended) => set({ suspended }),
-  reset: (timestamp: number) =>
+
+  reset: () =>
     set({
       suspending: 0,
-      suspended: timestamp,
+      suspended: Date.now(),
     }),
 }));

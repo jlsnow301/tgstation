@@ -1,4 +1,3 @@
-import { ByondMessage } from 'common/dispatch';
 import { throttle } from 'tgui-core/timer';
 
 import { focusMap } from '../../focus';
@@ -8,13 +7,13 @@ import { useChunkingStore } from '../stores/chunking';
 import { useConfigStore } from '../stores/config';
 import { useGameStore } from '../stores/game';
 import { useSharedStore } from '../stores/shared';
-import { useWindowStore } from '../stores/window';
+import { useWindowStore } from '../stores/suspense';
 
 let suspendInterval: NodeJS.Timeout | null = null;
 
 const TWO_SECONDS = 2000;
 
-const suspend = throttle(() => {
+const suspendMsg = throttle(() => {
   Byond.sendMessage('suspend');
 }, TWO_SECONDS);
 
@@ -23,28 +22,19 @@ export function suspendStart() {
   if (suspendInterval) return;
 
   logger.log(`suspending (${Byond.windowId})`);
-
-  suspend();
-  suspendInterval = setInterval(suspend, TWO_SECONDS);
+  suspendMsg();
+  suspendInterval = setInterval(suspendMsg, TWO_SECONDS);
 }
 
-type SuspendFinishPayload = {
-  timestamp: number;
-};
-
-/** Resets all state and refocuses window */
-export function suspendFinish(message: ByondMessage<SuspendFinishPayload>) {
-  const {
-    payload: { timestamp },
-  } = message;
-
+/** Resets all state and refocuses byond window */
+export function suspend() {
   suspendRenderer();
 
   useConfigStore.getState().reset();
   useGameStore.getState().reset();
   useSharedStore.getState().reset();
   useChunkingStore.getState().reset();
-  useWindowStore.getState().reset(timestamp);
+  useWindowStore.getState().reset();
 
   if (suspendInterval) clearInterval(suspendInterval);
 

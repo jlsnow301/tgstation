@@ -1,20 +1,33 @@
-import { Callback } from 'common/dispatch';
-
 import {
   acknowledgeChunk,
   createQueue,
   oversizeResponse,
 } from './callbacks/chunking';
+import {
+  openExternalBrowser,
+  toggleDebugLayout,
+  toggleKitchenSink,
+} from './callbacks/debug';
 import { ping } from './callbacks/ping';
-import { suspendFinish, suspendStart } from './callbacks/suspend';
-import { handleUpdate } from './callbacks/update';
+import { suspend, suspendStart } from './callbacks/suspense';
+import { update } from './callbacks/update';
 
-export const listeners = new Map<string, Callback<unknown>>([
-  ['acknowledgeChunk', acknowledgeChunk],
-  ['createQueue', createQueue],
-  ['oversizeResponse', oversizeResponse],
-  ['ping', ping],
-  ['suspend', suspendFinish],
-  ['suspendStart', suspendStart],
-  ['update', handleUpdate],
-]);
+/**
+ * A string/callback map.
+ * Ideally, these link to a function named after the event type.
+ */
+export const listeners = {
+  // Standard window events
+  ping,
+  suspend,
+  suspendStart,
+  update,
+  // Chunking
+  acknowledgeChunk,
+  createQueue,
+  oversizeResponse,
+  // Debug
+  openExternalBrowser,
+  toggleDebugLayout,
+  toggleKitchenSink,
+} as const;

@@ -26,24 +26,21 @@ import './styles/themes/syndicate.scss';
 import './styles/themes/wizard.scss';
 import './styles/themes/admin.scss';
 
-import { Dispatch } from 'common/dispatch';
+import { EventBus } from 'common/eventbus';
 import { perf } from 'common/perf';
 import { setupGlobalEvents } from 'tgui-core/events';
 import { setupHotKeys } from 'tgui-core/hotkeys';
 import { setupHotReloading } from 'tgui-dev-server/link/client.mjs';
 
 import { App } from './App';
-import { setGlobalStore } from './backend';
 import { captureExternalLinks } from './links';
 import { listeners } from './newBackend/listeners';
 import { render } from './renderer';
-import { configureStore } from './store';
 
 perf.mark('inception', window.performance?.timeOrigin);
 perf.mark('init');
 
-const store = configureStore();
-export let newStore: Dispatch;
+export const bus = new EventBus(listeners);
 
 function setupApp() {
   // Delay setup
@@ -52,22 +49,11 @@ function setupApp() {
     return;
   }
 
-  newStore = new Dispatch();
-  newStore.subscribeAll(listeners);
-
-  setGlobalStore(store);
-
   setupGlobalEvents();
   setupHotKeys();
   captureExternalLinks();
 
-  store.subscribe(() => render(<App />));
-
-  // Dispatch incoming messages as store actions
-  Byond.subscribe((type, payload) => {
-    store.dispatch({ type, payload });
-    newStore.dispatch({ type, payload });
-  });
+  Byond.subscribe((type, payload) => bus.dispatch({ type, payload } as any));
 
   // Enable hot module reloading
   if (import.meta.webpackHot) {

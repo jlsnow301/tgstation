@@ -4,7 +4,6 @@
  * @license MIT
  */
 
-import { useDebug } from './debug';
 import { LoadingScreen } from './interfaces/common/LoadingScreen';
 import { Window } from './layouts';
 import { useNewBackend } from './newBackend';
@@ -53,13 +52,12 @@ function RefreshingWindow() {
 
 // Get the component for the current route
 export function getRoutedComponent() {
-  const { suspended, config } = useNewBackend();
-  const { kitchenSink = false } = useDebug();
+  const { suspended, config, kitchenSink } = useNewBackend();
 
   if (suspended) {
     return SuspendedWindow;
   }
-  if (config?.refreshing) {
+  if (config.refreshing) {
     return RefreshingWindow;
   }
 
