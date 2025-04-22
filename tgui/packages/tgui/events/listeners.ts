@@ -15,12 +15,12 @@ import { update } from './callbacks/update';
 
 /**
  * A string/callback map.
- * Ideally, these link to a function named after the event type.
+ * Ideally, these reference a function named after the respective event type.
  */
 export const listeners = {
   // Assets
-  'asset/stylesheet': loadStyleSheet,
   'asset/mappings': loadMappings,
+  'asset/stylesheet': loadStyleSheet,
   // Standard window events
   ping,
   suspend,

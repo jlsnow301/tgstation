@@ -1,10 +1,9 @@
-import { throttle } from 'tgui-core/timer';
-
 import { focusMap } from '../../focus';
 import { logger } from '../../logging';
 import { suspendRenderer } from '../../renderer';
 import { useChunkingStore } from '../stores/chunking';
 import { useConfigStore } from '../stores/config';
+import { useDebugStore } from '../stores/debug';
 import { useGameStore } from '../stores/game';
 import { useSharedStore } from '../stores/shared';
 import { useWindowStore } from '../stores/suspense';
@@ -13,13 +12,13 @@ let suspendInterval: NodeJS.Timeout | null = null;
 
 const TWO_SECONDS = 2000;
 
-const suspendMsg = throttle(() => {
+function suspendMsg() {
   Byond.sendMessage('suspend');
-}, TWO_SECONDS);
+}
 
 /** Signals Byond to dismiss the window */
 export function suspendStart() {
-  if (suspendInterval) return;
+  if (suspendInterval) clearInterval(suspendInterval);
 
   logger.log(`suspending (${Byond.windowId})`);
   suspendMsg();
@@ -31,6 +30,7 @@ export function suspend() {
   suspendRenderer();
 
   useConfigStore.getState().reset();
+  useDebugStore.getState().reset();
   useGameStore.getState().reset();
   useSharedStore.getState().reset();
   useChunkingStore.getState().reset();

@@ -7,8 +7,8 @@
  * it's able to provide type safety for the event types and their payloads.
  *
  * The philosophy: This interacts directly with state managers in vanilla JS,
- * offering a way to handle browser events. The state manager handles storing
- * the data and UI reactivity.
+ * offering a way to handle browser events. UIs then subscribe to these states
+ * and update accordingly.
  *
  * @usage
  * ```ts
@@ -45,7 +45,6 @@ export class EventBus<
     [TType in keyof TListeners]: TListeners[TType];
   }> = {};
 
-  /** See documentation for {@link EventBus} */
   constructor(initialListeners: TListeners) {
     this.listeners = initialListeners;
   }
