@@ -15,7 +15,6 @@ import { perf } from 'common/perf';
 import { createAction } from 'common/redux';
 import { BooleanLike } from 'tgui-core/react';
 
-import { bus } from '.';
 import { setupDrag } from './drag';
 import { focusMap } from './focus';
 import { createLogger } from './logging';
@@ -374,7 +373,7 @@ export const sendAct = (action: string, payload: object = {}) => {
   if (urlSize > 2048) {
     let chunks: string[] = stringifiedPayload.split(chunkSplitter);
     const id = `${Date.now()}`;
-    bus.dispatch({ type: 'createQueue', payload: { id, chunks } });
+    globalStore?.dispatch(backendCreatePayloadQueue({ id, chunks }));
     Byond.sendMessage('oversizedPayloadRequest', {
       type: 'act/' + action,
       id,

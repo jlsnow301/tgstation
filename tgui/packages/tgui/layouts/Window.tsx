@@ -24,8 +24,8 @@ import {
   resizeStartHandler,
   setWindowKey,
 } from '../drag';
+import { useBackend } from '../events';
 import { createLogger } from '../logging';
-import { useNewBackend } from '../newBackend';
 import { Layout } from './Layout';
 import { TitleBar } from './TitleBar';
 
@@ -53,8 +53,7 @@ export const Window = (props: Props) => {
     height,
   } = props;
 
-  const { config, suspended, debugLayout } = useNewBackend();
-  logger.log('update');
+  const { config, suspended, debugLayout } = useBackend();
 
   const [isReadyToRender, setIsReadyToRender] = useState(false);
 

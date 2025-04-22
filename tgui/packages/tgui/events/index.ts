@@ -6,7 +6,7 @@ import { useGameStore } from './stores/game';
 import { useSharedStore } from './stores/shared';
 import { useWindowStore } from './stores/suspense';
 
-export function useNewBackend<TData extends Record<string, unknown>>() {
+export function useBackend<TData extends Record<string, unknown>>() {
   const config = useConfigStore((state) => state.config);
   const data = useGameStore((state) => state.data);
 

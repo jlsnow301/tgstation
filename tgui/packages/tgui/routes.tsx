@@ -4,9 +4,9 @@
  * @license MIT
  */
 
+import { useBackend } from './events';
 import { LoadingScreen } from './interfaces/common/LoadingScreen';
 import { Window } from './layouts';
-import { useNewBackend } from './newBackend';
 
 const requireInterface = require.context('./interfaces');
 
@@ -52,7 +52,7 @@ function RefreshingWindow() {
 
 // Get the component for the current route
 export function getRoutedComponent() {
-  const { suspended, config, kitchenSink } = useNewBackend();
+  const { suspended, config, kitchenSink } = useBackend();
 
   if (suspended) {
     return SuspendedWindow;

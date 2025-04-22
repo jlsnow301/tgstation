@@ -1,9 +1,8 @@
-import { globalStore } from './backend';
 import { IconProvider } from './Icons';
+import { getRoutedComponent } from './routes';
 
 export function App() {
-  const { getRoutedComponent } = require('./routes');
-  const Component = getRoutedComponent(globalStore);
+  const Component = getRoutedComponent();
 
   return (
     <>

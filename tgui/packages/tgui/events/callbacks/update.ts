@@ -40,8 +40,7 @@ function resume(payload: UpdatePayload) {
   setTimeout(() => {
     perf.mark('resume/start');
     // Doublecheck if we are not re-suspended.
-    const suspended = useWindowStore.getState().suspended;
-    if (suspended) {
+    if (useWindowStore.getState().suspended) {
       return;
     }
 
@@ -108,4 +107,6 @@ function updateData(payload: UpdatePayload) {
     }
     useSharedStore.getState().updateShared(newShared);
   }
+
+  useWindowStore.getState().updateSuspended(0);
 }

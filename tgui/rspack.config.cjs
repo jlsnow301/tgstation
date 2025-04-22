@@ -29,16 +29,16 @@ module.exports = (env = {}, argv) => {
 
   /** @type {import('@rspack/core').Configuration} */
   const config = defineConfig({
-    cache: true,
-    experiments: {
-      cache: {
-        type: 'persistent',
-        storage: {
-          type: 'filesystem',
-          directory: path.resolve(__dirname, '.yarn/rspack'),
-        },
-      },
-    },
+    // cache: true,
+    // experiments: {
+    //   cache: {
+    //     type: 'persistent',
+    //     storage: {
+    //       type: 'filesystem',
+    //       directory: path.resolve(__dirname, '.yarn/rspack'),
+    //     },
+    //   },
+    // },
     mode: mode === 'production' ? 'production' : 'development',
     context: path.resolve(__dirname),
     target: ['web', 'browserslist:edge >= 123'],

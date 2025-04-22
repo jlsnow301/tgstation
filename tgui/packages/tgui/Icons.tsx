@@ -8,7 +8,7 @@ function loadIconMap() {
   fetchRetry(resolveAsset('icon_ref_map.json'))
     .then((res) => res.json())
     .then((data) => (Byond.iconRefMap = data))
-    .catch((error) => logger.log(error));
+    .catch((error) => logger.log('here'));
 }
 
 function IconMapLoader() {

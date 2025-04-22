@@ -33,8 +33,8 @@ import { setupHotKeys } from 'tgui-core/hotkeys';
 import { setupHotReloading } from 'tgui-dev-server/link/client.mjs';
 
 import { App } from './App';
+import { listeners } from './events/listeners';
 import { captureExternalLinks } from './links';
-import { listeners } from './newBackend/listeners';
 import { render } from './renderer';
 
 perf.mark('inception', window.performance?.timeOrigin);
@@ -59,7 +59,7 @@ function setupApp() {
   if (import.meta.webpackHot) {
     setupHotReloading();
     import.meta.webpackHot.accept(
-      ['./debug', './layouts', './routes', './App', './newBackend'],
+      ['./debug', './layouts', './routes', './App', './events'],
       () => {
         render(<App />);
       },

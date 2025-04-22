@@ -7,8 +7,7 @@
 import { Box } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
-import { useBackend } from '../backend';
-import { useDebug } from '../debug';
+import { useBackend } from '../events';
 import { Layout } from './Layout';
 
 type BoxProps = React.ComponentProps<typeof Box>;
@@ -20,8 +19,7 @@ type Props = Partial<{
 
 export function Pane(props: Props) {
   const { theme, children, className, ...rest } = props;
-  const { suspended } = useBackend();
-  const { debugLayout = false } = useDebug();
+  const { suspended, debugLayout } = useBackend();
 
   return (
     <Layout className={classes(['Window', className])} theme={theme} {...rest}>

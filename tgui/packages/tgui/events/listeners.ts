@@ -1,3 +1,4 @@
+import { loadMappings, loadStyleSheet } from './callbacks/assets';
 import {
   acknowledgeChunk,
   createQueue,
@@ -17,6 +18,9 @@ import { update } from './callbacks/update';
  * Ideally, these link to a function named after the event type.
  */
 export const listeners = {
+  // Assets
+  'asset/stylesheet': loadStyleSheet,
+  'asset/mappings': loadMappings,
   // Standard window events
   ping,
   suspend,
