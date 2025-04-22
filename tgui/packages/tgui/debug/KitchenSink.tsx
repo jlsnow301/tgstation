@@ -7,7 +7,7 @@
 import { useState } from 'react';
 import { Section, Stack, Tabs } from 'tgui-core/components';
 
-import { Pane, Window } from '../layouts';
+import { Window } from '../layouts';
 
 const r = require.context('../stories', false, /\.stories\.tsx$/);
 
@@ -23,18 +23,15 @@ function getStories() {
   return r.keys().map((path) => r(path));
 }
 
-export function KitchenSink(props) {
-  const { panel } = props;
-
+export function KitchenSink() {
   const [pageIndex, setPageIndex] = useState(0);
 
   const stories = getStories();
   const story = stories[pageIndex];
-  const Layout = panel ? Pane : Window;
 
   return (
-    <Layout title="Kitchen Sink" width={600} height={500}>
-      <Layout.Content>
+    <Window title="Kitchen Sink" width={600} height={500}>
+      <Window.Content>
         <Stack fill>
           <Stack.Item>
             <Section fill fitted>
@@ -54,7 +51,7 @@ export function KitchenSink(props) {
           </Stack.Item>
           <Stack.Item grow>{story.meta.render()}</Stack.Item>
         </Stack>
-      </Layout.Content>
-    </Layout>
+      </Window.Content>
+    </Window>
   );
 }

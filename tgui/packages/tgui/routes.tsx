@@ -52,7 +52,7 @@ function RefreshingWindow() {
 }
 
 // Get the component for the current route
-export function getRoutedComponent() {
+export function RoutedComponent(): () => React.JSX.Element {
   const { suspended, config, debug } = useBackend();
 
   if (suspended) {

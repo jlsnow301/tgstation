@@ -13,23 +13,34 @@ import { useWindowStore } from './events/stores/suspense';
  */
 export function useBackend<TData extends Record<string, unknown>>() {
   const config = useConfigStore((state) => state.config);
-  const data = useGameStore((state) => state.data);
+
+  const fastData = useGameStore((state) => state.data);
+  const staticData = useGameStore((state) => state.static_data);
+  const data = {
+    ...fastData,
+    ...staticData,
+  } as TData;
 
   const debugLayout = useDebugStore((state) => state.debugLayout);
   const kitchenSink = useDebugStore((state) => state.kitchenSink);
-  const debug = { debugLayout, kitchenSink } as DebugState;
+  const debug: DebugState = {
+    debugLayout,
+    kitchenSink,
+  };
 
   const outgoingPayloadQueues = useChunkingStore(
     (state) => state.outgoingPayloadQueues,
   );
+
   const shared = useSharedStore((state) => state.shared);
+
   const suspending = useWindowStore((state) => state.suspending);
   const suspended = useWindowStore((state) => state.suspended);
 
   return {
     act: sendAct,
     config,
-    data: data as TData,
+    data,
     debug,
     shared,
     outgoingPayloadQueues,
@@ -43,11 +54,16 @@ export function useBackend<TData extends Record<string, unknown>>() {
  * It doesn't respond to state updates!
  */
 export function getNonreactiveBackend<TData extends Record<string, unknown>>() {
-  const data = useGameStore.getState().data;
+  const fastData = useGameStore.getState().data;
+  const staticData = useGameStore.getState().static_data;
+  const data = {
+    ...fastData,
+    ...staticData,
+  } as TData;
 
   return {
     act: sendAct,
-    data: data as TData,
+    data,
   };
 }
 

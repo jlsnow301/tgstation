@@ -77,11 +77,16 @@ function updateData(payload: UpdatePayload): void {
     configState.updateConfig(payload.config);
   }
 
-  const updateData = { ...payload.data, ...payload.static_data };
+  // If the static data has changed, we do a full update
   const gameState = useGameStore.getState();
-  // If the data has changed, we update it in the game store.
-  if (!deepEqual(updateData, gameState.data)) {
-    gameState.updateData(updateData);
+  if (payload.static_data) {
+    gameState.fullUpdate({
+      data: payload.data,
+      static_data: payload.static_data,
+    });
+  } else if (!deepEqual(payload.data, gameState.data)) {
+    // else, conditionally update ui data
+    gameState.updateData(payload.data);
   }
 
   if (payload.shared) {

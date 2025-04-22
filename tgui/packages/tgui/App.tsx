@@ -1,8 +1,8 @@
 import { IconProvider } from './Icons';
-import { getRoutedComponent } from './routes';
+import { RoutedComponent } from './routes';
 
 export function App() {
-  const Component = getRoutedComponent();
+  const Component = RoutedComponent();
 
   return (
     <>
