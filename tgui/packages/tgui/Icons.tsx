@@ -2,13 +2,12 @@ import { Suspense, useEffect } from 'react';
 import { fetchRetry } from 'tgui-core/http';
 
 import { resolveAsset } from './assets';
-import { logger } from './logging';
 
 function loadIconMap() {
   fetchRetry(resolveAsset('icon_ref_map.json'))
     .then((res) => res.json())
     .then((data) => (Byond.iconRefMap = data))
-    .catch((error) => logger.log('here'));
+    .catch(() => {});
 }
 
 function IconMapLoader() {

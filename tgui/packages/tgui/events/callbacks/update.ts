@@ -30,7 +30,7 @@ export function update(payload: UpdatePayload): void {
 /** Resumes the tgui window if suspended */
 function resume(payload: UpdatePayload): void {
   // Show the payload
-  logger.log('backend/update', payload);
+  logger.log('resume', payload);
   // Signal renderer that we have resumed
   resumeRenderer();
   // Setup drag

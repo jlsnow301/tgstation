@@ -40,7 +40,6 @@ export function TitleBar(props: TitleBarProps) {
     onClose,
     children,
   } = props;
-  const { dispatch } = bus;
 
   const finalTitle =
     (typeof title === 'string' &&
@@ -70,7 +69,7 @@ export function TitleBar(props: TitleBarProps) {
           className="TitleBar__buttons TitleBar__KitchenSink"
           icon="bug"
           onClick={() =>
-            dispatch({
+            bus.dispatch({
               type: 'toggleKitchenSink',
             })
           }

@@ -5,7 +5,7 @@ import { logger } from '../logging';
  * Sends an action to `ui_act` on `src_object` that this tgui window
  * is associated with.
  */
-export function sendAct(action: string, payload: Record<string, unknown>) {
+export function sendAct(action: string, payload?: Record<string, unknown>) {
   // Validate that payload is an object
   const isObject =
     typeof payload === 'object' && payload !== null && !Array.isArray(payload);

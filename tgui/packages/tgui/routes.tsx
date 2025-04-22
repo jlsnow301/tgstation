@@ -4,7 +4,8 @@
  * @license MIT
  */
 
-import { useBackend } from './events';
+import { useBackend } from './backend';
+import { KitchenSink } from './debug/KitchenSink';
 import { LoadingScreen } from './interfaces/common/LoadingScreen';
 import { Window } from './layouts';
 
@@ -64,7 +65,7 @@ export function getRoutedComponent() {
   if (process.env.NODE_ENV !== 'production') {
     // Show a kitchen sink
     if (kitchenSink) {
-      return require('./debug').KitchenSink;
+      return <KitchenSink />;
     }
   }
 
