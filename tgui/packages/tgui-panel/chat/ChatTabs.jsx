@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { useDispatch, useSelector } from 'tgui/backend';
+import { useDispatch, useSelector } from 'tgui/oldBackend';
 import { Box, Button, Flex, Tabs } from 'tgui-core/components';
 
 import { openChatSettings } from '../settings/actions';

@@ -10,8 +10,8 @@ import './styles/themes/light.scss';
 
 import { perf } from 'common/perf';
 import { combineReducers } from 'common/redux';
-import { setGlobalStore } from 'tgui/backend';
 import { captureExternalLinks } from 'tgui/links';
+import { setGlobalStore } from 'tgui/oldBackend';
 import { render } from 'tgui/renderer';
 import { configureStore } from 'tgui/store';
 import { setupGlobalEvents } from 'tgui-core/events';

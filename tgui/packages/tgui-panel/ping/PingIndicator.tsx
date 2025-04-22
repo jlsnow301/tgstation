@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { useSelector } from 'tgui/backend';
+import { useSelector } from 'tgui/oldBackend';
 import { Color } from 'tgui-core/color';
 import { Box } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';

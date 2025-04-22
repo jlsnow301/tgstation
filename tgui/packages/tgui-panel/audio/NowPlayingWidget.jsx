@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { useDispatch, useSelector } from 'tgui/backend';
+import { useDispatch, useSelector } from 'tgui/oldBackend';
 import { Button, Collapsible, Flex, Knob, Section } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
 

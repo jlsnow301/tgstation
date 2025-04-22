@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { useDispatch, useSelector } from 'tgui/backend';
+import { useDispatch, useSelector } from 'tgui/oldBackend';
 import { Section, Stack, Tabs } from 'tgui-core/components';
 
 import { ChatPageSettings } from '../chat';

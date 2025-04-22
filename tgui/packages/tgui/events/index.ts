@@ -1,4 +1,4 @@
-import { sendAct } from '../backend';
+import { sendAct } from './act';
 import { useChunkingStore } from './stores/chunking';
 import { useConfigStore } from './stores/config';
 import { useDebugStore } from './stores/debug';

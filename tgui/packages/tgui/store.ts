@@ -15,9 +15,10 @@ import {
 import { flow } from 'tgui-core/fp';
 
 import { assetMiddleware } from './assets';
-import { backendMiddleware, backendReducer } from './backend';
-import { debugMiddleware, debugReducer, relayMiddleware } from './debug';
+import { debugMiddleware, relayMiddleware } from './debug/middleware';
+import { debugReducer } from './debug/reducer';
 import { createLogger } from './logging';
+import { backendMiddleware, backendReducer } from './oldBackend';
 
 type ConfigureStoreOptions = {
   sideEffects?: boolean;
