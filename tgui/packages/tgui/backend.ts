@@ -2,7 +2,7 @@ import { bus } from '.';
 import { sendAct } from './events/act';
 import { useChunkingStore } from './events/stores/chunking';
 import { useConfigStore } from './events/stores/config';
-import { useDebugStore } from './events/stores/debug';
+import { DebugState, useDebugStore } from './events/stores/debug';
 import { useGameStore } from './events/stores/game';
 import { useSharedStore } from './events/stores/shared';
 import { useWindowStore } from './events/stores/suspense';
@@ -13,6 +13,7 @@ export function useBackend<TData extends Record<string, unknown>>() {
 
   const debugLayout = useDebugStore((state) => state.debugLayout);
   const kitchenSink = useDebugStore((state) => state.kitchenSink);
+  const debug = { debugLayout, kitchenSink } as DebugState;
 
   const outgoingPayloadQueues = useChunkingStore(
     (state) => state.outgoingPayloadQueues,
@@ -25,8 +26,7 @@ export function useBackend<TData extends Record<string, unknown>>() {
     act: sendAct,
     config,
     data: data as TData,
-    debugLayout,
-    kitchenSink,
+    debug,
     shared,
     outgoingPayloadQueues,
     suspending,

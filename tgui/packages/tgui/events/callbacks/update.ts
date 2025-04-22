@@ -4,7 +4,7 @@ import { deepEqual } from 'fast-equals';
 import { setupDrag } from '../../drag';
 import { logger } from '../../logging';
 import { resumeRenderer } from '../../renderer';
-import { type QueueState, useChunkingStore } from '../stores/chunking';
+import { type QueueState } from '../stores/chunking';
 import { type ConfigState, useConfigStore } from '../stores/config';
 import { type GameState, useGameStore } from '../stores/game';
 import { type SharedState, useSharedStore } from '../stores/shared';
@@ -84,16 +84,6 @@ function updateData(payload: UpdatePayload): void {
     gameState.updateData(updateData);
   }
 
-  const chunkingState = useChunkingStore.getState();
-  if (
-    !deepEqual(
-      payload.outgoingPayloadQueues,
-      chunkingState.outgoingPayloadQueues,
-    )
-  ) {
-    chunkingState.create(payload.outgoingPayloadQueues);
-  }
-
   if (payload.shared) {
     const newShared = {} as Record<string, unknown>;
 
@@ -108,5 +98,8 @@ function updateData(payload: UpdatePayload): void {
     useSharedStore.getState().updateShared(newShared);
   }
 
-  useWindowStore.getState().updateSuspended(0);
+  const windowState = useWindowStore.getState();
+  if (windowState.suspended) {
+    useWindowStore.getState().updateSuspended(0);
+  }
 }

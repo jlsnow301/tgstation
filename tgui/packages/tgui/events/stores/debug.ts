@@ -27,7 +27,7 @@ export const useDebugStore = create<DebugState & Action>()((set) => ({
 
   reset: () =>
     set({
-      kitchenSink: false,
       debugLayout: false,
+      kitchenSink: false,
     }),
 }));

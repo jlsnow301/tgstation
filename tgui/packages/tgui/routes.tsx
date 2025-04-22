@@ -53,7 +53,7 @@ function RefreshingWindow() {
 
 // Get the component for the current route
 export function getRoutedComponent() {
-  const { suspended, config, kitchenSink } = useBackend();
+  const { suspended, config, debug } = useBackend();
 
   if (suspended) {
     return SuspendedWindow;
@@ -64,8 +64,8 @@ export function getRoutedComponent() {
 
   if (process.env.NODE_ENV !== 'production') {
     // Show a kitchen sink
-    if (kitchenSink) {
-      return <KitchenSink />;
+    if (debug.kitchenSink) {
+      return KitchenSink;
     }
   }
 

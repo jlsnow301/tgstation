@@ -19,11 +19,11 @@ type Props = Partial<{
 
 export function Pane(props: Props) {
   const { theme, children, className, ...rest } = props;
-  const { suspended, debugLayout } = useBackend();
+  const { suspended, debug } = useBackend();
 
   return (
     <Layout className={classes(['Window', className])} theme={theme} {...rest}>
-      <Box fillPositionedParent className={debugLayout && 'debug-layout'}>
+      <Box fillPositionedParent className={debug.debugLayout && 'debug-layout'}>
         {!suspended && children}
       </Box>
     </Layout>

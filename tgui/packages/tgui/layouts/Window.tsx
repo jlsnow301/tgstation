@@ -53,7 +53,7 @@ export const Window = (props: Props) => {
     height,
   } = props;
 
-  const { config, suspended, debugLayout } = useBackend();
+  const { config, suspended, debug } = useBackend();
 
   const [isReadyToRender, setIsReadyToRender] = useState(false);
 
@@ -125,7 +125,12 @@ export const Window = (props: Props) => {
       >
         {buttons}
       </TitleBar>
-      <div className={classes(['Window__rest', debugLayout && 'debug-layout'])}>
+      <div
+        className={classes([
+          'Window__rest',
+          debug.debugLayout && 'debug-layout',
+        ])}
+      >
         {!suspended && children}
         {showDimmer && <div className="Window__dimmer" />}
       </div>
