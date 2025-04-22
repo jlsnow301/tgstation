@@ -12,12 +12,12 @@ let suspendInterval: NodeJS.Timeout | null = null;
 
 const TWO_SECONDS = 2000;
 
-function suspendMsg() {
+function suspendMsg(): void {
   Byond.sendMessage('suspend');
 }
 
 /** Signals Byond to dismiss the window */
-export function suspendStart() {
+export function suspendStart(): void {
   if (suspendInterval) clearInterval(suspendInterval);
 
   logger.log(`suspending (${Byond.windowId})`);
@@ -26,7 +26,7 @@ export function suspendStart() {
 }
 
 /** Resets all state and refocuses byond window */
-export function suspend() {
+export function suspend(): void {
   suspendRenderer();
 
   useConfigStore.getState().reset();

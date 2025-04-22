@@ -1,3 +1,3 @@
-export function ping() {
+export function ping(): void {
   Byond.sendMessage('ping/reply');
 }

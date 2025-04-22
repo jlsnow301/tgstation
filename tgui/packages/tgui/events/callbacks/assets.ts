@@ -1,14 +1,15 @@
 const EXCLUDED_PATTERNS = [/v4shim/i];
 const loadedMappings: Record<string, string> = {};
 
-export const resolveAsset = (name: string): string =>
-  loadedMappings[name] || name;
+export function resolveAsset(name: string): string {
+  return loadedMappings[name] || name;
+}
 
-export function loadStyleSheet(payload: string) {
+export function loadStyleSheet(payload: string): void {
   Byond.loadCss(payload);
 }
 
-export function loadMappings(payload: Record<string, string>) {
+export function loadMappings(payload: Record<string, string>): void {
   for (const name in payload) {
     // Skip anything that matches excluded patterns
     if (EXCLUDED_PATTERNS.some((regex) => regex.test(name))) {

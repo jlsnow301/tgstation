@@ -5,7 +5,7 @@ type CreateQueuePayload = {
   chunks: string[];
 };
 
-export function createQueue(payload: CreateQueuePayload) {
+export function createQueue(payload: CreateQueuePayload): void {
   const { id, chunks } = payload;
 
   useChunkingStore.getState().create({
@@ -18,7 +18,7 @@ type OversizePayload = {
   id: string;
 };
 
-export function oversizeResponse(payload: OversizePayload) {
+export function oversizeResponse(payload: OversizePayload): void {
   const { allow, id } = payload;
 
   if (allow) {
@@ -28,14 +28,14 @@ export function oversizeResponse(payload: OversizePayload) {
   }
 }
 
-export function acknowledgeChunk(payload: OversizePayload) {
+export function acknowledgeChunk(payload: OversizePayload): void {
   const { id } = payload;
 
   useChunkingStore.getState().dequeue(id);
   nextChunk(id);
 }
 
-function nextChunk(id: string) {
+function nextChunk(id: string): void {
   const chunk = useChunkingStore.getState().outgoingPayloadQueues[id][0];
 
   Byond.sendMessage('payloadChunk', {

@@ -19,7 +19,7 @@ interface UpdatePayload
   static_data: Record<string, unknown>;
 }
 
-export function update(payload: UpdatePayload) {
+export function update(payload: UpdatePayload): void {
   setFancy(payload);
   updateData(payload);
   if (useWindowStore.getState().suspended) {
@@ -28,7 +28,7 @@ export function update(payload: UpdatePayload) {
 }
 
 /** Resumes the tgui window if suspended */
-function resume(payload: UpdatePayload) {
+function resume(payload: UpdatePayload): void {
   // Show the payload
   logger.log('backend/update', payload);
   // Signal renderer that we have resumed
@@ -57,7 +57,7 @@ function resume(payload: UpdatePayload) {
 }
 
 /** React to changes in fancy mode */
-function setFancy(payload: UpdatePayload) {
+function setFancy(payload: UpdatePayload): void {
   const fancy = payload.config?.window?.fancy;
   const fancyState = useConfigStore.getState().config.window?.fancy;
 
@@ -71,7 +71,7 @@ function setFancy(payload: UpdatePayload) {
 }
 
 /** Delegates update data to the appropriate store */
-function updateData(payload: UpdatePayload) {
+function updateData(payload: UpdatePayload): void {
   const configState = useConfigStore.getState();
   if (!deepEqual(payload.config, configState.config)) {
     configState.updateConfig(payload.config);

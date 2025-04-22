@@ -15,7 +15,9 @@ import { perf } from 'common/perf';
 import { createAction } from 'common/redux';
 import { BooleanLike } from 'tgui-core/react';
 
+import { bus } from '.';
 import { setupDrag } from './drag';
+import { useSharedStore } from './events/stores/shared';
 import { focusMap } from './focus';
 import { createLogger } from './logging';
 import { resumeRenderer, suspendRenderer } from './renderer';
@@ -457,25 +459,26 @@ type StateWithSetter<T> = [T, (nextState: T) => void];
  * @param initialState Initializes your global variable with this value.
  * @deprecated Use useState and useEffect when you can. Pass the state as a prop.
  */
-export const useLocalState = <T>(
+export const useLocalState = <TState>(
   key: string,
-  initialState: T,
-): StateWithSetter<T> => {
-  const state = globalStore?.getState()?.backend;
-  const sharedStates = state?.shared ?? {};
+  initialState: TState,
+): StateWithSetter<TState> => {
+  const sharedStates = useSharedStore((state) => state.shared);
   const sharedState = key in sharedStates ? sharedStates[key] : initialState;
+
   return [
     sharedState,
     (nextState) => {
-      globalStore.dispatch(
-        backendSetSharedState({
+      bus.dispatch({
+        type: 'setSharedState',
+        payload: {
           key,
           nextState:
             typeof nextState === 'function'
               ? nextState(sharedState)
               : nextState,
-        }),
-      );
+        },
+      });
     },
   ];
 };
@@ -494,13 +497,13 @@ export const useLocalState = <T>(
  * @param key Key which uniquely identifies this state in Redux store.
  * @param initialState Initializes your global variable with this value.
  */
-export const useSharedState = <T>(
+export const useSharedState = <TState>(
   key: string,
-  initialState: T,
-): StateWithSetter<T> => {
-  const state = globalStore?.getState()?.backend;
-  const sharedStates = state?.shared ?? {};
+  initialState: TState,
+): StateWithSetter<TState> => {
+  const sharedStates = useSharedStore((state) => state.shared);
   const sharedState = key in sharedStates ? sharedStates[key] : initialState;
+
   return [
     sharedState,
     (nextState) => {

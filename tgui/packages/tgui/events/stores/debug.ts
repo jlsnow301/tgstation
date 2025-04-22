@@ -1,28 +1,28 @@
 import { create } from 'zustand';
 
 export type DebugState = {
-  kitchenSink: boolean;
   debugLayout: boolean;
+  kitchenSink: boolean;
 };
 
 type Action = {
-  toggleKitchenSink: () => void;
   toggleDebugLayout: () => void;
+  toggleKitchenSink: () => void;
   reset: () => void;
 };
 
 export const useDebugStore = create<DebugState & Action>()((set) => ({
-  kitchenSink: false,
   debugLayout: false,
-
-  toggleKitchenSink: () =>
-    set((state) => ({
-      kitchenSink: !state.kitchenSink,
-    })),
+  kitchenSink: false,
 
   toggleDebugLayout: () =>
     set((state) => ({
       debugLayout: !state.debugLayout,
+    })),
+
+  toggleKitchenSink: () =>
+    set((state) => ({
+      kitchenSink: !state.kitchenSink,
     })),
 
   reset: () =>

@@ -10,6 +10,7 @@ import {
   toggleKitchenSink,
 } from './callbacks/debug';
 import { ping } from './callbacks/ping';
+import { setSharedState } from './callbacks/shared';
 import { suspend, suspendStart } from './callbacks/suspense';
 import { update } from './callbacks/update';
 
@@ -34,4 +35,6 @@ export const listeners = {
   openExternalBrowser,
   toggleDebugLayout,
   toggleKitchenSink,
+  // Shared States
+  setSharedState,
 } as const;
