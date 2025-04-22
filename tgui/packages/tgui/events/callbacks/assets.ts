@@ -1,9 +1,5 @@
 const EXCLUDED_PATTERNS = [/v4shim/i];
-const loadedMappings: Record<string, string> = {};
-
-export function resolveAsset(name: string): string {
-  return loadedMappings[name] || name;
-}
+export const loadedMappings: Record<string, string> = {};
 
 export function loadStyleSheet(payload: string): void {
   Byond.loadCss(payload);

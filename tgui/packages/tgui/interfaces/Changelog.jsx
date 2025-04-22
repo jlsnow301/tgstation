@@ -13,7 +13,8 @@ import {
 import { classes } from 'tgui-core/react';
 
 import { resolveAsset } from '../assets';
-import { useBackend } from '../backend';
+import { getNonreactiveBackend } from '../backend';
+import { sendAct as act } from '../events/act';
 import { Window } from '../layouts';
 
 const icons = {
@@ -68,7 +69,6 @@ export class Changelog extends Component {
   }
 
   getData = (date, attemptNumber = 1) => {
-    const { act } = useBackend();
     const self = this;
     const maxAttempts = 6;
 
@@ -100,7 +100,7 @@ export class Changelog extends Component {
   componentDidMount() {
     const {
       data: { dates = [] },
-    } = useBackend();
+    } = getNonreactiveBackend();
 
     if (dates) {
       dates.forEach((date) =>
@@ -115,7 +115,7 @@ export class Changelog extends Component {
     const { data, selectedDate, selectedIndex } = this.state;
     const {
       data: { dates },
-    } = useBackend();
+    } = getNonreactiveBackend();
     const { dateChoices } = this;
 
     const dateDropdown = dateChoices.length > 0 && (

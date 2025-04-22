@@ -7,6 +7,10 @@ import { useGameStore } from './events/stores/game';
 import { useSharedStore } from './events/stores/shared';
 import { useWindowStore } from './events/stores/suspense';
 
+/**
+ * Reactive backend state hook. Please use a type to define what the data is
+ * intended to be.
+ */
 export function useBackend<TData extends Record<string, unknown>>() {
   const config = useConfigStore((state) => state.config);
   const data = useGameStore((state) => state.data);
@@ -35,6 +39,19 @@ export function useBackend<TData extends Record<string, unknown>>() {
 }
 
 /**
+ * This is a holdover for UIs breaking the rule of hooks.
+ * It doesn't respond to state updates!
+ */
+export function getNonreactiveBackend<TData extends Record<string, unknown>>() {
+  const data = useGameStore.getState().data;
+
+  return {
+    act: sendAct,
+    data: data as TData,
+  };
+}
+
+/**
  * A tuple that contains the state and a setter function for it.
  */
 type StateWithSetter<T> = [T, (nextState: T) => void];
@@ -57,7 +74,7 @@ export const useLocalState = <TState>(
   key: string,
   initialState: TState,
 ): StateWithSetter<TState> => {
-  const sharedStates = useSharedStore((state) => state.shared);
+  const sharedStates = useSharedStore.getState().shared;
   const sharedState = key in sharedStates ? sharedStates[key] : initialState;
 
   return [
@@ -95,7 +112,7 @@ export const useSharedState = <TState>(
   key: string,
   initialState: TState,
 ): StateWithSetter<TState> => {
-  const sharedStates = useSharedStore((state) => state.shared);
+  const sharedStates = useSharedStore.getState().shared;
   const sharedState = key in sharedStates ? sharedStates[key] : initialState;
 
   return [

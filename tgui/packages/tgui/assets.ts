@@ -7,9 +7,9 @@
 import { Dispatch } from 'common/redux';
 
 import { Action, AnyAction, Middleware } from '../common/redux';
+import { loadedMappings } from './events/callbacks/assets';
 
 const EXCLUDED_PATTERNS = [/v4shim/i];
-const loadedMappings: Record<string, string> = {};
 
 export const resolveAsset = (name: string): string =>
   loadedMappings[name] || name;
