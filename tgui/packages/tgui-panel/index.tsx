@@ -17,7 +17,6 @@ import { configureStore } from 'tgui/store';
 import { setupGlobalEvents } from 'tgui-core/events';
 import { setupHotReloading } from 'tgui-dev-server/link/client.mjs';
 
-import { audioMiddleware, audioReducer } from './audio';
 import { chatMiddleware, chatReducer } from './chat';
 import { gameMiddleware, gameReducer } from './game';
 import { Panel } from './Panel';
@@ -31,7 +30,6 @@ perf.mark('init');
 
 const store = configureStore({
   reducer: combineReducers({
-    audio: audioReducer,
     chat: chatReducer,
     game: gameReducer,
     ping: pingReducer,
@@ -43,7 +41,7 @@ const store = configureStore({
       pingMiddleware,
       telemetryMiddleware,
       settingsMiddleware,
-      audioMiddleware,
+
       gameMiddleware,
     ],
   },
