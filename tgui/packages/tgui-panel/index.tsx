@@ -9,43 +9,20 @@ import './styles/main.scss';
 import './styles/themes/light.scss';
 
 import { perf } from 'common/perf';
-import { combineReducers } from 'common/redux';
-import { setGlobalStore } from 'tgui/backend';
 import { captureExternalLinks } from 'tgui/links';
 import { render } from 'tgui/renderer';
-import { configureStore } from 'tgui/store';
+import { EventBus } from 'tgui-core/eventbus';
 import { setupGlobalEvents } from 'tgui-core/events';
 import { setupHotReloading } from 'tgui-dev-server/link/client.mjs';
 
-import { chatMiddleware, chatReducer } from './chat';
-import { gameMiddleware, gameReducer } from './game';
+import { listeners } from './events/listeners';
 import { Panel } from './Panel';
 import { setupPanelFocusHacks } from './panelFocus';
-import { pingMiddleware, pingReducer } from './ping';
-import { settingsMiddleware, settingsReducer } from './settings';
-import { telemetryMiddleware } from './telemetry';
 
 perf.mark('inception', window.performance?.timeOrigin);
 perf.mark('init');
 
-const store = configureStore({
-  reducer: combineReducers({
-    chat: chatReducer,
-    game: gameReducer,
-    ping: pingReducer,
-    settings: settingsReducer,
-  }),
-  middleware: {
-    pre: [
-      chatMiddleware,
-      pingMiddleware,
-      telemetryMiddleware,
-      settingsMiddleware,
-
-      gameMiddleware,
-    ],
-  },
-});
+const bus = new EventBus(listeners);
 
 function setupApp() {
   // Delay setup
@@ -54,8 +31,6 @@ function setupApp() {
     return;
   }
 
-  setGlobalStore(store);
-
   setupGlobalEvents({
     ignoreWindowFocus: true,
   });
@@ -63,11 +38,8 @@ function setupApp() {
   setupPanelFocusHacks();
   captureExternalLinks();
 
-  // Re-render UI on store updates
-  store.subscribe(() => render(<Panel />));
-
   // Dispatch incoming messages as store actions
-  Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
+  Byond.subscribe((type, payload) => bus.dispatch({ type, payload } as any));
 
   // Unhide the panel
   Byond.winset('output_selector.legacy_output_selector', {
@@ -96,9 +68,7 @@ function setupApp() {
         './settings',
         './telemetry',
       ],
-      () => {
-        render(<Panel />);
-      },
+      () => render(<Panel />),
     );
   }
 }

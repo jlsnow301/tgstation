@@ -6,6 +6,8 @@
 
 import { storage } from 'common/storage';
 
+import { useChatStore } from '../events/stores/chat';
+import { useSettingsStore } from '../events/stores/settings';
 import { setClientTheme } from '../themes';
 import {
   addHighlightSetting,
@@ -18,7 +20,6 @@ import {
 } from './actions';
 import { FONTS_DISABLED } from './constants';
 import { setDisplayScaling } from './scaling';
-import { selectSettings } from './selectors';
 import { exportChatSettings } from './settingsImExport';
 
 let statFontTimer: NodeJS.Timeout;
@@ -51,8 +52,8 @@ function updateGlobalOverrideRule() {
 }
 
 function setGlobalFontSize(
-  fontSize: string,
-  statFontSize: string,
+  fontSize: number,
+  statFontSize: number,
   statLinked: boolean,
 ) {
   overrideFontSize = `${fontSize}px`;
@@ -97,9 +98,10 @@ export function settingsMiddleware(store) {
       });
     }
     if (type === exportSettings.type) {
-      const state = store.getState();
-      const settings = selectSettings(state);
-      exportChatSettings(settings, state.chat.pageById);
+      exportChatSettings(
+        useSettingsStore.getState(),
+        useChatStore.getState().pageById,
+      );
       return;
     }
     if (
@@ -122,7 +124,7 @@ export function settingsMiddleware(store) {
     // Pass action to get an updated state
     next(action);
 
-    const settings = selectSettings(store.getState());
+    const settings = useSettingsStore.getState();
 
     if (importSettings.type) {
       setClientTheme(settings.theme);

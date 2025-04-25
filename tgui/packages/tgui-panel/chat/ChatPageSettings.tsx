@@ -4,7 +4,6 @@
  * @license MIT
  */
 
-import { useDispatch, useSelector } from 'tgui/backend';
 import {
   Button,
   Collapsible,
@@ -15,18 +14,16 @@ import {
 } from 'tgui-core/components';
 
 import {
-  moveChatPageLeft,
   moveChatPageRight,
   removeChatPage,
   toggleAcceptedType,
   updateChatPage,
 } from './actions';
 import { MESSAGE_TYPES } from './constants';
-import { selectCurrentChatPage } from './selectors';
+import { useChat } from './hooks';
 
 export function ChatPageSettings(props) {
-  const page = useSelector(selectCurrentChatPage);
-  const dispatch = useDispatch();
+  const { page, moveChatPageLeft } = useChat();
 
   return (
     <Section>
@@ -38,11 +35,9 @@ export function ChatPageSettings(props) {
               icon="angles-left"
               tooltip="Reorder tab to the left"
               onClick={() =>
-                dispatch(
-                  moveChatPageLeft({
-                    pageId: page.id,
-                  }),
-                )
+                moveChatPageLeft({
+                  pageId: page.id,
+                })
               }
             />
           </Stack.Item>
@@ -53,12 +48,10 @@ export function ChatPageSettings(props) {
             expensive
             value={page.name}
             onChange={(value) =>
-              dispatch(
-                updateChatPage({
-                  pageId: page.id,
-                  name: value,
-                }),
-              )
+              updateChatPage({
+                pageId: page.id,
+                name: value,
+              })
             }
           />
         </Stack.Item>
@@ -69,11 +62,9 @@ export function ChatPageSettings(props) {
               icon="angles-right"
               tooltip="Reorder tab to the right"
               onClick={() =>
-                dispatch(
-                  moveChatPageRight({
-                    pageId: page.id,
-                  }),
-                )
+                moveChatPageRight({
+                  pageId: page.id,
+                })
               }
             />
           </Stack.Item>
@@ -84,12 +75,10 @@ export function ChatPageSettings(props) {
             icon={page.hideUnreadCount ? 'bell-slash' : 'bell'}
             tooltip="Disables unread counter"
             onClick={() =>
-              dispatch(
-                updateChatPage({
-                  pageId: page.id,
-                  hideUnreadCount: !page.hideUnreadCount,
-                }),
-              )
+              updateChatPage({
+                pageId: page.id,
+                hideUnreadCount: !page.hideUnreadCount,
+              })
             }
           >
             Mute
@@ -101,11 +90,9 @@ export function ChatPageSettings(props) {
               color="red"
               icon="times"
               onClick={() =>
-                dispatch(
-                  removeChatPage({
-                    pageId: page.id,
-                  }),
-                )
+                removeChatPage({
+                  pageId: page.id,
+                })
               }
             >
               Remove
@@ -122,12 +109,10 @@ export function ChatPageSettings(props) {
             key={typeDef.type}
             checked={page.acceptedTypes[typeDef.type]}
             onClick={() =>
-              dispatch(
-                toggleAcceptedType({
-                  pageId: page.id,
-                  type: typeDef.type,
-                }),
-              )
+              toggleAcceptedType({
+                pageId: page.id,
+                type: typeDef.type,
+              })
             }
           >
             {typeDef.name}

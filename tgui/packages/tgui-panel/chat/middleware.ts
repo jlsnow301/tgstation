@@ -16,7 +16,6 @@ import {
   updateHighlightSetting,
   updateSettings,
 } from '../settings/actions';
-import { selectSettings } from '../settings/selectors';
 import {
   addChatPage,
   changeChatPage,

@@ -10,7 +10,7 @@ type Meta = Partial<{
   upload_date: string;
 }>;
 
-export type AudioState = {
+type AudioState = {
   meta: Meta;
   playing: boolean;
   visible: boolean;
@@ -18,8 +18,8 @@ export type AudioState = {
 };
 
 type Actions = {
-  setPlaying: (on: boolean) => void;
   setMeta: (meta: Meta) => void;
+  setPlaying: (on: boolean) => void;
   stopMusic: () => void;
   toggle: () => void;
 };
@@ -30,15 +30,15 @@ export const useAudioStore = create<AudioState & Actions>((set) => ({
   track: null,
   visible: false,
 
+  setMeta: (meta) =>
+    set(() => ({
+      meta,
+    })),
+
   setPlaying: (on) =>
     set(() => ({
       playing: on,
       visible: on,
-    })),
-
-  setMeta: (meta) =>
-    set(() => ({
-      meta,
     })),
 
   stopMusic: () =>

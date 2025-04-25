@@ -7,7 +7,7 @@
 import { Pane } from 'tgui/layouts';
 import { Button, Section, Stack } from 'tgui-core/components';
 
-import { useAudio } from './audio/hook';
+import { useAudio } from './audio/hooks';
 import { NowPlayingWidget } from './audio/NowPlayingWidget';
 import { ChatPanel, ChatTabs } from './chat';
 import { useGame } from './game';

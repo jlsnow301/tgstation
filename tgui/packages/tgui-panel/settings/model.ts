@@ -18,3 +18,5 @@ export const createDefaultHighlightSetting = (obj?: Record<string, any>) =>
     id: 'default',
     ...obj,
   });
+
+export const defaultHighlightSetting = createDefaultHighlightSetting();

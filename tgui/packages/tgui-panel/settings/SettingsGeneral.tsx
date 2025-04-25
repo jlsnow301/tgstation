@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'tgui/backend';
 import {
   Button,
   Collapsible,
@@ -15,38 +14,34 @@ import { capitalize } from 'tgui-core/string';
 
 import { clearChat, saveChatToDisk } from '../chat/actions';
 import { THEMES } from '../themes';
-import { exportSettings, updateSettings } from './actions';
+import { exportSettings } from './actions';
 import { FONTS } from './constants';
+import { useSettings } from './hooks';
 import { resetPaneSplitters, setEditPaneSplitters } from './scaling';
-import { selectSettings } from './selectors';
 import { importChatSettings } from './settingsImExport';
 
 export function SettingsGeneral(props) {
-  const { theme, fontFamily, fontSize, lineHeight } =
-    useSelector(selectSettings);
-  const dispatch = useDispatch();
-  const [freeFont, setFreeFont] = useState(false);
+  const { settings, updateSettings } = useSettings();
 
+  const [freeFont, setFreeFont] = useState(false);
   const [editingPanes, setEditingPanes] = useState(false);
 
   return (
     <Section>
       <LabeledList>
         <LabeledList.Item label="Theme">
-          {THEMES.map((THEME) => (
+          {THEMES.map((theme) => (
             <Button
-              key={THEME}
-              selected={theme === THEME}
+              key={theme}
+              selected={settings.theme === theme}
               color="transparent"
               onClick={() =>
-                dispatch(
-                  updateSettings({
-                    theme: THEME,
-                  }),
-                )
+                updateSettings({
+                  theme: theme,
+                })
               }
             >
-              {capitalize(THEME)}
+              {capitalize(theme)}
             </Button>
           ))}
         </LabeledList.Item>
@@ -77,8 +72,8 @@ export function SettingsGeneral(props) {
           <Stack.Item>
             {!freeFont ? (
               <Collapsible
-                title={fontFamily}
-                width={'100%'}
+                title={settings.fontFamily}
+                width="100%"
                 buttons={
                   <Button
                     icon={freeFont ? 'lock-open' : 'lock'}
@@ -91,21 +86,19 @@ export function SettingsGeneral(props) {
                   </Button>
                 }
               >
-                {FONTS.map((FONT) => (
+                {FONTS.map((font) => (
                   <Button
-                    key={FONT}
-                    fontFamily={FONT}
-                    selected={fontFamily === FONT}
+                    key={font}
+                    fontFamily={font}
+                    selected={settings.fontFamily === font}
                     color="transparent"
                     onClick={() =>
-                      dispatch(
-                        updateSettings({
-                          fontFamily: FONT,
-                        }),
-                      )
+                      updateSettings({
+                        fontFamily: font,
+                      })
                     }
                   >
-                    {FONT}
+                    {font}
                   </Button>
                 ))}
               </Collapsible>
@@ -113,14 +106,12 @@ export function SettingsGeneral(props) {
               <Stack>
                 <Input
                   fluid
-                  value={fontFamily}
+                  value={settings.fontFamily}
                   expensive
                   onChange={(value) =>
-                    dispatch(
-                      updateSettings({
-                        fontFamily: value,
-                      }),
-                    )
+                    updateSettings({
+                      fontFamily: value,
+                    })
                   }
                 />
                 <Button
@@ -146,12 +137,10 @@ export function SettingsGeneral(props) {
                 stepPixelSize={20}
                 minValue={8}
                 maxValue={32}
-                value={fontSize}
+                value={settings.fontSize}
                 unit="px"
                 format={(value) => toFixed(value)}
-                onChange={(e, value) =>
-                  dispatch(updateSettings({ fontSize: value }))
-                }
+                onChange={(e, value) => updateSettings({ fontSize: value })}
               />
             </Stack.Item>
           </Stack>
@@ -162,14 +151,12 @@ export function SettingsGeneral(props) {
             step={0.01}
             minValue={0.8}
             maxValue={5}
-            value={lineHeight}
+            value={settings.lineHeight}
             format={(value) => toFixed(value, 2)}
             onDrag={(e, value) =>
-              dispatch(
-                updateSettings({
-                  lineHeight: value,
-                }),
-              )
+              updateSettings({
+                lineHeight: value,
+              })
             }
           />
         </LabeledList.Item>
@@ -180,7 +167,7 @@ export function SettingsGeneral(props) {
           <Button
             icon="compact-disc"
             tooltip="Export chat settings"
-            onClick={() => dispatch(exportSettings())}
+            onClick={exportSettings}
           >
             Export settings
           </Button>
@@ -190,7 +177,7 @@ export function SettingsGeneral(props) {
             accept=".json"
             tooltip="Import chat settings"
             icon="arrow-up-from-bracket"
-            onSelectFiles={(files) => importChatSettings(files)}
+            onSelectFiles={importChatSettings}
           >
             Import settings
           </Button.File>
@@ -199,7 +186,7 @@ export function SettingsGeneral(props) {
           <Button
             icon="save"
             tooltip="Export current tab history into HTML file"
-            onClick={() => dispatch(saveChatToDisk())}
+            onClick={saveChatToDisk}
           >
             Save chat log
           </Button>
@@ -208,7 +195,7 @@ export function SettingsGeneral(props) {
           <Button.Confirm
             icon="trash"
             tooltip="Erase current tab history"
-            onClick={() => dispatch(clearChat())}
+            onClick={clearChat}
           >
             Clear chat
           </Button.Confirm>

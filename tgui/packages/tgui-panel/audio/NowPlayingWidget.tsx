@@ -14,7 +14,8 @@ import {
 import { toFixed } from 'tgui-core/math';
 
 import { useAudioStore } from '../events/stores/audio';
-import { useAudio } from './hook';
+import { useSettings } from '../settings/hooks';
+import { useAudio } from './hooks';
 import { AudioPlayer } from './player';
 
 export const player = new AudioPlayer();
@@ -45,6 +46,7 @@ export function NowPlayingWidget(props) {
     album = 'Unknown Album',
     duration,
   } = meta;
+  const { settings } = useSettings();
 
   const date = getDate(upload_date);
 
@@ -110,7 +112,7 @@ export function NowPlayingWidget(props) {
           stepPixelSize={1}
           format={(value) => toFixed(value * 100) + '%'}
           onDrag={(e, value) =>
-            settings.update({
+            settings.updateSettings({
               adminMusicVolume: value,
             })
           }
