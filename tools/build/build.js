@@ -6,26 +6,26 @@
  * https://github.com/stylemistake/juke-build
  */
 
-import fs from "node:fs";
-import https from "node:https";
-import Juke from "./juke/index.js";
-import { DreamDaemon, DreamMaker, NamedVersionFile } from "./lib/byond.js";
-import { bun } from "./lib/bun.js";
+import fs from 'node:fs';
+import https from 'node:https';
+import Juke from './juke/index.js';
+import { bun } from './lib/bun.js';
+import { DreamDaemon, DreamMaker, NamedVersionFile } from './lib/byond.js';
 
-const TGS_MODE = process.env.CBT_BUILD_MODE === "TGS";
+const TGS_MODE = process.env.CBT_BUILD_MODE === 'TGS';
 
-Juke.chdir("../..", import.meta.url);
+Juke.chdir('../..', import.meta.url);
 
-const DME_NAME = "tgstation";
+const DME_NAME = 'tgstation';
 
 // Stores the contents of dependencies.sh as a key value pair
 // Best way I could figure to get ahold of this stuff
 const dependencies = fs
-  .readFileSync("dependencies.sh", "utf8")
-  .split("\n")
-  .map((statement) => statement.replace("export", "").trim())
-  .filter((value) => !(value == "" || value.startsWith("#")))
-  .map((statement) => statement.split("="))
+  .readFileSync('dependencies.sh', 'utf8')
+  .split('\n')
+  .map((statement) => statement.replace('export', '').trim())
+  .filter((value) => !(value === '' || value.startsWith('#')))
+  .map((statement) => statement.split('='))
   .reduce((acc, kv_pair) => {
     acc[kv_pair[0]] = kv_pair[1];
     return acc;
@@ -34,81 +34,81 @@ const dependencies = fs
 // Canonical path for the cutter exe at this moment
 const getCutterPath = () => {
   const ver = dependencies.CUTTER_VERSION;
-  const suffix = process.platform === "win32" ? ".exe" : "";
-  const file_ver = ver.split(".").join("-");
+  const suffix = process.platform === 'win32' ? '.exe' : '';
+  const file_ver = ver.split('.').join('-');
   return `tools/icon_cutter/cache/hypnagogic${file_ver}${suffix}`;
 };
 
 const cutter_path = getCutterPath();
 
 export const DefineParameter = new Juke.Parameter({
-  type: "string[]",
-  alias: "D",
+  type: 'string[]',
+  alias: 'D',
 });
 
 export const PortParameter = new Juke.Parameter({
-  type: "string",
-  alias: "p",
+  type: 'string',
+  alias: 'p',
 });
 
 export const DmVersionParameter = new Juke.Parameter({
-  type: "string",
+  type: 'string',
 });
 
-export const CiParameter = new Juke.Parameter({ type: "boolean" });
+export const CiParameter = new Juke.Parameter({ type: 'boolean' });
 
 export const ForceRecutParameter = new Juke.Parameter({
-  type: "boolean",
-  name: "force-recut",
+  type: 'boolean',
+  name: 'force-recut',
 });
 
 export const SkipIconCutter = new Juke.Parameter({
-  type: "boolean",
-  name: "skip-icon-cutter",
+  type: 'boolean',
+  name: 'skip-icon-cutter',
 });
 
 export const WarningParameter = new Juke.Parameter({
-  type: "string[]",
-  alias: "W",
+  type: 'string[]',
+  alias: 'W',
 });
 
 export const NoWarningParameter = new Juke.Parameter({
-  type: "string[]",
-  alias: "I",
+  type: 'string[]',
+  alias: 'I',
 });
 
 export const CutterTarget = new Juke.Target({
   onlyWhen: () => {
     const files = Juke.glob(cutter_path);
-    return files.length == 0;
+    return files.length === 0;
   },
   executes: async () => {
     const repo = dependencies.CUTTER_REPO;
     const ver = dependencies.CUTTER_VERSION;
-    const suffix = process.platform === "win32" ? ".exe" : "";
+    const suffix = process.platform === 'win32' ? '.exe' : '';
     const download_from = `https://github.com/${repo}/releases/download/${ver}/hypnagogic${suffix}`;
     await download_file(download_from, cutter_path);
-    if (process.platform !== "win32") {
-      await Juke.exec("chmod", ["+x", cutter_path]);
+    if (process.platform !== 'win32') {
+      await Juke.exec('chmod', ['+x', cutter_path]);
     }
   },
 });
 
 async function download_file(url, file) {
   return new Promise((resolve, reject) => {
-    let file_stream = fs.createWriteStream(file);
+    const file_stream = fs.createWriteStream(file);
     https
-      .get(url, function (response) {
+      .get(url, (response) => {
         if (response.statusCode === 302) {
           file_stream.close();
           download_file(response.headers.location, file).then((value) =>
-            resolve()
+            resolve(),
           );
           return;
         }
         if (response.statusCode !== 200) {
           Juke.logger.error(
-            `Failed to download ${url}: Status ${response.statusCode}`
+            `Failed to download ${url}: Status ${response.statusCode}`,
           );
           file_stream.close();
           reject();
@@ -117,12 +117,12 @@ async function download_file(url, file) {
         response.pipe(file_stream);
 
         // after download completed close filestream
-        file_stream.on("finish", () => {
+        file_stream.on('finish', () => {
           file_stream.close();
           resolve();
         });
       })
-      .on("error", (err) => {
+      .on('error', (err) => {
         file_stream.close();
         Juke.rm(download_into);
         Juke.logger.error(`Failed to download ${url}: ${err.message}`);
@@ -149,7 +149,7 @@ export const IconCutterTarget = new Juke.Target({
     ];
     return [
       ...standard_inputs,
-      ...existing_configs.map((file) => file.replace(".toml", "")),
+      ...existing_configs.map((file) => file.replace('.toml', '')),
     ];
   },
   outputs: ({ get }) => {
@@ -159,15 +159,15 @@ export const IconCutterTarget = new Juke.Target({
       ...Juke.glob(`icons/**/*.dmi.toml`),
     ];
     return folders
-      .map((file) => file.replace(`.png.toml`, ".dmi"))
-      .map((file) => file.replace(`.dmi.toml`, ".png"));
+      .map((file) => file.replace(`.png.toml`, '.dmi'))
+      .map((file) => file.replace(`.dmi.toml`, '.png'));
   },
   executes: async () => {
     await Juke.exec(cutter_path, [
-      "--dont-wait",
-      "--templates",
-      "cutter_templates",
-      "icons",
+      '--dont-wait',
+      '--templates',
+      'cutter_templates',
+      'icons',
     ]);
   },
 });
@@ -175,18 +175,18 @@ export const IconCutterTarget = new Juke.Target({
 export const DmMapsIncludeTarget = new Juke.Target({
   executes: async () => {
     const folders = [
-      ...Juke.glob("_maps/map_files/**/modular_pieces/*.dmm"),
-      ...Juke.glob("_maps/RandomRuins/**/*.dmm"),
-      ...Juke.glob("_maps/RandomZLevels/**/*.dmm"),
-      ...Juke.glob("_maps/shuttles/**/*.dmm"),
-      ...Juke.glob("_maps/templates/**/*.dmm"),
+      ...Juke.glob('_maps/map_files/**/modular_pieces/*.dmm'),
+      ...Juke.glob('_maps/RandomRuins/**/*.dmm'),
+      ...Juke.glob('_maps/RandomZLevels/**/*.dmm'),
+      ...Juke.glob('_maps/shuttles/**/*.dmm'),
+      ...Juke.glob('_maps/templates/**/*.dmm'),
     ];
     const content =
       folders
-        .map((file) => file.replace("_maps/", ""))
+        .map((file) => file.replace('_maps/', ''))
         .map((file) => `#include "${file}"`)
-        .join("\n") + "\n";
-    fs.writeFileSync("_maps/templates.dm", content);
+        .join('\n') + '\n';
+    fs.writeFileSync('_maps/templates.dm', content);
   },
 });
 
@@ -199,18 +199,18 @@ export const DmTarget = new Juke.Target({
     SkipIconCutter,
   ],
   dependsOn: ({ get }) => [
-    get(DefineParameter).includes("ALL_TEMPLATES") && DmMapsIncludeTarget,
+    get(DefineParameter).includes('ALL_TEMPLATES') && DmMapsIncludeTarget,
     !get(SkipIconCutter) && IconCutterTarget,
   ],
   inputs: [
-    "_maps/map_files/generic/**",
-    "maps/**/*.dm",
-    "code/**",
-    "html/**",
-    "icons/**",
-    "interface/**",
-    "sound/**",
-    "tgui/public/tgui.html",
+    '_maps/map_files/generic/**',
+    'maps/**/*.dm',
+    'code/**',
+    'html/**',
+    'icons/**',
+    'interface/**',
+    'sound/**',
+    'tgui/public/tgui.html',
     `${DME_NAME}.dme`,
     NamedVersionFile,
   ],
@@ -222,8 +222,8 @@ export const DmTarget = new Juke.Target({
   },
   executes: async ({ get }) => {
     await DreamMaker(`${DME_NAME}.dme`, {
-      defines: ["CBT", ...get(DefineParameter)],
-      warningsAsErrors: get(WarningParameter).includes("error"),
+      defines: ['CBT', ...get(DefineParameter)],
+      warningsAsErrors: get(WarningParameter).includes('error'),
       ignoreWarningCodes: get(NoWarningParameter),
       namedDmVersion: get(DmVersionParameter),
     });
@@ -238,36 +238,36 @@ export const DmTestTarget = new Juke.Target({
     NoWarningParameter,
   ],
   dependsOn: ({ get }) => [
-    get(DefineParameter).includes("ALL_MAPS") && DmMapsIncludeTarget,
+    get(DefineParameter).includes('ALL_MAPS') && DmMapsIncludeTarget,
     IconCutterTarget,
   ],
   executes: async ({ get }) => {
     fs.copyFileSync(`${DME_NAME}.dme`, `${DME_NAME}.test.dme`);
     await DreamMaker(`${DME_NAME}.test.dme`, {
-      defines: ["CBT", "CIBUILDING", ...get(DefineParameter)],
-      warningsAsErrors: get(WarningParameter).includes("error"),
+      defines: ['CBT', 'CIBUILDING', ...get(DefineParameter)],
+      warningsAsErrors: get(WarningParameter).includes('error'),
       ignoreWarningCodes: get(NoWarningParameter),
       namedDmVersion: get(DmVersionParameter),
     });
-    Juke.rm("data/logs/ci", { recursive: true });
+    Juke.rm('data/logs/ci', { recursive: true });
     const options = {
       dmbFile: `${DME_NAME}.test.dmb`,
       namedDmVersion: get(DmVersionParameter),
     };
     await DreamDaemon(
       options,
-      "-close",
-      "-trusted",
-      "-verbose",
-      "-params",
-      "log-directory=ci"
+      '-close',
+      '-trusted',
+      '-verbose',
+      '-params',
+      'log-directory=ci',
     );
-    Juke.rm("*.test.*");
+    Juke.rm('*.test.*');
     try {
-      const cleanRun = fs.readFileSync("data/logs/ci/clean_run.lk", "utf-8");
+      const cleanRun = fs.readFileSync('data/logs/ci/clean_run.lk', 'utf-8');
       console.log(cleanRun);
     } catch (err) {
-      Juke.logger.error("Test run was not clean, exiting");
+      Juke.logger.error('Test run was not clean, exiting');
       throw new Juke.ExitCode(1);
     }
   },
@@ -281,21 +281,21 @@ export const AutowikiTarget = new Juke.Target({
     NoWarningParameter,
   ],
   dependsOn: ({ get }) => [
-    get(DefineParameter).includes("ALL_TEMPLATES") && DmMapsIncludeTarget,
+    get(DefineParameter).includes('ALL_TEMPLATES') && DmMapsIncludeTarget,
     IconCutterTarget,
   ],
-  outputs: ["data/autowiki_edits.txt"],
+  outputs: ['data/autowiki_edits.txt'],
   executes: async ({ get }) => {
     fs.copyFileSync(`${DME_NAME}.dme`, `${DME_NAME}.test.dme`);
     await DreamMaker(`${DME_NAME}.test.dme`, {
-      defines: ["CBT", "AUTOWIKI", ...get(DefineParameter)],
-      warningsAsErrors: get(WarningParameter).includes("error"),
+      defines: ['CBT', 'AUTOWIKI', ...get(DefineParameter)],
+      warningsAsErrors: get(WarningParameter).includes('error'),
       ignoreWarningCodes: get(NoWarningParameter),
       namedDmVersion: get(DmVersionParameter),
     });
-    Juke.rm("data/autowiki_edits.txt");
-    Juke.rm("data/autowiki_files", { recursive: true });
-    Juke.rm("data/logs/ci", { recursive: true });
+    Juke.rm('data/autowiki_edits.txt');
+    Juke.rm('data/autowiki_files', { recursive: true });
+    Juke.rm('data/logs/ci', { recursive: true });
 
     const options = {
       dmbFile: `${DME_NAME}.test.dmb`,
@@ -303,15 +303,15 @@ export const AutowikiTarget = new Juke.Target({
     };
     await DreamDaemon(
       options,
-      "-close",
-      "-trusted",
-      "-verbose",
-      "-params",
-      "log-directory=ci"
+      '-close',
+      '-trusted',
+      '-verbose',
+      '-params',
+      'log-directory=ci',
     );
-    Juke.rm("*.test.*");
-    if (!fs.existsSync("data/autowiki_edits.txt")) {
-      Juke.logger.error("Autowiki did not generate an output, exiting");
+    Juke.rm('*.test.*');
+    if (!fs.existsSync('data/autowiki_edits.txt')) {
+      Juke.logger.error('Autowiki did not generate an output, exiting');
       throw new Juke.ExitCode(1);
     }
   },
@@ -319,32 +319,32 @@ export const AutowikiTarget = new Juke.Target({
 
 export const BunTarget = new Juke.Target({
   parameters: [CiParameter],
-  inputs: ["tgui/**/package.json"],
+  inputs: ['tgui/**/package.json'],
   executes: ({ get }) => {
-    return bun("install", get(CiParameter));
+    return bun('install', get(CiParameter));
   },
 });
 
 export const TgFontTarget = new Juke.Target({
   dependsOn: [BunTarget],
   inputs: [
-    "tgui/packages/tgfont/**/*.+(js|mjs|svg)",
-    "tgui/packages/tgfont/package.json",
+    'tgui/packages/tgfont/**/*.+(js|mjs|svg)',
+    'tgui/packages/tgfont/package.json',
   ],
   outputs: [
-    "tgui/packages/tgfont/dist/tgfont.css",
-    "tgui/packages/tgfont/dist/tgfont.woff2",
+    'tgui/packages/tgfont/dist/tgfont.css',
+    'tgui/packages/tgfont/dist/tgfont.woff2',
   ],
   executes: async () => {
-    await bun("tgfont:build");
-    fs.mkdirSync("tgui/packages/tgfont/static", { recursive: true });
+    await bun('tgfont:build');
+    fs.mkdirSync('tgui/packages/tgfont/static', { recursive: true });
     fs.copyFileSync(
-      "tgui/packages/tgfont/dist/tgfont.css",
-      "tgui/packages/tgfont/static/tgfont.css"
+      'tgui/packages/tgfont/dist/tgfont.css',
+      'tgui/packages/tgfont/static/tgfont.css',
     );
     fs.copyFileSync(
-      "tgui/packages/tgfont/dist/tgfont.woff2",
-      "tgui/packages/tgfont/static/tgfont.woff2"
+      'tgui/packages/tgfont/dist/tgfont.woff2',
+      'tgui/packages/tgfont/static/tgfont.woff2',
     );
   },
 });
@@ -352,65 +352,55 @@ export const TgFontTarget = new Juke.Target({
 export const TguiTarget = new Juke.Target({
   dependsOn: [BunTarget],
   inputs: [
-    "tgui/webpack.config.js",
-    "tgui/**/package.json",
-    "tgui/packages/**/*.+(js|cjs|ts|tsx|jsx|scss)",
+    'tgui/webpack.config.js',
+    'tgui/**/package.json',
+    'tgui/packages/**/*.+(js|cjs|ts|tsx|jsx|scss)',
   ],
   outputs: [
-    "tgui/public/tgui.bundle.css",
-    "tgui/public/tgui.bundle.js",
-    "tgui/public/tgui-panel.bundle.css",
-    "tgui/public/tgui-panel.bundle.js",
-    "tgui/public/tgui-say.bundle.css",
-    "tgui/public/tgui-say.bundle.js",
+    'tgui/public/tgui.bundle.css',
+    'tgui/public/tgui.bundle.js',
+    'tgui/public/tgui-panel.bundle.css',
+    'tgui/public/tgui-panel.bundle.js',
+    'tgui/public/tgui-say.bundle.css',
+    'tgui/public/tgui-say.bundle.js',
   ],
-  executes: () => bun("tgui:build"),
+  executes: () => bun('tgui:build'),
 });
 
-export const TguiEslintTarget = new Juke.Target({
+export const TguiBiomeTarget = new Juke.Target({
   parameters: [CiParameter],
   dependsOn: [BunTarget],
-  executes: ({ get }) => bun("tgui:lint", !get(CiParameter) && "--fix"),
-});
-
-export const TguiPrettierTarget = new Juke.Target({
-  dependsOn: [BunTarget],
-  executes: () => bun("tgui:prettier"),
-});
-
-export const TguiSonarTarget = new Juke.Target({
-  dependsOn: [BunTarget],
-  executes: () => bun("tgui:sonar"),
+  executes: ({ get }) => bun('tgui:lint'),
 });
 
 export const TguiTscTarget = new Juke.Target({
   dependsOn: [BunTarget],
-  executes: () => bun("tgui:tsc"),
+  executes: () => bun('tgui:tsc'),
 });
 
 export const TguiTestTarget = new Juke.Target({
   parameters: [CiParameter],
   dependsOn: [BunTarget],
-  executes: () => bun("tgui:test"),
+  executes: () => bun('tgui:test'),
 });
 
 export const TguiLintTarget = new Juke.Target({
-  dependsOn: [BunTarget, TguiPrettierTarget, TguiEslintTarget, TguiTscTarget],
+  dependsOn: [BunTarget, TguiBiomeTarget, TguiTscTarget],
 });
 
 export const TguiDevTarget = new Juke.Target({
   dependsOn: [BunTarget],
-  executes: ({ args }) => bun("tgui:dev", ...args),
+  executes: ({ args }) => bun('tgui:dev', ...args),
 });
 
 export const TguiAnalyzeTarget = new Juke.Target({
   dependsOn: [BunTarget],
-  executes: () => bun("tgui:analyze"),
+  executes: () => bun('tgui:analyze'),
 });
 
 export const TguiBenchTarget = new Juke.Target({
   dependsOn: [BunTarget],
-  executes: () => bun("tgui:bench"),
+  executes: () => bun('tgui:bench'),
 });
 
 export const TestTarget = new Juke.Target({
@@ -429,12 +419,12 @@ export const ServerTarget = new Juke.Target({
   parameters: [DmVersionParameter, PortParameter],
   dependsOn: [BuildTarget],
   executes: async ({ get }) => {
-    const port = get(PortParameter) || "1337";
+    const port = get(PortParameter) || '1337';
     const options = {
       dmbFile: `${DME_NAME}.dmb`,
       namedDmVersion: get(DmVersionParameter),
     };
-    await DreamDaemon(options, port, "-trusted");
+    await DreamDaemon(options, port, '-trusted');
   },
 });
 
@@ -444,19 +434,19 @@ export const AllTarget = new Juke.Target({
 
 export const TguiCleanTarget = new Juke.Target({
   executes: async () => {
-    Juke.rm("tgui/public/.tmp", { recursive: true });
-    Juke.rm("tgui/public/*.map");
-    Juke.rm("tgui/public/*.{chunk,bundle,hot-update}.*");
-    Juke.rm("tgui/packages/tgfont/dist", { recursive: true });
-    Juke.rm("tgui/node_modules", { recursive: true });
+    Juke.rm('tgui/public/.tmp', { recursive: true });
+    Juke.rm('tgui/public/*.map');
+    Juke.rm('tgui/public/*.{chunk,bundle,hot-update}.*');
+    Juke.rm('tgui/packages/tgfont/dist', { recursive: true });
+    Juke.rm('tgui/node_modules', { recursive: true });
   },
 });
 
 export const CleanTarget = new Juke.Target({
   dependsOn: [TguiCleanTarget],
   executes: async () => {
-    Juke.rm("*.{dmb,rsc}");
-    Juke.rm("_maps/templates.dm");
+    Juke.rm('*.{dmb,rsc}');
+    Juke.rm('_maps/templates.dm');
   },
 });
 
@@ -466,8 +456,8 @@ export const CleanTarget = new Juke.Target({
 export const CleanAllTarget = new Juke.Target({
   dependsOn: [CleanTarget],
   executes: async () => {
-    Juke.logger.info("Cleaning up data/logs");
-    Juke.rm("data/logs", { recursive: true });
+    Juke.logger.info('Cleaning up data/logs');
+    Juke.rm('data/logs', { recursive: true });
   },
 });
 
@@ -485,16 +475,16 @@ const prependDefines = (...defines) => {
 export const TgsTarget = new Juke.Target({
   dependsOn: [TguiTarget],
   executes: async () => {
-    Juke.logger.info("Prepending TGS define");
-    prependDefines("TGS");
+    Juke.logger.info('Prepending TGS define');
+    prependDefines('TGS');
   },
 });
 
 Juke.setup({ file: import.meta.url }).then((code) => {
   // We're using the currently available quirk in Juke Build, which
   // prevents it from exiting on Windows, to wait on errors.
-  if (code !== 0 && process.argv.includes("--wait-on-error")) {
-    Juke.logger.error("Please inspect the error and close the window.");
+  if (code !== 0 && process.argv.includes('--wait-on-error')) {
+    Juke.logger.error('Please inspect the error and close the window.');
     return;
   }
 

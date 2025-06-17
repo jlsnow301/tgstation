@@ -1,6 +1,11 @@
-.pnp.*
-.yarn
 node_modules
+*.js
+*.ts
+*.tsx
+*.css
+*.jsx
+*.json
+.github/PULL_REQUEST_TEMPLATE.md
 
 # Avoid running on any bundles.
 /public/**/*
