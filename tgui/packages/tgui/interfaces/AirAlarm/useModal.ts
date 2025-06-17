@@ -4,7 +4,6 @@ import {
   type SetStateAction,
   useContext,
 } from 'react';
-
 import type { ActiveModal } from './types';
 
 type ModalContextType = [ActiveModal, Dispatch<SetStateAction<ActiveModal>>];

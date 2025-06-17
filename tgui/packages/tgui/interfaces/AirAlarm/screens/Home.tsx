@@ -1,7 +1,6 @@
 import type { Dispatch, SetStateAction } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Button, Stack } from 'tgui-core/components';
-
 import type { AirAlarmData, AlarmScreen } from '../types';
 
 type Props = {

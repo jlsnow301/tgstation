@@ -1,6 +1,5 @@
 import { filter } from 'common/collections';
 import { flow } from 'tgui-core/fp';
-
 import type { Supply, SupplyCategory } from './types';
 
 /**

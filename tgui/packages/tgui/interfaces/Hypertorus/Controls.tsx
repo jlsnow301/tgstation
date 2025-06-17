@@ -11,7 +11,6 @@ import {
   Tooltip,
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
-
 import type { HypertorusFilter } from '.';
 import { HelpDummy, HoverHelp } from './helpers';
 

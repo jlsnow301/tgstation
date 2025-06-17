@@ -10,7 +10,6 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-
 import type {
   FAIcon,
   LoadoutItem,

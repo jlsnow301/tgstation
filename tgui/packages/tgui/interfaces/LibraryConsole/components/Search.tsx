@@ -7,7 +7,6 @@ import {
   Stack,
   Table,
 } from 'tgui-core/components';
-
 import type { LibraryConsoleData } from '../types';
 
 export function SearchAndDisplay(props) {

@@ -1,5 +1,4 @@
 import type { BooleanLike } from 'tgui-core/react';
-
 import type { Region } from '../common/AccessConfig';
 
 export type AccessData = {

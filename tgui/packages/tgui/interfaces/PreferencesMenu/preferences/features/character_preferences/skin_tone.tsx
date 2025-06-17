@@ -1,7 +1,6 @@
 import { sortBy } from 'common/collections';
 import { useMemo } from 'react';
 import { Box, Dropdown, Stack } from 'tgui-core/components';
-
 import type {
   Feature,
   FeatureChoicedServerData,

@@ -12,7 +12,6 @@ import {
   Stack,
   TrackOutsideClicks,
 } from 'tgui-core/components';
-
 import type { Name } from '../types';
 import { useServerPrefs } from '../useServerPrefs';
 

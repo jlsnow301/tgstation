@@ -3,7 +3,6 @@ import type { ReactNode } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Box, Dropdown, Flex } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
-
 import type { PreferencesMenuData } from '../../../types';
 import {
   CheckboxInput,

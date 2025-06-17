@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Box, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
-
 import type { DataEvidence } from './DataTypes';
 
 type Fn = (...args: any[]) => any;

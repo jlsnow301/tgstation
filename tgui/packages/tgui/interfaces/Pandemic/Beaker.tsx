@@ -8,7 +8,6 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { capitalizeFirst } from 'tgui-core/string';
-
 import type { Data } from './types';
 
 /** Displays loaded container info, if it exists */

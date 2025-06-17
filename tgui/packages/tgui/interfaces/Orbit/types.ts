@@ -1,5 +1,4 @@
 import type { BooleanLike } from 'tgui-core/react';
-
 import type { VIEWMODE } from './constants';
 
 export type Antagonist = Observable & {

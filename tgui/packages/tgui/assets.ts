@@ -5,7 +5,6 @@
  */
 
 import type { Dispatch } from 'common/redux';
-
 import type { Action, AnyAction, Middleware } from '../common/redux';
 
 const EXCLUDED_PATTERNS = [/v4shim/i];

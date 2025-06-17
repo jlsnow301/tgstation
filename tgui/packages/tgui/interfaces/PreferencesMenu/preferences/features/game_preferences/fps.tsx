@@ -1,5 +1,4 @@
 import { Dropdown, NumberInput, Stack } from 'tgui-core/components';
-
 import type { Feature, FeatureNumericData, FeatureValueProps } from '../base';
 
 type FpsServerData = FeatureNumericData & {

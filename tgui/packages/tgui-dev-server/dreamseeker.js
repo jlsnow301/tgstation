@@ -6,7 +6,6 @@
 
 import { exec } from 'node:child_process';
 import { promisify } from 'node:util';
-
 import axios, { isAxiosError } from 'axios';
 import { createLogger } from './logging.js';
 

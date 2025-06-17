@@ -7,7 +7,6 @@ import {
 import { Box, Dropdown, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 import { capitalizeFirst } from 'tgui-core/string';
-
 import type {
   Feature,
   FeatureChoicedServerData,

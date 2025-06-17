@@ -1,5 +1,4 @@
 import type { BooleanLike } from 'tgui-core/react';
-
 import type { PreferencesMenuData } from '../../types';
 import type { LoadoutButton } from './ModifyPanel';
 

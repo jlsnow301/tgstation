@@ -8,7 +8,6 @@ import {
   Tooltip,
 } from 'tgui-core/components';
 import { createSearch } from 'tgui-core/string';
-
 import type { LoadoutCategory, LoadoutItem, LoadoutManagerData } from './base';
 
 type Props = {

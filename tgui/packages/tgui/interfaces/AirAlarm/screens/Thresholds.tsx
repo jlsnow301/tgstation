@@ -1,6 +1,5 @@
 import { useBackend } from 'tgui/backend';
 import { Button, Table } from 'tgui-core/components';
-
 import type { AirAlarmData } from '../types';
 import { useAlarmModal } from '../useModal';
 

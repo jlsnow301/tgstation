@@ -10,7 +10,6 @@ import {
   Section,
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
-
 import type { HypertorusFuel, HypertorusGas } from '.';
 import { HelpDummy, HoverHelp } from './helpers';
 

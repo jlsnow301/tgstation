@@ -1,5 +1,4 @@
 import { useDispatch } from 'tgui/backend';
-
 import type { Page } from '../chat/types';
 import { importSettings } from './actions';
 

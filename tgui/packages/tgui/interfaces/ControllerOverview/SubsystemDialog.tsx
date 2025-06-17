@@ -6,7 +6,6 @@ import {
   Modal,
   Stack,
 } from 'tgui-core/components';
-
 import type { SubsystemData } from './types';
 
 type Props = {

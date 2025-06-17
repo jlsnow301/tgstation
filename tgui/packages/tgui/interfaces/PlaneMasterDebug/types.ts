@@ -1,5 +1,4 @@
 import type { BooleanLike } from 'tgui-core/react';
-
 import type { Position } from '../common/Connections';
 
 export type PlaneDebugData = {
