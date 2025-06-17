@@ -9,7 +9,7 @@
 import fs from 'node:fs';
 import https from 'node:https';
 import Juke from './juke/index.js';
-import { bun } from './lib/bun.js';
+import { bun, bunRoot } from './lib/bun.js';
 import { DreamDaemon, DreamMaker, NamedVersionFile } from './lib/byond.js';
 
 const TGS_MODE = process.env.CBT_BUILD_MODE === 'TGS';
@@ -325,6 +325,17 @@ export const BunTarget = new Juke.Target({
   },
 });
 
+export const BiomeInstallTarget = new Juke.Target({
+  dependsOn: [BunTarget],
+  inputs: ['package.json', 'bun.lock'],
+  onlyWhen: () => {
+    return Juke.glob('node_modules/@biomejs/**').length === 0;
+  },
+  executes: () => {
+    return bunRoot('install');
+  },
+});
+
 export const TgFontTarget = new Juke.Target({
   dependsOn: [BunTarget],
   inputs: [
@@ -350,7 +361,7 @@ export const TgFontTarget = new Juke.Target({
 });
 
 export const TguiTarget = new Juke.Target({
-  dependsOn: [BunTarget],
+  dependsOn: [BunTarget, BiomeInstallTarget],
   inputs: [
     'tgui/webpack.config.js',
     'tgui/**/package.json',
@@ -368,9 +379,8 @@ export const TguiTarget = new Juke.Target({
 });
 
 export const TguiBiomeTarget = new Juke.Target({
-  parameters: [CiParameter],
-  dependsOn: [BunTarget],
-  executes: ({ get }) => bun('tgui:lint'),
+  dependsOn: [BunTarget, BiomeInstallTarget],
+  executes: () => bunRoot('tgui:lint'),
 });
 
 export const TguiTscTarget = new Juke.Target({
@@ -379,7 +389,6 @@ export const TguiTscTarget = new Juke.Target({
 });
 
 export const TguiTestTarget = new Juke.Target({
-  parameters: [CiParameter],
   dependsOn: [BunTarget],
   executes: () => bun('tgui:test'),
 });

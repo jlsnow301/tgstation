@@ -11,8 +11,6 @@
 		"tgui:bench": "webpack --env TGUI_BENCH=1 && bun packages/tgui-bench/index.js",
 		"tgui:build": "webpack",
 		"tgui:dev": "bun packages/tgui-dev-server/index.js",
-		"tgui:fix": "biome check --write --unsafe .",
-		"tgui:lint": "biome check .",
 		"tgui:test": "bun test",
 		"tgui:tsc": "tsc"
 	},
@@ -30,7 +28,6 @@
 		"webpack-cli": "^6.0.1"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.0.0-beta.6",
 		"@happy-dom/global-registrator": "^17.4.7",
 		"@types/bun": "^1.2.14",
 		"@types/react": "^19.1.5",
