@@ -18,9 +18,9 @@
 		"includes": [
 			"**",
 			"!**/node_modules",
-			"!**/public",
-			"./public/tgui.html",
-			"!**/packages/tgui-setup/helpers.js"
+			"!tgui/public",
+			"tgui/public/tgui.html",
+			"!tgui/packages/tgui-setup/helpers.js"
 		]
 	},
 	"formatter": {
@@ -31,8 +31,7 @@
 	"javascript": {
 		"formatter": {
 			"indentStyle": "space",
-			"quoteStyle": "single",
-			"indentWidth": 2
+			"quoteStyle": "single"
 		}
 	},
 	"linter": {

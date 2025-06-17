@@ -1,7 +1,5 @@
 {
 	"biome.lsp.bin": "./tgui/node_modules/@biomejs/cli-win32-x64/biome.exe",
-	"biome.lsp.trace.server": "verbose",
-	"eslint.workingDirectories": ["./tgui"],
 	"editor.codeActionsOnSave": {
 		"source.fixAll.biome": "explicit"
 	},
