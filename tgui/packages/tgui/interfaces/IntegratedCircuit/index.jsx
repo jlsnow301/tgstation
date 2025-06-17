@@ -93,8 +93,8 @@ export class IntegratedCircuit extends Component {
     position.color = port.color;
 
     if (
-      isNaN(position.x) ||
-      isNaN(position.y) ||
+      Number.isNaN(position.x) ||
+      Number.isNaN(position.y) ||
       (lastPosition &&
         lastPosition.x === position.x &&
         lastPosition.y === position.y)
@@ -428,7 +428,7 @@ export class IntegratedCircuit extends Component {
         for (const output of input.connected_to) {
           const output_port = locations[output];
           connections.push({
-            color: (output_port && output_port.color) || 'blue',
+            color: output_port?.color || 'blue',
             from: output_port,
             to: locations[input.ref],
           });
@@ -445,7 +445,7 @@ export class IntegratedCircuit extends Component {
         y: (mouseY + ABSOLUTE_Y_OFFSET) * zoom ** -1,
       };
       connections.push({
-        color: (portLocation && portLocation.color) || 'blue',
+        color: portLocation?.color || 'blue',
         from: isOutput ? portLocation : mouseCoords,
         to: isOutput ? mouseCoords : portLocation,
       });

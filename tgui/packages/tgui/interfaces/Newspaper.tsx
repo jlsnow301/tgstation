@@ -119,9 +119,8 @@ const NewspaperChannel = (props) => {
           <Box fontSize="12px">
             Channel made by: {individual_channel.author_name}
           </Box>
-          {channel_has_messages ? (
-            <>
-              {individual_channel.channel_messages.map((message) => (
+          {channel_has_messages
+            ? individual_channel.channel_messages.map((message) => (
                 <>
                   <Box key={message.message}>
                     <Box
@@ -132,11 +131,8 @@ const NewspaperChannel = (props) => {
                   </Box>
                   <Divider />
                 </>
-              ))}
-            </>
-          ) : (
-            'No feed stories stem from this channel...'
-          )}
+              ))
+            : 'No feed stories stem from this channel...'}
         </Box>
       ))}
     </Section>

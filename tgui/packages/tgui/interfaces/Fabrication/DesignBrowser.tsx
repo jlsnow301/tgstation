@@ -503,7 +503,7 @@ const CategoryView = <T extends Design = Design>(
       title={category.title}
       key={category.anchorKey}
       container_id={category.anchorKey}
-      buttons={categoryButtons && categoryButtons(category)}
+      buttons={categoryButtons?.(category)}
     >
       {body}
     </Section>

@@ -39,7 +39,7 @@ export const Content = (props) => {
     accesses,
     diagnostic_status,
   } = data;
-  const id_lock = mecha_flags & mechflag_keys['ID_LOCK_ON'];
+  const id_lock = mecha_flags & mechflag_keys.ID_LOCK_ON;
   return (
     <Stack fill>
       <Stack.Item grow={1}>
@@ -211,8 +211,8 @@ const IntegrityBar = (props) => {
 const LightsBar = (props) => {
   const { act, data } = useBackend<MainData>();
   const { power_level, power_max, mecha_flags, mechflag_keys } = data;
-  const has_lights = mecha_flags & mechflag_keys['HAS_LIGHTS'];
-  const lights_on = mecha_flags & mechflag_keys['LIGHTS_ON'];
+  const has_lights = mecha_flags & mechflag_keys.HAS_LIGHTS;
+  const lights_on = mecha_flags & mechflag_keys.LIGHTS_ON;
   return (
     <LabeledList.Item label="Lights">
       <Button

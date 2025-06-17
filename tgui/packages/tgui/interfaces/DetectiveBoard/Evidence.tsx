@@ -4,17 +4,19 @@ import { Box, Button, Flex, Stack } from 'tgui-core/components';
 import type { DataEvidence } from './DataTypes';
 import { Pin } from './Pin';
 
+type Fn = (...args: any[]) => any;
+
 type EvidenceProps = {
   case_ref: string;
   evidence: DataEvidence;
-  act: Function;
-  onPinStartConnecting: Function;
-  onPinConnected: Function;
-  onPinMouseUp: Function;
-  onEvidenceRemoved: Function;
-  onStartMoving: Function;
-  onStopMoving: Function;
-  onMoving: Function;
+  act: Fn;
+  onPinStartConnecting: Fn;
+  onPinConnected: Fn;
+  onPinMouseUp: Fn;
+  onEvidenceRemoved: Fn;
+  onStartMoving: Fn;
+  onStopMoving: Fn;
+  onMoving: Fn;
 };
 
 type Position = {

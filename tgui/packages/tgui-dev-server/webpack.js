@@ -4,9 +4,9 @@
  * @license MIT
  */
 
-import fs from 'fs';
-import { createRequire } from 'module';
-import { dirname } from 'path';
+import fs from 'node:fs';
+import { createRequire } from 'node:module';
+import { dirname } from 'node:path';
 import { loadSourceMaps, setupLink } from './link/server.js';
 import { createLogger } from './logging.js';
 import { reloadByondCache } from './reloader.js';

@@ -4,11 +4,13 @@ import { classes } from 'tgui-core/react';
 
 import type { DataEvidence } from './DataTypes';
 
+type Fn = (...args: any[]) => any;
+
 type PinProps = {
   evidence: DataEvidence;
-  onStartConnecting: Function;
-  onConnected: Function;
-  onMouseUp: Function;
+  onStartConnecting: Fn;
+  onConnected: Fn;
+  onMouseUp: Fn;
 };
 
 export function Pin(props: PinProps) {

@@ -15,7 +15,13 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"includes": ["**", "./public/tgui.html", "!**/node_modules", "!**/public"]
+		"includes": [
+			"**",
+			"!**/node_modules",
+			"!**/public",
+			"./public/tgui.html",
+			"!**/packages/tgui-setup/helpers.js"
+		]
 	},
 	"formatter": {
 		"enabled": true,
@@ -36,14 +42,19 @@
 			"a11y": "off",
 			"correctness": {
 				"noUnusedImports": "warn",
-				"noUnusedVariables": "warn",
-				"useExhaustiveDependencies": "off"
+				"noUnusedVariables": "off",
+				"useExhaustiveDependencies": "off",
+				"noUnusedFunctionParameters": "off"
 			},
 			"security": {
-				"noDangerouslySetInnerHtml": "warn"
+				"noDangerouslySetInnerHtml": "off"
+			},
+			"style": {
+				"noNonNullAssertion": "off",
+				"useTemplate": "off"
 			},
 			"suspicious": {
-				"noArrayIndexKey": "warn",
+				"noArrayIndexKey": "off",
 				"noExplicitAny": "off",
 				"noImplicitAnyLet": "off"
 			}

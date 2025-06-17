@@ -171,7 +171,7 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
                       <Button
                         icon="arrow-down"
                         color={'green'}
-                        disabled={law.num === num_of_each_lawtype['inherent']}
+                        disabled={law.num === num_of_each_lawtype.inherent}
                         onClick={() =>
                           act('move_law', {
                             ref: cyborg_ref,

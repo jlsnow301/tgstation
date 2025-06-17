@@ -116,7 +116,7 @@ export const EntryGradient = (props: EntryGradientProps) => {
   const isLooping = gradient?.find((x) => x === 'loop');
   const space_type = gradient?.includes('space')
     ? Object.keys(SpaceToNum).find(
-        (space) => SpaceToNum[space] === gradient['space'],
+        (space) => SpaceToNum[space] === gradient.space,
       )
     : 'COLORSPACE_RGB';
   return (

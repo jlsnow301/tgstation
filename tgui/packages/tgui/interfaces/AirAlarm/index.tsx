@@ -34,7 +34,7 @@ export function AirAlarm(props) {
           {activeModal && (
             <AlarmEditingModal
               oldValue={
-                (tlvSettings.find((tlv) => tlv.id === activeModal.id) || {})[
+                tlvSettings.find((tlv) => tlv.id === activeModal.id)?.[
                   activeModal.typeVar
                 ]
               }

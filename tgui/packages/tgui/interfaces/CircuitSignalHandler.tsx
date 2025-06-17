@@ -37,7 +37,7 @@ type BitflagToString = {
 };
 
 export class CircuitSignalHandler extends Component<
-  {},
+  any,
   CircuitSignalHandlerState
 > {
   bitflags: BitflagToString;

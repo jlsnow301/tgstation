@@ -332,7 +332,7 @@ export function SmartPipeBlockSection(props) {
             <Stack.Item>
               <Button
                 icon="arrow-up"
-                selected={init_directions['north']}
+                selected={init_directions.north}
                 onClick={() =>
                   act('init_dir_setting', {
                     dir_flag: 'north',
@@ -347,7 +347,7 @@ export function SmartPipeBlockSection(props) {
             <Stack.Item>
               <Button
                 icon="arrow-left"
-                selected={init_directions['west']}
+                selected={init_directions.west}
                 onClick={() =>
                   act('init_dir_setting', {
                     dir_flag: 'west',
@@ -361,7 +361,7 @@ export function SmartPipeBlockSection(props) {
             <Stack.Item>
               <Button
                 icon="arrow-right"
-                selected={init_directions['east']}
+                selected={init_directions.east}
                 onClick={() =>
                   act('init_dir_setting', {
                     dir_flag: 'east',
@@ -374,7 +374,7 @@ export function SmartPipeBlockSection(props) {
         <Stack.Item>
           <Button
             icon="arrow-down"
-            selected={init_directions['south']}
+            selected={init_directions.south}
             onClick={() =>
               act('init_dir_setting', {
                 dir_flag: 'south',

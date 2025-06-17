@@ -179,7 +179,7 @@ module.exports = function () {
    */
   function runInContext(context) {
     // Exit early if unable to acquire lodash.
-    var _ = (context && context._) || require('lodash') || root._;
+    var _ = context?._ || require('lodash') || root._;
     if (!_) {
       Benchmark.runInContext = runInContext;
       return Benchmark;
@@ -228,7 +228,7 @@ module.exports = function () {
     var processObject = isHostType(context, 'process') && context.process;
 
     /** Used to prevent a `removeChild` memory leak in IE < 9. */
-    var trash = doc && doc.createElement('div');
+    var trash = doc?.createElement('div');
 
     /** Used to integrity check compiled tests. */
     var uid = 'uid' + _.now();
@@ -469,7 +469,7 @@ module.exports = function () {
         ? _.assign(
             this,
             { timeStamp: _.now() },
-            typeof type == 'string' ? { type: type } : type,
+            typeof type === 'string' ? { type: type } : type,
           )
         : new Event(type);
     }
@@ -581,7 +581,7 @@ module.exports = function () {
       // For more information see http://bugzil.la/639720.
       createFunction =
         support.browser &&
-        (createFunction('', 'return"' + uid + '"') || _.noop)() == uid
+        (createFunction('', 'return"' + uid + '"') || _.noop)() === uid
           ? createFunction
           : Function;
       return createFunction.apply(null, arguments);
@@ -670,7 +670,7 @@ module.exports = function () {
      * @returns {boolean} Returns `true` if the value is of the specified class, else `false`.
      */
     function isClassOf(value, name) {
-      return value != null && toString.call(value) == '[object ' + name + ']';
+      return value != null && toString.call(value) === '[object ' + name + ']';
     }
 
     /**
@@ -689,7 +689,7 @@ module.exports = function () {
       }
       var type = typeof object[property];
       return (
-        !rePrimitive.test(type) && (type != 'object' || !!object[property])
+        !rePrimitive.test(type) && (type !== 'object' || !!object[property])
       );
     }
 
@@ -841,7 +841,7 @@ module.exports = function () {
           );
         });
 
-        return _.filter(result, (bench) => result[0].compare(bench) == 0);
+        return _.filter(result, (bench) => result[0].compare(bench) === 0);
       }
       return _.filter(array, callback);
     }
@@ -924,7 +924,7 @@ module.exports = function () {
           listeners.splice(0, 0, listeners.pop());
         }
         // Execute method.
-        result[index] = _.isFunction(bench && bench[name])
+        result[index] = _.isFunction(bench?.[name])
           ? bench[name].apply(bench, args)
           : undefined;
         // If synchronous return `true` until finished.
@@ -981,9 +981,9 @@ module.exports = function () {
        */
       function isAsync(object) {
         // Avoid using `instanceof` here because of IE memory leak issues with host objects.
-        var async = args[0] && args[0].async;
+        var async = args[0]?.async;
         return (
-          name == 'run' &&
+          name === 'run' &&
           object instanceof Benchmark &&
           (((async == null ? object.options.async : async) &&
             support.timeout) ||
@@ -1028,7 +1028,7 @@ module.exports = function () {
         options.onStart.call(benches, Event(eventProps));
 
         // End early if the suite was aborted in an "onStart" listener.
-        if (name == 'run' && benches instanceof Suite && benches.aborted) {
+        if (name === 'run' && benches instanceof Suite && benches.aborted) {
           // Emit "cycle" event.
           eventProps.type = 'cycle';
           options.onCycle.call(benches, Event(eventProps));
@@ -1341,7 +1341,7 @@ module.exports = function () {
       }
       _.each(type ? type.split(' ') : events, (listeners, type) => {
         var index;
-        if (typeof listeners == 'string') {
+        if (typeof listeners === 'string') {
           type = listeners;
           listeners = _.has(events, type) && events[type];
         }
@@ -1460,7 +1460,7 @@ module.exports = function () {
      */
     function compare(other) {
       // Exit early if comparing the same benchmark.
-      if (this == other) {
+      if (this === other) {
         return 0;
       }
       var critical,
@@ -1503,11 +1503,11 @@ module.exports = function () {
         // ...the z-stat is greater than 1.96 or less than -1.96
         // http://www.statisticslectures.com/topics/mannwhitneyu/
         zStat = getZ(u);
-        return abs(zStat) > 1.96 ? (u == u1 ? 1 : -1) : 0;
+        return abs(zStat) > 1.96 ? (u === u1 ? 1 : -1) : 0;
       }
       // ...the U value is less than or equal the critical U value.
       critical = maxSize < 5 || minSize < 3 ? 0 : uTable[maxSize][minSize - 3];
-      return u <= critical ? (u == u1 ? 1 : -1) : 0;
+      return u <= critical ? (u === u1 ? 1 : -1) : 0;
     }
 
     /**
@@ -1548,23 +1548,23 @@ module.exports = function () {
 
           // Skip pseudo private properties like `_timerId` which could be a
           // Java object in environments like RingoJS.
-          if (key.charAt(0) == '_') {
+          if (key.charAt(0) === '_') {
             return;
           }
-          if (value && typeof value == 'object') {
+          if (value && typeof value === 'object') {
             if (_.isArray(value)) {
               // Check if an array value has changed to a non-array value.
               if (!_.isArray(currValue)) {
                 changed = currValue = [];
               }
               // Check if an array has changed its length.
-              if (currValue.length != value.length) {
+              if (currValue.length !== value.length) {
                 changed = currValue = currValue.slice(0, value.length);
                 currValue.length = value.length;
               }
             }
             // Check if an object has changed to a non-object value.
-            else if (!currValue || typeof currValue != 'object') {
+            else if (!currValue || typeof currValue !== 'object') {
               changed = currValue = {};
             }
             // Register a changed object.
@@ -1638,7 +1638,7 @@ module.exports = function () {
           '% (' +
           size +
           ' run' +
-          (size == 1 ? '' : 's') +
+          (size === 1 ? '' : 's') +
           ' sampled)';
       }
       return result;
@@ -1675,7 +1675,7 @@ module.exports = function () {
               (clone.setup !== _.noop || clone.teardown !== _.noop)),
           id = bench.id,
           name =
-            bench.name || (typeof id == 'number' ? '<Test #' + id + '>' : id),
+            bench.name || (typeof id === 'number' ? '<Test #' + id + '>' : id),
           result = 0;
 
         // Init `minTime` if needed.
@@ -1724,8 +1724,7 @@ module.exports = function () {
             bench.count = 1;
             compiled =
               decompilable &&
-              (compiled.call(bench, context, timer) || {}).uid ==
-                templateData.uid &&
+              compiled.call(bench, context, timer)?.uid === templateData.uid &&
               compiled;
             bench.count = count;
           }
@@ -1794,12 +1793,12 @@ module.exports = function () {
         });
 
         // Use API of chosen timer.
-        if (timer.unit == 'ns') {
+        if (timer.unit === 'ns') {
           _.assign(templateData, {
             begin: interpolate('s#=n#()'),
             end: interpolate('r#=n#(s#);r#=r#[0]+(r#[1]/1e9)'),
           });
-        } else if (timer.unit == 'us') {
+        } else if (timer.unit === 'us') {
           if (timer.ns.stop) {
             _.assign(templateData, {
               begin: interpolate('s#=n#.start()'),
@@ -1854,7 +1853,7 @@ module.exports = function () {
 
         // Get average smallest measurable time.
         while (count--) {
-          if (unit == 'us') {
+          if (unit === 'us') {
             divisor = 1e6;
             if (ns.stop) {
               ns.start();
@@ -1863,7 +1862,7 @@ module.exports = function () {
               begin = ns();
               while (!(measured = ns() - begin)) {}
             }
-          } else if (unit == 'ns') {
+          } else if (unit === 'ns') {
             divisor = 1e9;
             begin = (begin = ns())[0] + begin[1] / divisor;
             while (
@@ -1913,7 +1912,7 @@ module.exports = function () {
       // Detect Node.js's nanosecond resolution timer available in Node.js >= 0.8.
       if (
         processObject &&
-        typeof (timer.ns = processObject.hrtime) == 'function'
+        typeof (timer.ns = processObject.hrtime) === 'function'
       ) {
         timers.push({ ns: timer.ns, res: getRes('ns'), unit: 'ns' });
       }
@@ -1921,7 +1920,7 @@ module.exports = function () {
       timer = _.minBy(timers, 'res');
 
       // Error if there are no working timers.
-      if (timer.res == Infinity) {
+      if (timer.res === Infinity) {
         throw new Error('Benchmark.js was unable to find a working timer.');
       }
       // Resolve time span required to achieve a percent uncertainty of at most 1%.
@@ -1973,14 +1972,14 @@ module.exports = function () {
         var type = event.type;
 
         if (bench.running) {
-          if (type == 'start') {
+          if (type === 'start') {
             // Note: `clone.minTime` prop is inited in `clock()`.
             this.count = bench.initCount;
           } else {
-            if (type == 'error') {
+            if (type === 'error') {
               bench.error = this.error;
             }
-            if (type == 'abort') {
+            if (type === 'abort') {
               bench.abort();
               bench.emit('cycle');
             } else {
@@ -2018,7 +2017,7 @@ module.exports = function () {
           varOf = (sum, x) => sum + pow(x - mean, 2);
 
         // Exit early for aborted or unclockable tests.
-        if (done || clone.hz == Infinity) {
+        if (done || clone.hz === Infinity) {
           maxedOut = !(size = sample.length = queue.length = 0);
         }
 
@@ -2061,7 +2060,7 @@ module.exports = function () {
             done = true;
             times.elapsed = (now - times.timeStamp) / 1e3;
           }
-          if (bench.hz != Infinity) {
+          if (bench.hz !== Infinity) {
             bench.hz = 1 / mean;
             times.cycle = mean * bench.count;
             times.period = mean;
@@ -2158,7 +2157,7 @@ module.exports = function () {
           if (count <= clone.count) {
             count += Math.ceil((minTime - clocked) / period);
           }
-          clone.running = count != Infinity;
+          clone.running = count !== Infinity;
         }
       }
       // Should we exit early?
@@ -2222,9 +2221,8 @@ module.exports = function () {
       if (!event.cancelled) {
         options = {
           async:
-            ((options = options && options.async) == null
-              ? this.async
-              : options) && support.timeout,
+            ((options = options?.async) == null ? this.async : options) &&
+            support.timeout,
         };
 
         // For clones created within `compute()`.
@@ -2394,8 +2392,7 @@ module.exports = function () {
        */
       platform: context.platform ||
         require('platform') || {
-          description:
-            (context.navigator && context.navigator.userAgent) || null,
+          description: context.navigator?.userAgent || null,
           layout: null,
           product: null,
           name: null,
