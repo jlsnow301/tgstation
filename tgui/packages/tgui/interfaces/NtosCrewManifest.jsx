@@ -1,6 +1,5 @@
 import { map } from 'common/collections';
 import { Button, Section, Table } from 'tgui-core/components';
-
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 

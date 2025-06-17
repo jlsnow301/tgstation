@@ -6,7 +6,6 @@ import {
   ProgressBar,
   Section,
 } from 'tgui-core/components';
-
 import { useBackend } from '../../backend';
 import {
   SUBJECT_CONCIOUS,

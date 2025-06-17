@@ -10,7 +10,6 @@ import {
   Stack,
   TextArea,
 } from 'tgui-core/components';
-
 import { rebuildChat } from '../chat/actions';
 import {
   addHighlightSetting,

@@ -9,7 +9,6 @@ import {
 } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
 import { createSearch, toTitleCase } from 'tgui-core/string';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { SearchBar } from './common/SearchBar';

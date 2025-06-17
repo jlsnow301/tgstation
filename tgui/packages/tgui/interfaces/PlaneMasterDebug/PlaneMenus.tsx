@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Button, Dropdown, Modal, Section, Stack } from 'tgui-core/components';
-
-import { BlendModes, Plane } from './types';
+import { BlendModes, type Plane } from './types';
 import { usePlaneDebugContext } from './usePlaneDebug';
 
 export function PlaneMenus() {
@@ -236,9 +235,9 @@ function InfoModal() {
         quite powerful. <br />
         Even just setting alpha to show and hide things can be quite useful.{' '}
         <br />
+        <br />I won&apos;t get into every effect we do here, you can learn more
+        about each plane by clicking on the little button in their top right.{' '}
         <br />
-        I won&apos;t get into every effect we do here, you can learn more about
-        each plane by clicking on the little button in their top right. <br />
         <br />
       </Section>
     </Modal>

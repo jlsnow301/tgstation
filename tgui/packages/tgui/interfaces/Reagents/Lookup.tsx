@@ -1,10 +1,9 @@
 import { Button, Section, Stack } from 'tgui-core/components';
-
 import { useBackend } from '../../backend';
 import { ReagentLookup } from '../common/ReagentLookup';
 import { RecipeLookup } from '../common/RecipeLookup';
 import { bookmarkedReactions } from '.';
-import { ReagentsData } from './types';
+import type { ReagentsData } from './types';
 
 export function Lookup() {
   const { act, data } = useBackend<ReagentsData>();

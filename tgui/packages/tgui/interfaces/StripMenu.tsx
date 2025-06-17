@@ -1,8 +1,7 @@
 import { range } from 'common/collections';
-import { CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 import { Box, Button, Icon, Image, Stack } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
-
+import type { BooleanLike } from 'tgui-core/react';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';

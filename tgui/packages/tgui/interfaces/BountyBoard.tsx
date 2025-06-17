@@ -10,7 +10,6 @@ import {
   TextArea,
 } from 'tgui-core/components';
 import { formatMoney } from 'tgui-core/format';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { UserDetails } from './Vending';

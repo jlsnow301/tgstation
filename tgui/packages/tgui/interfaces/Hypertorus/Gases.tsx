@@ -11,7 +11,7 @@ import {
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
 
-import { HypertorusFuel, HypertorusGas } from '.';
+import type { HypertorusFuel, HypertorusGas } from '.';
 import { HelpDummy, HoverHelp } from './helpers';
 
 type GasListProps = {
@@ -67,7 +67,7 @@ const ensure_gases = (gas_array: HypertorusGas[] = [], gasids) => {
     gases_by_id[gas.id] = true;
   });
 
-  for (let gasid of gasids) {
+  for (const gasid of gasids) {
     if (!gases_by_id[gasid]) {
       gas_array.push({ id: gasid, amount: 0 });
     }

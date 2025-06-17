@@ -7,7 +7,6 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
@@ -48,7 +47,7 @@ export const ColorMatrixEditor = (props) => {
                                 width="50px"
                                 format={(value) => toFixed(value, 2)}
                                 onDrag={(value) => {
-                                  let retColor = currentColor;
+                                  const retColor = currentColor;
                                   retColor[row * 4 + col] = value;
                                   act('transition_color', {
                                     color: retColor,

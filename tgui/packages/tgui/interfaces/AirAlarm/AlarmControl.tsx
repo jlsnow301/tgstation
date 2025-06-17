@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { Button, Section } from 'tgui-core/components';
-
 import { AirAlarmControlHome } from './screens/Home';
 import { AirAlarmControlModes } from './screens/Modes';
 import { AirAlarmControlScrubbers } from './screens/Scrubbers';
 import { AirAlarmControlThresholds } from './screens/Thresholds';
 import { AirAlarmControlVents } from './screens/Vents';
-import { AlarmScreen } from './types';
+import type { AlarmScreen } from './types';
 
 export const AIR_ALARM_ROUTES = {
   home: {

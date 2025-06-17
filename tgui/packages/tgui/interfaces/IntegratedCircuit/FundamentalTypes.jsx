@@ -5,7 +5,6 @@ import {
   NumberInput,
   Stack,
 } from 'tgui-core/components';
-
 import { BasicInput } from './BasicInput';
 import { OPTION_DROPDOWN_LARGE_CHAR_AMOUNT } from './constants';
 

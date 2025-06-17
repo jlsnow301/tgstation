@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Box, Button, Input, Section, Stack } from 'tgui-core/components';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 

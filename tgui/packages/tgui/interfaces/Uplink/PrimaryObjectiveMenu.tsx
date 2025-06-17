@@ -1,5 +1,4 @@
 import { Box, Button, Section, Stack } from 'tgui-core/components';
-
 import { useBackend } from '../../backend';
 import { ObjectiveElement } from './ObjectiveElement';
 

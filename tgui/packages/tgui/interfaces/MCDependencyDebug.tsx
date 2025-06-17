@@ -1,11 +1,14 @@
 import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Box, InfinitePlane, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
-
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Connection, Connections, ConnectionStyle } from './common/Connections';
+import {
+  type Connection,
+  ConnectionStyle,
+  Connections,
+} from './common/Connections';
 import { ABSOLUTE_Y_OFFSET } from './IntegratedCircuit/constants';
 
 type Coord = {

@@ -1,11 +1,10 @@
 import { Button, Icon, Stack, Tooltip } from 'tgui-core/components';
 import { capitalizeFirst } from 'tgui-core/string';
-
 import { useBackend } from '../../backend';
 import { getDisplayColor, getDisplayName } from './helpers';
 import { JobIcon } from './JobIcon';
 import { OrbitTooltip } from './OrbitTooltip';
-import { Antagonist, Observable, OrbitData, ViewMode } from './types';
+import type { Antagonist, Observable, OrbitData, ViewMode } from './types';
 
 type Props = {
   item: Observable | Antagonist;

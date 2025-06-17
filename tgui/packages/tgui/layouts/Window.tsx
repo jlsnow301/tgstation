@@ -5,18 +5,17 @@
  */
 
 import {
-  ComponentProps,
-  PropsWithChildren,
-  ReactNode,
+  type ComponentProps,
+  type PropsWithChildren,
+  type ReactNode,
   useEffect,
   useLayoutEffect,
   useState,
 } from 'react';
-import { Box } from 'tgui-core/components';
+import type { Box } from 'tgui-core/components';
 import { UI_DISABLED, UI_INTERACTIVE } from 'tgui-core/constants';
-import { BooleanLike, classes } from 'tgui-core/react';
+import { type BooleanLike, classes } from 'tgui-core/react';
 import { decodeHtmlEntities } from 'tgui-core/string';
-
 import { backendSuspendStart, globalStore, useBackend } from '../backend';
 import { useDebug } from '../debug';
 import {

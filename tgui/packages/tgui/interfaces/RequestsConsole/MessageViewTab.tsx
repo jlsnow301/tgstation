@@ -7,12 +7,11 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { decodeHtmlEntities } from 'tgui-core/string';
-
 import { useBackend } from '../../backend';
 import {
-  RequestMessage,
+  type RequestMessage,
   RequestPriority,
-  RequestsData,
+  type RequestsData,
   RequestType,
 } from './types';
 

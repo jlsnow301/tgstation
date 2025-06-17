@@ -1,10 +1,10 @@
 /* eslint-disable */
 
-(function () {
+(() => {
   // Utility functions
   var hasOwn = Object.prototype.hasOwnProperty;
 
-  var assign = function (target) {
+  var assign = (target) => {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i];
       for (var key in source) {
@@ -16,7 +16,7 @@
     return target;
   };
 
-  var parseMetaTag = function (name) {
+  var parseMetaTag = (name) => {
     var content = document.getElementById(name).getAttribute('content');
     if (content === '[' + name + ']') {
       return null;
@@ -36,7 +36,7 @@
   window.__windowId__ = Byond.windowId;
 
   // Blink engine version
-  Byond.BLINK = (function () {
+  Byond.BLINK = (() => {
     var groups = navigator.userAgent.match(/Chrome\/(\d+)\./);
     var majorVersion = groups && groups[1];
     return majorVersion ? parseInt(majorVersion, 10) : null;
@@ -60,7 +60,7 @@
   Byond.__callbacks__ = [];
 
   // Reviver for BYOND JSON
-  var byondJsonReviver = function (key, value) {
+  var byondJsonReviver = (key, value) => {
     if (typeof value === 'object' && value !== null && value.__number__) {
       return parseFloat(value.__number__);
     }
@@ -69,7 +69,7 @@
 
   // Makes a BYOND call.
   // See: https://secure.byond.com/docs/ref/skinparams.html
-  Byond.call = function (path, params) {
+  Byond.call = (path, params) => {
     // Not running in BYOND, abort.
     if (!isByond) {
       return;
@@ -110,34 +110,31 @@
     xhr.send();
   };
 
-  Byond.callAsync = function (path, params) {
+  Byond.callAsync = (path, params) => {
     if (!window.Promise) {
       throw new Error('Async calls require API level of ES2015 or later.');
     }
     var index = Byond.__callbacks__.length;
-    var promise = new window.Promise(function (resolve) {
+    var promise = new window.Promise((resolve) => {
       Byond.__callbacks__.push(resolve);
     });
     Byond.call(
       path,
       assign({}, params, {
         callback: 'Byond.__callbacks__[' + index + ']',
-      })
+      }),
     );
     return promise;
   };
 
-  Byond.topic = function (params) {
-    return Byond.call('', params);
-  };
+  Byond.topic = (params) => Byond.call('', params);
 
-  Byond.command = function (command) {
-    return Byond.call('winset', {
+  Byond.command = (command) =>
+    Byond.call('winset', {
       command: command,
     });
-  };
 
-  Byond.winget = function (id, propName) {
+  Byond.winget = (id, propName) => {
     if (id === null) {
       id = '';
     }
@@ -148,14 +145,12 @@
       property: (isArray && propName.join(',')) || propName || '*',
     });
     if (isSpecific) {
-      promise = promise.then(function (props) {
-        return props[propName];
-      });
+      promise = promise.then((props) => props[propName]);
     }
     return promise;
   };
 
-  Byond.winset = function (id, propName, propValue) {
+  Byond.winset = (id, propName, propValue) => {
     if (id === null) {
       id = '';
     } else if (typeof id === 'object') {
@@ -171,7 +166,7 @@
     return Byond.call('winset', props);
   };
 
-  Byond.parseJson = function (json) {
+  Byond.parseJson = (json) => {
     try {
       return JSON.parse(json, byondJsonReviver);
     } catch (err) {
@@ -179,7 +174,7 @@
     }
   };
 
-  Byond.sendMessage = function (type, payload) {
+  Byond.sendMessage = (type, payload) => {
     var message =
       typeof type === 'string' ? { type: type, payload: payload } : type;
     // JSON-encode the payload
@@ -195,17 +190,17 @@
   };
 
   // This function exists purely for debugging, do not use it in code!
-  Byond.injectMessage = function (type, payload) {
+  Byond.injectMessage = (type, payload) => {
     window.update(JSON.stringify({ type: type, payload: payload }));
   };
 
-  Byond.subscribe = function (listener) {
+  Byond.subscribe = (listener) => {
     window.update.flushQueue(listener);
     window.update.listeners.push(listener);
   };
 
-  Byond.subscribeTo = function (type, listener) {
-    var _listener = function (_type, payload) {
+  Byond.subscribeTo = (type, listener) => {
+    var _listener = (_type, payload) => {
       if (_type === type) {
         listener(payload);
       }
@@ -223,7 +218,7 @@
 
   var loadedAssetByUrl = {};
 
-  var isStyleSheetLoaded = function (node, url) {
+  var isStyleSheetLoaded = (node, url) => {
     var styleSheet = node.sheet;
     if (styleSheet) {
       return styleSheet.rules.length > 0;
@@ -231,9 +226,9 @@
     return false;
   };
 
-  var injectNode = function (node) {
+  var injectNode = (node) => {
     if (!document.body) {
-      setTimeout(function () {
+      setTimeout(() => {
         injectNode(node);
       });
       return;
@@ -243,7 +238,7 @@
     ref.parentNode.insertBefore(node, ref.nextSibling);
   };
 
-  var loadAsset = function (options) {
+  var loadAsset = (options) => {
     var url = options.url;
     var type = options.type;
     var sync = options.sync;
@@ -253,7 +248,7 @@
     }
     loadedAssetByUrl[url] = options;
     // Generic retry function
-    var retry = function () {
+    var retry = () => {
       if (attempt >= RETRY_ATTEMPTS) {
         var errorMessage =
           'Error: Failed to load the asset ' +
@@ -269,12 +264,12 @@
         throw new Error(errorMessage);
       }
       setTimeout(
-        function () {
+        () => {
           loadedAssetByUrl[url] = null;
           options.attempt += 1;
           loadAsset(options);
         },
-        RETRY_WAIT_INITIAL + attempt * RETRY_WAIT_INCREMENT
+        RETRY_WAIT_INITIAL + attempt * RETRY_WAIT_INCREMENT,
       );
     };
     // JS specific code
@@ -288,7 +283,7 @@
       } else {
         node.async = true;
       }
-      node.onerror = function () {
+      node.onerror = () => {
         node.onerror = null;
         node.parentNode.removeChild(node);
         node = null;
@@ -309,7 +304,7 @@
       if (!sync) {
         node.media = 'only x';
       }
-      var removeNodeAndRetry = function () {
+      var removeNodeAndRetry = () => {
         node.parentNode.removeChild(node);
         node = null;
         retry();
@@ -317,11 +312,11 @@
       // 516: Chromium won't call onload() if there is a 404 error
       // Legacy IE doesn't use onerror, so we retain that
       // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#stylesheet_load_events
-      node.onerror = function () {
+      node.onerror = () => {
         node.onerror = null;
         removeNodeAndRetry();
       };
-      node.onload = function () {
+      node.onload = () => {
         node.onload = null;
         if (isStyleSheetLoaded(node, url)) {
           // Render the stylesheet
@@ -335,15 +330,15 @@
     }
   };
 
-  Byond.loadJs = function (url, sync) {
+  Byond.loadJs = (url, sync) => {
     loadAsset({ url: url, sync: sync, type: 'js' });
   };
 
-  Byond.loadCss = function (url, sync) {
+  Byond.loadCss = (url, sync) => {
     loadAsset({ url: url, sync: sync, type: 'css' });
   };
 
-  Byond.saveBlob = function (blob, filename, ext) {
+  Byond.saveBlob = (blob, filename, ext) => {
     if (window.navigator.msSaveBlob) {
       window.navigator.msSaveBlob(blob, filename);
     } else if (window.showSaveFilePicker) {
@@ -362,15 +357,9 @@
 
       window
         .showSaveFilePicker(opts)
-        .then(function (file) {
-          return file.createWritable();
-        })
-        .then(function (file) {
-          return file.write(blob).then(function () {
-            return file.close();
-          });
-        })
-        .catch(function () {});
+        .then((file) => file.createWritable())
+        .then((file) => file.write(blob).then(() => file.close()))
+        .catch(() => {});
     }
   };
 
@@ -381,7 +370,7 @@
 // Error handling
 // ------------------------------------------------------
 
-window.onerror = function (msg, url, line, col, error) {
+window.onerror = (msg, url, line, col, error) => {
   window.onerror.errorCount = (window.onerror.errorCount || 0) + 1;
   // Proper stacktrace
   var stack = error && error.stack;
@@ -409,7 +398,7 @@ window.onerror = function (msg, url, line, col, error) {
       errorStack[textProp] = window.onerror.__stack__;
     }
     // Set window geometry
-    var setFatalErrorGeometry = function () {
+    var setFatalErrorGeometry = () => {
       Byond.winset(Byond.windowId, {
         titlebar: true,
         'is-visible': true,
@@ -435,7 +424,7 @@ window.onerror = function (msg, url, line, col, error) {
   }
   // Short-circuit further updates
   if (Byond.strictMode) {
-    window.update = function () {};
+    window.update = () => {};
     window.update.queue = [];
   }
   // Prevent default action
@@ -443,7 +432,7 @@ window.onerror = function (msg, url, line, col, error) {
 };
 
 // Catch unhandled promise rejections
-window.onunhandledrejection = function (e) {
+window.onunhandledrejection = (e) => {
   var msg = 'UnhandledRejection';
   if (e.reason) {
     msg += ': ' + (e.reason.message || e.reason.description || e.reason);
@@ -455,15 +444,14 @@ window.onunhandledrejection = function (e) {
 };
 
 // Helper for augmenting stack traces on fatal errors
-window.__augmentStack__ = function (stack, error) {
-  return stack + '\nUser Agent: ' + navigator.userAgent;
-};
+window.__augmentStack__ = (stack, error) =>
+  stack + '\nUser Agent: ' + navigator.userAgent;
 
 // Incoming message handling
 // ------------------------------------------------------
 
 // Message handler
-window.update = function (rawMessage) {
+window.update = (rawMessage) => {
   // Push onto the queue (active during initialization)
   if (window.update.queueActive) {
     window.update.queue.push(rawMessage);
@@ -482,12 +470,12 @@ window.update = function (rawMessage) {
 window.update.listeners = [];
 window.update.queue = [];
 window.update.queueActive = true;
-window.update.flushQueue = function (listener) {
+window.update.flushQueue = (listener) => {
   // Disable and clear the queue permanently on short delay
   if (window.update.queueActive) {
     window.update.queueActive = false;
     if (window.setTimeout) {
-      window.setTimeout(function () {
+      window.setTimeout(() => {
         window.update.queue = [];
       }, 0);
     }
@@ -500,7 +488,7 @@ window.update.flushQueue = function (listener) {
   }
 };
 
-window.replaceHtml = function (inline_html) {
+window.replaceHtml = (inline_html) => {
   var children = document.body.childNodes;
 
   for (var i = 0; i < children.length; i++) {
@@ -516,6 +504,6 @@ window.replaceHtml = function (inline_html) {
     'afterbegin',
     '<!-- tgui:inline-html-start -->' +
       inline_html +
-      '<!-- tgui:inline-html-end -->'
+      '<!-- tgui:inline-html-end -->',
   );
 };

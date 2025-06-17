@@ -14,9 +14,8 @@ import {
 import { formatPower } from 'tgui-core/format';
 import { toFixed } from 'tgui-core/math';
 import { classes } from 'tgui-core/react';
-
 import { useBackend } from '../../backend';
-import { MainData, MechModule } from './data';
+import type { MainData, MechModule } from './data';
 
 const moduleSlotIcon = (param) => {
   switch (param) {

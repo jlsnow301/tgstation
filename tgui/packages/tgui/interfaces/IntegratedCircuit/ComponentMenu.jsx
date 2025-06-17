@@ -9,7 +9,6 @@ import {
 } from 'tgui-core/components';
 import { fetchRetry } from 'tgui-core/http';
 import { shallowDiffers } from 'tgui-core/react';
-
 import { resolveAsset } from '../../assets';
 import { DEFAULT_COMPONENT_MENU_LIMIT } from './constants';
 import { DisplayComponent } from './DisplayComponent';
@@ -73,8 +72,8 @@ export class ComponentMenu extends Component {
     } = this.state;
 
     const tabs = ['All'];
-    let shownComponents = componentData.filter((val) => {
-      let shouldShow = showAll || components.includes(val.type);
+    const shownComponents = componentData.filter((val) => {
+      const shouldShow = showAll || components.includes(val.type);
       if (shouldShow) {
         if (!tabs.includes(val.category)) {
           tabs.push(val.category);

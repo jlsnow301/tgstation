@@ -2,7 +2,11 @@ import { sortBy } from 'common/collections';
 import { useMemo } from 'react';
 import { Box, Dropdown, Stack } from 'tgui-core/components';
 
-import { Feature, FeatureChoicedServerData, FeatureValueProps } from '../base';
+import type {
+  Feature,
+  FeatureChoicedServerData,
+  FeatureValueProps,
+} from '../base';
 
 type HexValue = {
   lightness: number;

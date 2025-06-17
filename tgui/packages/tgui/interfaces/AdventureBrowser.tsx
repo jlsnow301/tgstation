@@ -1,9 +1,8 @@
 import { Box, Button, NoticeBox, Section, Table } from 'tgui-core/components';
 import { formatTime } from 'tgui-core/format';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { AdventureDataProvider, AdventureScreen } from './ExodroneConsole';
+import { type AdventureDataProvider, AdventureScreen } from './ExodroneConsole';
 
 type Adventure = {
   ref: string;

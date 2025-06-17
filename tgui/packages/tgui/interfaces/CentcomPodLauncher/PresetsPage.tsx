@@ -9,10 +9,9 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { createUuid } from 'tgui-core/uuid';
-
 import { useBackend } from '../../backend';
 import { POD_GREY } from './constants';
-import { PodLauncherData } from './types';
+import type { PodLauncherData } from './types';
 
 type Preset = {
   hue: number;

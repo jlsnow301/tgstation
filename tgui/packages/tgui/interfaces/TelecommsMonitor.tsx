@@ -10,7 +10,6 @@ import {
 } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 import { toTitleCase } from 'tgui-core/string';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 

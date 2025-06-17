@@ -6,7 +6,6 @@ import {
   ProgressBar,
   Section,
 } from 'tgui-core/components';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';

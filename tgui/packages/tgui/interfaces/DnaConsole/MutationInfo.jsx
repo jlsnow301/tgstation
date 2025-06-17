@@ -7,7 +7,6 @@ import {
   LabeledList,
   Stack,
 } from 'tgui-core/components';
-
 import { useBackend } from '../../backend';
 import {
   CHROMOSOME_NEVER,

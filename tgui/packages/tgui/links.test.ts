@@ -7,7 +7,6 @@ import {
   mock,
   spyOn,
 } from 'bun:test';
-
 import { captureExternalLinks } from './links';
 
 describe('captureExternalLinks', () => {

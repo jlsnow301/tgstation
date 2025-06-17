@@ -1,6 +1,5 @@
 import { sortBy } from 'common/collections';
 import { Button, Flex, Section, Tabs } from 'tgui-core/components';
-
 import { useSharedState } from '../../backend';
 
 export const AccessList = (props) => {
@@ -254,7 +253,7 @@ const RegionAccessList = (props) => {
   );
 
   const allWildcards = Object.keys(wildcardSlots);
-  let wcAccess = {};
+  const wcAccess = {};
   allWildcards.forEach((wildcard) => {
     wildcardSlots[wildcard].usage.forEach((access) => {
       wcAccess[access] = wildcard;

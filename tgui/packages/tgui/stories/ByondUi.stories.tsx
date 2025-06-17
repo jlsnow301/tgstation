@@ -6,7 +6,6 @@
 
 import { useState } from 'react';
 import { Button, ByondUi, Section, TextArea } from 'tgui-core/components';
-
 import { logger } from '../logging';
 
 export const meta = {

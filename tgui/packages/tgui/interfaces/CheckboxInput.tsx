@@ -10,7 +10,6 @@ import {
   Tooltip,
 } from 'tgui-core/components';
 import { createSearch, decodeHtmlEntities } from 'tgui-core/string';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { InputButtons } from './common/InputButtons';

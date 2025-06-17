@@ -1,6 +1,5 @@
 import { Component } from 'react';
 import { Box, Button, InfinitePlane, Input, Stack } from 'tgui-core/components';
-
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -348,8 +347,8 @@ export class IntegratedCircuit extends Component {
     act('add_setter_or_getter', {
       variable: draggingVariable,
       is_setter: variableIsSetter,
-      rel_x: xPos * Math.pow(zoom, -1),
-      rel_y: (yPos + ABSOLUTE_Y_OFFSET) * Math.pow(zoom, -1),
+      rel_x: xPos * zoom ** -1,
+      rel_y: (yPos + ABSOLUTE_Y_OFFSET) * zoom ** -1,
     });
   }
 
@@ -384,8 +383,8 @@ export class IntegratedCircuit extends Component {
 
     act('print_component', {
       component_to_print: draggingComponent.type,
-      rel_x: xPos * Math.pow(zoom, -1),
-      rel_y: (yPos + ABSOLUTE_Y_OFFSET) * Math.pow(zoom, -1),
+      rel_x: xPos * zoom ** -1,
+      rel_y: (yPos + ABSOLUTE_Y_OFFSET) * zoom ** -1,
     });
   }
 
@@ -442,8 +441,8 @@ export class IntegratedCircuit extends Component {
       const isOutput = selectedPort.is_output;
       const portLocation = locations[selectedPort.ref];
       const mouseCoords = {
-        x: mouseX * Math.pow(zoom, -1),
-        y: (mouseY + ABSOLUTE_Y_OFFSET) * Math.pow(zoom, -1),
+        x: mouseX * zoom ** -1,
+        y: (mouseY + ABSOLUTE_Y_OFFSET) * zoom ** -1,
       };
       connections.push({
         color: (portLocation && portLocation.color) || 'blue',

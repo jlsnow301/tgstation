@@ -8,9 +8,8 @@ import {
   Stack,
   TextArea,
 } from 'tgui-core/components';
-
 import { useBackend, useLocalState } from '../../backend';
-import { RequestPriority, RequestsData, RequestType } from './types';
+import { RequestPriority, type RequestsData, RequestType } from './types';
 
 export const MessageWriteTab = (props) => {
   const { act, data } = useBackend<RequestsData>();

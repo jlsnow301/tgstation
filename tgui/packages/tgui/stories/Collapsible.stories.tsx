@@ -5,7 +5,6 @@
  */
 
 import { Button, Collapsible, Section } from 'tgui-core/components';
-
 import { BoxWithSampleText } from './common';
 
 export const meta = {

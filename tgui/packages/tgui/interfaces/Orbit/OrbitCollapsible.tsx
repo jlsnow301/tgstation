@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import { Collapsible, Stack } from 'tgui-core/components';
-
 import { useBackend } from '../../backend';
 import { OrbitContext } from '.';
 import { VIEWMODE } from './constants';
@@ -10,7 +9,7 @@ import {
   sortByDisplayName,
 } from './helpers';
 import { OrbitItem } from './OrbitItem';
-import { Observable } from './types';
+import type { Observable } from './types';
 
 type Props = {
   color?: string;

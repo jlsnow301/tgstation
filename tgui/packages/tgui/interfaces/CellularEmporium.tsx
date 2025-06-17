@@ -9,7 +9,6 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
@@ -40,7 +39,7 @@ export const CellularEmporium = (props) => {
 
   const { can_readapt, genetic_points_count } = data;
   const readaptTracker = (can_readapt: number): string => {
-    let firstPart = 'Readapt(';
+    const firstPart = 'Readapt(';
     return firstPart.concat(can_readapt.toString(), ')');
   };
   return (

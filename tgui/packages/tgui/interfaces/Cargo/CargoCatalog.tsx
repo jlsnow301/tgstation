@@ -1,5 +1,5 @@
 import { sortBy } from 'common/collections';
-import { Dispatch, SetStateAction, useMemo, useState } from 'react';
+import { type Dispatch, type SetStateAction, useMemo, useState } from 'react';
 import {
   BlockQuote,
   Button,
@@ -12,11 +12,10 @@ import {
   Tooltip,
 } from 'tgui-core/components';
 import { formatMoney } from 'tgui-core/format';
-
 import { useBackend, useSharedState } from '../../backend';
 import { SearchBar } from '../common/SearchBar';
 import { searchForSupplies } from './helpers';
-import { CargoData, Supply, SupplyCategory } from './types';
+import type { CargoData, Supply, SupplyCategory } from './types';
 
 type Props = {
   express?: boolean;

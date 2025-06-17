@@ -8,7 +8,6 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-
 import { resolveAsset } from '../../assets';
 import { ParticleContext } from '.';
 

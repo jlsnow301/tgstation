@@ -1,11 +1,10 @@
 import { binaryInsertWith, sortBy } from 'common/collections';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Box, Flex, Tooltip } from 'tgui-core/components';
-
 import { features } from '../preferences/features';
 import { FeatureValueInput } from '../preferences/features/base';
-import { PreferencesMenuData } from '../types';
+import type { PreferencesMenuData } from '../types';
 import { TabbedMenu } from './TabbedMenu';
 
 type PreferenceChild = {

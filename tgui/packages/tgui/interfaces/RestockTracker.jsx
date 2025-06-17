@@ -1,7 +1,6 @@
 import { sortBy } from 'common/collections';
 import { ColorBox, ProgressBar, Section, Stack } from 'tgui-core/components';
 import { round } from 'tgui-core/math';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 

@@ -20,7 +20,6 @@ import {
   TextArea,
 } from 'tgui-core/components';
 import { decodeHtmlEntities } from 'tgui-core/string';
-
 import { useBackend, useSharedState } from '../backend';
 import { processedText } from '../process';
 import { BountyBoardContent } from './BountyBoard';

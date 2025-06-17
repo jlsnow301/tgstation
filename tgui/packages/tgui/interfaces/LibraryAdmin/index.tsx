@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import { Window } from '../../layouts';
 import { BookListing } from './BookListing';
 import { ModifyState } from './hooks';

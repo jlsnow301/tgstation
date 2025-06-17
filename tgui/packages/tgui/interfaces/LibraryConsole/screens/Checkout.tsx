@@ -11,10 +11,9 @@ import {
   Stack,
   Table,
 } from 'tgui-core/components';
-
 import { PageSelect } from '../components/PageSelect';
 import { ScrollableSection } from '../components/ScrollableSection';
-import { LibraryConsoleData } from '../types';
+import type { LibraryConsoleData } from '../types';
 import { useLibraryContext } from '../useLibraryContext';
 
 export function Checkout(props) {

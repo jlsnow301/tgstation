@@ -6,7 +6,6 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';

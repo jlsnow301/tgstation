@@ -7,7 +7,6 @@ import {
   LabeledList,
   Tooltip,
 } from 'tgui-core/components';
-
 import { useBackend } from '../../backend';
 
 export const RecipeLookup = (props) => {

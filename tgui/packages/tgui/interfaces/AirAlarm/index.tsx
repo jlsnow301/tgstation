@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { Stack } from 'tgui-core/components';
-
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { InterfaceLockNoticeBox } from '../common/InterfaceLockNoticeBox';
 import { AirAlarmControl } from './AlarmControl';
 import { AlarmEditingModal } from './AlarmModal';
 import { AirAlarmStatus } from './AlarmStatus';
-import { ActiveModal, AirAlarmData } from './types';
+import type { ActiveModal, AirAlarmData } from './types';
 import { ModalContext } from './useModal';
 
 export function AirAlarm(props) {

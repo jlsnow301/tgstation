@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Button, Image, Input, Section, Tooltip } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
-
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 

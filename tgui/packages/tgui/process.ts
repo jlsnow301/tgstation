@@ -1,7 +1,6 @@
 import { marked } from 'marked';
 import { baseUrl } from 'marked-base-url';
 import { markedSmartypants } from 'marked-smartypants';
-
 import { sanitizeText } from './sanitize';
 
 type ProcessedText = {

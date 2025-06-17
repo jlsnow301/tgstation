@@ -1,5 +1,4 @@
 import { Box, Section, Table, Tooltip } from 'tgui-core/components';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 

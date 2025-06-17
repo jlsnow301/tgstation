@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { Section, Stack } from 'tgui-core/components';
-
 import { Window } from '../../layouts';
 import { Lookup } from './Lookup';
 import { RecipeLibrary } from './RecipeLibrary';
 import { TagBox } from './TagBox';
-import { Reaction } from './types';
+import type { Reaction } from './types';
 
 export const bookmarkedReactions = new Set<Reaction>();
 

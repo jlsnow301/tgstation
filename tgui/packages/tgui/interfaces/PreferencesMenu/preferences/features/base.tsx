@@ -1,8 +1,8 @@
 import { sortBy } from 'common/collections';
 import {
-  ComponentType,
+  type ComponentType,
   createElement,
-  ReactNode,
+  type ReactNode,
   useEffect,
   useState,
 } from 'react';
@@ -16,9 +16,8 @@ import {
   Slider,
   Stack,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
-
-import { createSetPreference, PreferencesMenuData } from '../../types';
+import type { BooleanLike } from 'tgui-core/react';
+import { createSetPreference, type PreferencesMenuData } from '../../types';
 import { useServerPrefs } from '../../useServerPrefs';
 
 export function sortChoices(array: [string, ReactNode][]) {

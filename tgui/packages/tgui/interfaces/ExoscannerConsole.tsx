@@ -10,7 +10,6 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { formatTime } from 'tgui-core/format';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 

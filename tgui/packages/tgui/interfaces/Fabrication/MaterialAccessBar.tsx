@@ -3,9 +3,8 @@ import { useState } from 'react';
 import { AnimatedNumber, Button, Flex } from 'tgui-core/components';
 import { formatSiUnit } from 'tgui-core/format';
 import { classes } from 'tgui-core/react';
-
 import { MaterialIcon } from './MaterialIcon';
-import { Material } from './Types';
+import type { Material } from './Types';
 
 // by popular demand of discord people (who are always right and never wrong)
 // this is completely made up

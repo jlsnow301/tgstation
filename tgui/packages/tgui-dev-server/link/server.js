@@ -7,7 +7,6 @@
 import { inspect } from 'node:util';
 
 import * as WebSocket from 'ws';
-
 import { createLogger, directLog } from '../logging.js';
 import { loadSourceMaps, retrace } from './retrace.js';
 
@@ -79,7 +78,7 @@ class LinkServer {
       if (!this.wss) {
         return;
       }
-      for (let client of this.wss.clients) {
+      for (const client of this.wss.clients) {
         if (client === ws) {
           continue;
         }
@@ -103,7 +102,7 @@ class LinkServer {
       return;
     }
     logger.log(`broadcasting ${msg.type} to ${clients.length} clients`);
-    for (let client of clients) {
+    for (const client of clients) {
       const json = JSON.stringify(msg);
       client.send(json);
     }

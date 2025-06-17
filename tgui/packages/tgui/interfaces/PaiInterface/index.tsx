@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Window } from 'tgui/layouts';
 import { Stack, Tabs } from 'tgui-core/components';
-
 import { AvailableDisplay } from './Available';
 import { PAI_TAB } from './constants';
 import { DirectiveDisplay } from './Directives';

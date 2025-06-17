@@ -5,7 +5,6 @@
  */
 
 import { useDispatch, useSelector } from 'tgui/backend';
-
 import { toggleSettings, updateSettings } from './actions';
 import { selectSettings } from './selectors';
 

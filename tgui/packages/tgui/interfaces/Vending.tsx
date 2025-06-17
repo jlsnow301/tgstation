@@ -9,7 +9,6 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { capitalizeAll, createSearch } from 'tgui-core/string';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { getLayoutState, LAYOUT, LayoutToggle } from './common/LayoutToggle';

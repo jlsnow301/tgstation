@@ -1,5 +1,4 @@
 import { marked } from 'marked';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';

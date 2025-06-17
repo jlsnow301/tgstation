@@ -1,11 +1,4 @@
-/**
- * @file
- * @copyright 2020 Aleksej Komarov
- * @license MIT
- */
-
-import { connectionLost } from './actions';
-import { connectionRestored } from './actions';
+import { connectionLost, connectionRestored } from './actions';
 
 const initialState = {
   // TODO: This is where round info should be.

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Stack } from 'tgui-core/components';
 import { exhaustiveCheck } from 'tgui-core/exhaustive';
-
 import { PageButton } from '../components/PageButton';
 import { GamePreferencesSelectedPage } from '../types';
 import { GamePreferencesPage } from './GamePreferencesPage';

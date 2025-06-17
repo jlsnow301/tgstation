@@ -6,11 +6,10 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { capitalizeFirst } from 'tgui-core/string';
-
 import { useBackend } from '../../backend';
 import { TraitTooltip } from '../SeedExtractor';
 import { Fallback } from './Fallback';
-import { PlantAnalyzerData } from './types';
+import type { PlantAnalyzerData } from './types';
 
 export function PlantAnalyzerGraft(props) {
   const { data } = useBackend<PlantAnalyzerData>();

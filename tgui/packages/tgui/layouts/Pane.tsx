@@ -6,7 +6,6 @@
 
 import { Box } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
-
 import { useBackend } from '../backend';
 import { useDebug } from '../debug';
 import { Layout } from './Layout';

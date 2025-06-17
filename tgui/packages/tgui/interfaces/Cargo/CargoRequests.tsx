@@ -1,9 +1,8 @@
 import { Button, NoticeBox, Section, Table } from 'tgui-core/components';
 import { formatMoney } from 'tgui-core/format';
 import { decodeHtmlEntities } from 'tgui-core/string';
-
 import { useBackend } from '../../backend';
-import { CargoData } from './types';
+import type { CargoData } from './types';
 
 export function CargoRequests(props) {
   const { act, data } = useBackend<CargoData>();

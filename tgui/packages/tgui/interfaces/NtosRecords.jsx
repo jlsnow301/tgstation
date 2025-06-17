@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Box, Icon, Input, Section } from 'tgui-core/components';
 import { createSearch } from 'tgui-core/string';
-
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 

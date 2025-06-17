@@ -10,10 +10,9 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { round, toFixed } from 'tgui-core/math';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { MixingData, Reagent } from './ChemMixingChamber';
+import type { MixingData, Reagent } from './ChemMixingChamber';
 
 type ReactingData = MixingData & {
   ph: number;

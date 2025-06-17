@@ -5,7 +5,6 @@
  */
 
 import path from 'node:path';
-
 import { Glob } from 'bun';
 
 export const resolvePath = path.resolve;

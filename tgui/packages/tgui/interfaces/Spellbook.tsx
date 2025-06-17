@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import {
   Box,
   Button,
@@ -11,8 +11,7 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
-
+import type { BooleanLike } from 'tgui-core/react';
 import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
 
@@ -477,10 +476,14 @@ const SearchSpells = (props) => {
         // Unsure about including description. Wizard spell descriptions
         // are painfully original and use the same verbiage often,
         // which may both be a benefit and a curse
-        entry.desc.toLowerCase().includes(searchStatement) ||
+        entry.desc
+          .toLowerCase()
+          .includes(searchStatement) ||
         // Also opting to include category
         // so you can search "rituals" to see them all at once
-        entry.cat.toLowerCase().includes(searchStatement),
+        entry.cat
+          .toLowerCase()
+          .includes(searchStatement),
     );
   };
 
@@ -648,7 +651,7 @@ export const Spellbook = (props) => {
 
   // Has a chance of selecting a random funny verb instead of "Searching"
   const SelectSearchVerb = () => {
-    let found = Math.random();
+    const found = Math.random();
     if (found <= 0.03) {
       return 'Seeking';
     }

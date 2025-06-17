@@ -1,5 +1,4 @@
 import { Button, Dropdown, Input, Section, Stack } from 'tgui-core/components';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 

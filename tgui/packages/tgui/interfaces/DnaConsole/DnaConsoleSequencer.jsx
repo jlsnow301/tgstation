@@ -1,6 +1,5 @@
 import { Box, Button, Image, Section, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
-
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
 import {

@@ -9,7 +9,6 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 

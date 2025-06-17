@@ -12,7 +12,6 @@ import {
   Stack,
   Tabs,
 } from 'tgui-core/components';
-
 import { useServerPrefs } from '../../useServerPrefs';
 import type {
   LoadoutCategory,

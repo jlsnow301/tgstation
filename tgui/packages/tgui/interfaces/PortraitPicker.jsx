@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Button, Flex, Input, NoticeBox, Section } from 'tgui-core/components';
-
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';

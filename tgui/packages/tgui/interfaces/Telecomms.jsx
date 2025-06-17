@@ -9,7 +9,6 @@ import {
   Section,
   Table,
 } from 'tgui-core/components';
-
 import { useBackend } from '../backend';
 import { RADIO_CHANNELS } from '../constants';
 import { Window } from '../layouts';

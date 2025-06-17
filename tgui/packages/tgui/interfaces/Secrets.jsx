@@ -9,7 +9,6 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 

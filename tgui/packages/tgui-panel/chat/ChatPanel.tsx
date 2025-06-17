@@ -7,7 +7,6 @@
 import { Component, createRef } from 'react';
 import { Button } from 'tgui-core/components';
 import { shallowDiffers } from 'tgui-core/react';
-
 import { chatRenderer } from './renderer';
 
 type Props = {

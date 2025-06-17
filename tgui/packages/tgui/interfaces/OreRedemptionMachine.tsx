@@ -12,9 +12,8 @@ import {
   Tabs,
 } from 'tgui-core/components';
 import { formatSiUnit } from 'tgui-core/format';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 import { createSearch, toTitleCase } from 'tgui-core/string';
-
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 import { SearchBar } from './common/SearchBar';

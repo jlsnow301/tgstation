@@ -79,7 +79,7 @@ export function AccessConfig(props: ConfigProps) {
   function checkAccessIcon(accesses: Area[]) {
     let oneAccess = false;
     let oneInaccess = false;
-    for (let element of accesses) {
+    for (const element of accesses) {
       if (selectedList.includes(element.ref)) {
         oneAccess = true;
       } else {

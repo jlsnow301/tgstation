@@ -7,7 +7,6 @@ import {
 } from 'tgui-core/components';
 import { formatSiUnit } from 'tgui-core/format';
 import { toFixed } from 'tgui-core/math';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 

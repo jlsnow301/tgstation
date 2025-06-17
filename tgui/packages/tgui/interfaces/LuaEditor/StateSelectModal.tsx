@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { Button, Input, Modal, Section, Stack } from 'tgui-core/components';
-
 import { useBackend } from '../../backend';
-import { LuaEditorData, LuaEditorModal } from './types';
+import type { LuaEditorData, LuaEditorModal } from './types';
 
 type StateSelectModalProps = {
   setModal: (modal: LuaEditorModal) => void;

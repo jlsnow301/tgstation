@@ -1,4 +1,4 @@
-import { Dispatch } from 'react';
+import type { Dispatch } from 'react';
 import {
   Button,
   Icon,
@@ -7,10 +7,9 @@ import {
   Table,
   Tooltip,
 } from 'tgui-core/components';
-
 import { useBackend } from '../../backend';
 import { SORTING_TYPES } from './contants';
-import { SortType, SubsystemData } from './types';
+import { SortType, type SubsystemData } from './types';
 
 type Props = {
   max: number;

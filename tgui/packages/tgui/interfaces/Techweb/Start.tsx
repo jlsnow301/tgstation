@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { Button, Modal } from 'tgui-core/components';
-
 import { useBackend } from '../../backend';
 import { TechwebContent } from './Content';
 import { TechWebRoute } from './hooks';
-import { TechWebData } from './types';
+import type { TechWebData } from './types';
 
 export function TechwebStart(props) {
   const { act, data } = useBackend<TechWebData>();

@@ -5,7 +5,6 @@
  */
 import { useState } from 'react';
 import { Section, Stack, Tabs } from 'tgui-core/components';
-
 import { Pane, Window } from '../layouts';
 
 const r = import.meta.webpackContext('../', {

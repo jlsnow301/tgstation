@@ -9,7 +9,6 @@ import {
   Tabs,
 } from 'tgui-core/components';
 import { formatMoney } from 'tgui-core/format';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 

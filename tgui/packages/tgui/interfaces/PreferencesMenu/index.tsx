@@ -1,7 +1,6 @@
 import { Suspense, useEffect, useState } from 'react';
 import { exhaustiveCheck } from 'tgui-core/exhaustive';
 import { fetchRetry } from 'tgui-core/http';
-
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -11,9 +10,9 @@ import { CharacterPreferenceWindow } from './CharacterPreferences';
 import { GamePreferenceWindow } from './GamePreferences';
 import {
   GamePreferencesSelectedPage,
-  PreferencesMenuData,
+  type PreferencesMenuData,
   PrefsWindow,
-  ServerData,
+  type ServerData,
 } from './types';
 import { RandomToggleState } from './useRandomToggleState';
 import { ServerPrefs } from './useServerPrefs';

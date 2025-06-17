@@ -15,7 +15,7 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"includes": ["**", "!**/node_modules"]
+		"includes": ["**", "./public/tgui.html", "!**/node_modules", "!**/public"]
 	},
 	"formatter": {
 		"enabled": true,
@@ -38,6 +38,9 @@
 				"noUnusedImports": "warn",
 				"noUnusedVariables": "warn",
 				"useExhaustiveDependencies": "off"
+			},
+			"security": {
+				"noDangerouslySetInnerHtml": "warn"
 			},
 			"suspicious": {
 				"noArrayIndexKey": "warn",

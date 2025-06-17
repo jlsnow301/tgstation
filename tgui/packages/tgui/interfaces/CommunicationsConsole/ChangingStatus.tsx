@@ -1,5 +1,4 @@
 import { Box, Button, Section } from 'tgui-core/components';
-
 import { useBackend } from '../../backend';
 import { StatusDisplayControls } from '../common/StatusDisplayControls';
 import { ShuttleState } from './types';

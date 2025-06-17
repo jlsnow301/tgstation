@@ -1,9 +1,8 @@
 import { sortBy } from 'common/collections';
 import { Box, Button, Section } from 'tgui-core/components';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Beaker, BeakerDisplay } from './common/BeakerDisplay';
+import { type Beaker, BeakerDisplay } from './common/BeakerDisplay';
 
 type DispensableReagent = {
   title: string;

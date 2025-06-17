@@ -1,6 +1,5 @@
 import { Button, Section, Stack, Tabs } from 'tgui-core/components';
 import { toTitleCase } from 'tgui-core/string';
-
 import { useBackend, useSharedState } from '../../backend';
 import { Window } from '../../layouts';
 import { CargoCartButtons } from './CargoButtons';
@@ -9,7 +8,7 @@ import { CargoCatalog } from './CargoCatalog';
 import { CargoHelp } from './CargoHelp';
 import { CargoRequests } from './CargoRequests';
 import { CargoStatus } from './CargoStatus';
-import { CargoData } from './types';
+import type { CargoData } from './types';
 
 enum TAB {
   Catalog = 'catalog',

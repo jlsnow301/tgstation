@@ -6,10 +6,9 @@ import {
   Section,
   Table,
 } from 'tgui-core/components';
-
 import { useBackend } from '../../backend';
 import { bookmarkedReactions } from '.';
-import { ReagentsData, ReagentsProps } from './types';
+import type { ReagentsData, ReagentsProps } from './types';
 
 function matchBitflag(a: number, b: number) {
   return a & b && (a | b) === b;
@@ -35,7 +34,7 @@ export function RecipeLibrary(props: ReagentsProps) {
     if (!reagentFilter || currentReagents === null) {
       return true;
     }
-    let matches = reaction.reactants.filter((reactant) =>
+    const matches = reaction.reactants.filter((reactant) =>
       currentReagents.includes(reactant.id),
     ).length;
     return matches === currentReagents.length;

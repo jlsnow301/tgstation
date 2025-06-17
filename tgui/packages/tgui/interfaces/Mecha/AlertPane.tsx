@@ -6,9 +6,8 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-
 import { useBackend } from '../../backend';
-import { MainData } from './data';
+import type { MainData } from './data';
 
 export const InternalDamageToDamagedDesc = {
   MECHA_INT_FIRE: 'Internal fire detected',

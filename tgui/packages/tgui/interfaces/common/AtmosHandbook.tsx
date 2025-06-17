@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { type ReactNode, useState } from 'react';
 import {
   Box,
   Button,
@@ -9,7 +9,6 @@ import {
   Stack,
   Tooltip,
 } from 'tgui-core/components';
-
 import { useBackend, useLocalState } from '../../backend';
 
 /**

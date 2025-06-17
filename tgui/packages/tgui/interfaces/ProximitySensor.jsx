@@ -1,5 +1,4 @@
 import { Button, LabeledList, Section } from 'tgui-core/components';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 

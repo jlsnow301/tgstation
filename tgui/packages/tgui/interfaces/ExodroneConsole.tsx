@@ -1,7 +1,7 @@
 import {
   createContext,
   Fragment,
-  SetStateAction,
+  type SetStateAction,
   useContext,
   useState,
 } from 'react';
@@ -21,7 +21,6 @@ import {
 } from 'tgui-core/components';
 import { formatTime } from 'tgui-core/format';
 import { capitalize } from 'tgui-core/string';
-
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';

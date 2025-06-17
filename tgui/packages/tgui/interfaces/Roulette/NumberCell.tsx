@@ -1,6 +1,5 @@
 import { Button, Table } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
-
 import { useBackend } from '../../backend';
 
 type Props = {

@@ -1,6 +1,5 @@
 import { Fragment } from 'react';
 import { Box, Button, Icon, Image, Section } from 'tgui-core/components';
-
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';

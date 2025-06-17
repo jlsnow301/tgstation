@@ -7,7 +7,6 @@
 import fs from 'node:fs';
 import os from 'node:os';
 import { basename } from 'node:path';
-
 import { DreamSeeker } from './dreamseeker.js';
 import { createLogger } from './logging.js';
 import { resolveGlob, resolvePath } from './util.js';
@@ -40,7 +39,7 @@ export async function findCacheRoot() {
   }
   logger.log('looking for byond cache');
   // Find BYOND cache folders
-  for (let pattern of SEARCH_LOCATIONS) {
+  for (const pattern of SEARCH_LOCATIONS) {
     if (!pattern) {
       continue;
     }
@@ -54,7 +53,10 @@ export async function findCacheRoot() {
   // Query the Windows Registry
   if (process.platform === 'win32') {
     logger.log('querying windows registry');
-    let userpath = await regQuery('HKCU\\Software\\Dantom\\BYOND', 'userpath');
+    const userpath = await regQuery(
+      'HKCU\\Software\\Dantom\\BYOND',
+      'userpath',
+    );
     if (userpath) {
       cacheRoot = userpath.replace(/\\$/, '').replace(/\\/g, '/') + '/cache';
       onCacheRootFound(cacheRoot);
@@ -89,18 +91,18 @@ export async function reloadByondCache(bundleDir) {
   const dssPromise = DreamSeeker.getInstancesByPids(pids);
   // Copy assets
   const assets = await resolveGlob(bundleDir, bundleGlob);
-  for (let cacheDir of cacheDirs) {
+  for (const cacheDir of cacheDirs) {
     // Clear garbage
     const garbage = await resolveGlob(cacheDir, bundleGlob);
     try {
       // Plant a dummy browser window file, we'll be using this to avoid world topic. For byond 515-516.
       fs.closeSync(fs.openSync(cacheDir + '/dummy.htm', 'w'));
 
-      for (let file of garbage) {
+      for (const file of garbage) {
         fs.unlinkSync(file);
       }
       // Copy assets
-      for (let asset of assets) {
+      for (const asset of assets) {
         const destination = resolvePath(cacheDir, basename(asset));
         fs.writeFileSync(destination, fs.readFileSync(asset));
       }
@@ -114,7 +116,7 @@ export async function reloadByondCache(bundleDir) {
   const dss = await dssPromise;
   if (dss.length > 0) {
     logger.log(`notifying dreamseeker`);
-    for (let dreamseeker of dss) {
+    for (const dreamseeker of dss) {
       dreamseeker.topic({
         tgui: 1,
         type: 'cacheReloaded',

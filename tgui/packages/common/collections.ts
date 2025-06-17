@@ -67,8 +67,8 @@ export const map: MapFunction = (collection, iterateeFn) => {
 
   if (typeof collection === 'object') {
     const result: unknown[] = [];
-    for (let i in collection) {
-      if (Object.prototype.hasOwnProperty.call(collection, i)) {
+    for (const i in collection) {
+      if (Object.hasOwn(collection, i)) {
         result.push(iterateeFn(collection[i], i, collection));
       }
     }
@@ -110,7 +110,7 @@ export const sortBy = <T>(
   }
   let length = array.length;
   // Iterate over the array to collect criteria to sort it by
-  let mappedArray: {
+  const mappedArray: {
     criteria: unknown[];
     value: T;
   }[] = [];
@@ -194,7 +194,7 @@ export const reduce: ReduceFunction = (array, reducerFn, initialValue?) => {
  * is determined by the order they occur in the array. The iteratee is
  * invoked with one argument: value.
  */
-export const uniqBy = <T extends unknown>(
+export const uniqBy = <T>(
   array: T[],
   iterateeFn?: (value: T) => unknown,
 ): T[] => {
@@ -203,28 +203,27 @@ export const uniqBy = <T extends unknown>(
   const seen: unknown[] = iterateeFn ? [] : result;
   let index = -1;
   // prettier-ignore
-  outer:
-    while (++index < length) {
-      let value: T | 0 = array[index];
-      const computed = iterateeFn ? iterateeFn(value) : value;
-      if (computed === computed) {
-        let seenIndex = seen.length;
-        while (seenIndex--) {
-          if (seen[seenIndex] === computed) {
-            continue outer;
-          }
+  outer: while (++index < length) {
+    const value: T | 0 = array[index];
+    const computed = iterateeFn ? iterateeFn(value) : value;
+    if (computed === computed) {
+      let seenIndex = seen.length;
+      while (seenIndex--) {
+        if (seen[seenIndex] === computed) {
+          continue outer;
         }
-        if (iterateeFn) {
-          seen.push(computed);
-        }
-        result.push(value);
-      } else if (!seen.includes(computed)) {
-        if (seen !== result) {
-          seen.push(computed);
-        }
-        result.push(value);
       }
+      if (iterateeFn) {
+        seen.push(computed);
+      }
+      result.push(value);
+    } else if (!seen.includes(computed)) {
+      if (seen !== result) {
+        seen.push(computed);
+      }
+      result.push(value);
     }
+  }
   return result;
 };
 

@@ -10,7 +10,6 @@ import {
 } from 'tgui-core/components';
 import { flow } from 'tgui-core/fp';
 import { clamp } from 'tgui-core/math';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 

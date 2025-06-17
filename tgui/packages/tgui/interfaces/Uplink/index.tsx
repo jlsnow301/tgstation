@@ -1,4 +1,4 @@
-import { Component, Fragment } from 'react';
+import { Component } from 'react';
 import {
   Box,
   Button,
@@ -10,8 +10,7 @@ import {
   Tooltip,
 } from 'tgui-core/components';
 import { fetchRetry } from 'tgui-core/http';
-import { BooleanLike } from 'tgui-core/react';
-
+import type { BooleanLike } from 'tgui-core/react';
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -20,7 +19,7 @@ import {
   calculateProgression,
   dangerLevelsTooltip,
 } from './calculateDangerLevel';
-import { GenericUplink, Item } from './GenericUplink';
+import { GenericUplink, type Item } from './GenericUplink';
 import { PrimaryObjectiveMenu } from './PrimaryObjectiveMenu';
 
 type UplinkItem = {
@@ -146,10 +145,8 @@ export class Uplink extends Component<{}, UplinkState> {
       ) {
         return false;
       }
-      {
-        if (value.purchasable_from & uplinkFlag) {
-          return true;
-        }
+      if (value.purchasable_from & uplinkFlag) {
+        return true;
       }
       return false;
     });

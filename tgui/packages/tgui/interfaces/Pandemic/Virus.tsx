@@ -8,9 +8,8 @@ import {
   Tooltip,
 } from 'tgui-core/components';
 import { capitalizeFirst, decodeHtmlEntities } from 'tgui-core/string';
-
 import { getColor } from './helpers';
-import { Data } from './types';
+import type { Data } from './types';
 
 /**
  * Displays info about the virus. Child elements display

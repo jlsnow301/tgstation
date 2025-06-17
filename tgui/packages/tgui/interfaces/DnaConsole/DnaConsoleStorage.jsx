@@ -8,7 +8,6 @@ import {
   Stack,
   Tabs,
 } from 'tgui-core/components';
-
 import { useBackend } from '../../backend';
 import {
   STORAGE_CONS_SUBMODE_CHROMOSOMES,

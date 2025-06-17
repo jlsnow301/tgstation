@@ -17,7 +17,6 @@ import {
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 import { capitalize } from 'tgui-core/string';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import type { Beaker, BeakerReagent } from './common/BeakerDisplay';

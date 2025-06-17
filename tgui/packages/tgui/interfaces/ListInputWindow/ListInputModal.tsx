@@ -8,7 +8,6 @@ import {
   KEY_UP,
   KEY_Z,
 } from 'tgui-core/keycodes';
-
 import { useBackend } from '../../backend';
 import { InputButtons } from '../common/InputButtons';
 

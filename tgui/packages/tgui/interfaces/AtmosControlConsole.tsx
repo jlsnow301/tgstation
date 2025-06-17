@@ -8,14 +8,13 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import {
   AtmosHandbookContent,
   atmosHandbookHooks,
 } from './common/AtmosHandbook';
-import { Gasmix, GasmixParser } from './common/GasmixParser';
+import { type Gasmix, GasmixParser } from './common/GasmixParser';
 
 type Chamber = {
   id: string;

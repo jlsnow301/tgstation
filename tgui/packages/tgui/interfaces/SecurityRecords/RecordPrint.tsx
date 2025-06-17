@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { useBackend, useLocalState } from 'tgui/backend';
 import { Box, Button, Input, Section, Stack } from 'tgui-core/components';
-
 import {
   getDefaultPrintDescription,
   getDefaultPrintHeader,
   getSecurityRecord,
 } from './helpers';
-import { PRINTOUT, SecurityRecordsData } from './types';
+import { PRINTOUT, type SecurityRecordsData } from './types';
 
 /** Handles printing posters and rapsheets */
 export const RecordPrint = (props) => {

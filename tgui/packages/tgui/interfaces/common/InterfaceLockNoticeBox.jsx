@@ -1,5 +1,4 @@
 import { Button, Flex, NoticeBox } from 'tgui-core/components';
-
 import { useBackend } from '../../backend';
 
 /**

@@ -1,6 +1,5 @@
 import { map, sortBy } from 'common/collections';
 import { Box, Button, Flex, Section, Table } from 'tgui-core/components';
-
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 

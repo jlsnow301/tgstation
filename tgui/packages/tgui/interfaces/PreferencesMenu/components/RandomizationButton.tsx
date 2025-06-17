@@ -1,6 +1,5 @@
 import { Dropdown } from 'tgui-core/components';
 import { exhaustiveCheck } from 'tgui-core/exhaustive';
-
 import { RandomSetting } from '../types';
 
 const options = [

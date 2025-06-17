@@ -9,7 +9,6 @@ import {
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
 import { capitalize } from 'tgui-core/string';
-
 import { updateSettings } from './actions';
 import { selectSettings } from './selectors';
 

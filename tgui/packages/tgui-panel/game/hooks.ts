@@ -5,7 +5,6 @@
  */
 
 import { useSelector } from 'tgui/backend';
-
 import { selectGame } from './selectors';
 
 export const useGame = () => {
