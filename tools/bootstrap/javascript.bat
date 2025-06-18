@@ -20,7 +20,7 @@ if %errorlevel% == 0 (
 	call node.exe %*
 	goto exit_with_last_error_level
 )
-echo "node.bat: Failed to bootstrap Node!"
+echo "javascript.bat: Failed to bootstrap Node!"
 %COMSPEC% /c exit 1
 
 :exit_with_last_error_level
