@@ -13,6 +13,7 @@ import {
 import type { KeyEvent } from 'tgui-core/events';
 import { fetchRetry } from 'tgui-core/http';
 import { isEscape, KEY } from 'tgui-core/keys';
+import type { NoProps } from '../../../types';
 import { LoadingScreen } from '../../common/LoadingScreen';
 import type { PreferencesMenuData } from '../types';
 import { TabbedMenu } from './TabbedMenu';
@@ -205,7 +206,7 @@ function ResetToDefaultButton(props: ResetToDefaultButtonProps) {
   );
 }
 
-export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
+export class KeybindingsPage extends Component<NoProps, KeybindingsPageState> {
   cancelNextKeyUp?: number;
   keybindingOnClicks: Record<string, (() => void)[]> = {};
   lastKeybinds?: PreferencesMenuData['keybindings'];

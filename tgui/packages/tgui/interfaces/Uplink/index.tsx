@@ -14,6 +14,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
+import type { NoProps } from '../../types';
 import {
   calculateDangerLevel,
   calculateProgression,
@@ -92,7 +93,7 @@ type ItemExtraData = Item & {
 // Cache response so it's only sent once
 let fetchServerData: Promise<ServerData> | undefined;
 
-export class Uplink extends Component<{}, UplinkState> {
+export class Uplink extends Component<NoProps, UplinkState> {
   constructor(props) {
     super(props);
     this.state = {

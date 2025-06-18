@@ -6,4 +6,5 @@ export type Page = {
   unreadCount: number;
   hideUnreadCount: boolean;
   createdAt: number;
+  chatPages: Record<string, Page>[];
 };
