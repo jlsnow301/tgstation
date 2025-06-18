@@ -10,7 +10,7 @@ import fs from "node:fs";
 import https from "node:https";
 import Juke from "./juke/index.js";
 import { DreamDaemon, DreamMaker, NamedVersionFile } from "./lib/byond.js";
-import { bun } from "./lib/bun.js";
+import { pnpm } from "./lib/pnpm.js";
 
 const TGS_MODE = process.env.CBT_BUILD_MODE === "TGS";
 
@@ -317,16 +317,16 @@ export const AutowikiTarget = new Juke.Target({
   },
 });
 
-export const BunTarget = new Juke.Target({
+export const PnpmTarget = new Juke.Target({
   parameters: [CiParameter],
-  inputs: ["tgui/**/package.json"],
+  inputs: ["tgui/**/package.json", "tgui/pnpm-lock.yaml"],
   executes: ({ get }) => {
-    return bun("install", get(CiParameter));
+    return pnpm("install", get(CiParameter));
   },
 });
 
 export const TgFontTarget = new Juke.Target({
-  dependsOn: [BunTarget],
+  dependsOn: [PnpmTarget],
   inputs: [
     "tgui/packages/tgfont/**/*.+(js|mjs|svg)",
     "tgui/packages/tgfont/package.json",
@@ -336,7 +336,7 @@ export const TgFontTarget = new Juke.Target({
     "tgui/packages/tgfont/dist/tgfont.woff2",
   ],
   executes: async () => {
-    await bun("tgfont:build");
+    await pnpm("tgfont:build");
     fs.mkdirSync("tgui/packages/tgfont/static", { recursive: true });
     fs.copyFileSync(
       "tgui/packages/tgfont/dist/tgfont.css",
@@ -350,7 +350,7 @@ export const TgFontTarget = new Juke.Target({
 });
 
 export const TguiTarget = new Juke.Target({
-  dependsOn: [BunTarget],
+  dependsOn: [PnpmTarget],
   inputs: [
     "tgui/webpack.config.js",
     "tgui/**/package.json",
@@ -364,53 +364,53 @@ export const TguiTarget = new Juke.Target({
     "tgui/public/tgui-say.bundle.css",
     "tgui/public/tgui-say.bundle.js",
   ],
-  executes: () => bun("tgui:build"),
+  executes: () => pnpm("tgui:build"),
 });
 
 export const TguiEslintTarget = new Juke.Target({
   parameters: [CiParameter],
-  dependsOn: [BunTarget],
-  executes: ({ get }) => bun("tgui:lint", !get(CiParameter) && "--fix"),
+  dependsOn: [PnpmTarget],
+  executes: ({ get }) => pnpm("tgui:lint", !get(CiParameter) && "--fix"),
 });
 
 export const TguiPrettierTarget = new Juke.Target({
-  dependsOn: [BunTarget],
-  executes: () => bun("tgui:prettier"),
+  dependsOn: [PnpmTarget],
+  executes: () => pnpm("tgui:prettier"),
 });
 
 export const TguiSonarTarget = new Juke.Target({
-  dependsOn: [BunTarget],
-  executes: () => bun("tgui:sonar"),
+  dependsOn: [PnpmTarget],
+  executes: () => pnpm("tgui:sonar"),
 });
 
 export const TguiTscTarget = new Juke.Target({
-  dependsOn: [BunTarget],
-  executes: () => bun("tgui:tsc"),
+  dependsOn: [PnpmTarget],
+  executes: () => pnpm("tgui:tsc"),
 });
 
 export const TguiTestTarget = new Juke.Target({
   parameters: [CiParameter],
-  dependsOn: [BunTarget],
-  executes: () => bun("tgui:test"),
+  dependsOn: [PnpmTarget],
+  executes: () => pnpm("tgui:test"),
 });
 
 export const TguiLintTarget = new Juke.Target({
-  dependsOn: [BunTarget, TguiPrettierTarget, TguiEslintTarget, TguiTscTarget],
+  dependsOn: [PnpmTarget, TguiPrettierTarget, TguiEslintTarget, TguiTscTarget],
 });
 
 export const TguiDevTarget = new Juke.Target({
-  dependsOn: [BunTarget],
-  executes: ({ args }) => bun("tgui:dev", ...args),
+  dependsOn: [PnpmTarget],
+  executes: ({ args }) => pnpm("tgui:dev", ...args),
 });
 
 export const TguiAnalyzeTarget = new Juke.Target({
-  dependsOn: [BunTarget],
-  executes: () => bun("tgui:analyze"),
+  dependsOn: [PnpmTarget],
+  executes: () => pnpm("tgui:analyze"),
 });
 
 export const TguiBenchTarget = new Juke.Target({
-  dependsOn: [BunTarget],
-  executes: () => bun("tgui:bench"),
+  dependsOn: [PnpmTarget],
+  executes: () => pnpm("tgui:bench"),
 });
 
 export const TestTarget = new Juke.Target({

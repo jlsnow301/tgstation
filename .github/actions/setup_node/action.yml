@@ -1,11 +1,11 @@
 # This action is a wrapper around `actions/setup-node`, to use the version specified in
 # `dependencies.sh`.
 name: Setup Node
-description: Install Node using the version specified in `dependencies.sh`; additionally, restores the Yarn cache if one exists
+description: Install Node using the version specified in `dependencies.sh`; additionally, restores the pnpm cache if one exists
 
 inputs:
-  restore-yarn-cache:
-    description: "If `true`, restores the Yarn cache alongside installing node."
+  restore-pnpm-cache:
+    description: "If `true`, restores the pnpm cache alongside installing node."
     required: false
     type: boolean
     default: false
@@ -17,10 +17,10 @@ runs:
       shell: bash
       run: |
         source dependencies.sh
-        echo "NODE_VERSION_REQUIRED=$NODE_VERSION_LTS" >> $GITHUB_ENV
+        echo "NODE_VERSION_REQUIRED=$NODE_VERSION" >> $GITHUB_ENV
     - name: Install Node
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION_REQUIRED }}
-        cache: ${{ fromJSON(inputs.restore-yarn-cache) && 'yarn' || '' }}
-        cache-dependency-path: ${{ fromJSON(inputs.restore-yarn-cache) && 'tgui/yarn.lock' || '' }}
+        cache: ${{ fromJSON(inputs.restore-pnpm-cache) && 'pnpm' || '' }}
+        cache-dependency-path: ${{ fromJSON(inputs.restore-pnpm-cache) && 'tgui/pnpm-lock.yaml' || '' }}

@@ -16,7 +16,7 @@ import { regQuery } from './winreg.js';
 const logger = createLogger('reloader');
 
 // Basic glob pattern for bundle files
-const bundleGlob = '*.{bundle,chunk,hot-update}.*';
+const bundleGlob = './*.+(bundle|chunk|hot-update).*';
 
 const HOME = os.homedir();
 const SEARCH_LOCATIONS = [
@@ -76,7 +76,7 @@ export async function reloadByondCache(bundleDir) {
     return;
   }
   // Find tmp folders in cache
-  const cacheDirs = await resolveGlob(cacheRoot, 'tmp*');
+  const cacheDirs = await resolveGlob(cacheRoot, './tmp*');
   if (cacheDirs.length === 0) {
     logger.log('found no tmp folder in cache');
     return;

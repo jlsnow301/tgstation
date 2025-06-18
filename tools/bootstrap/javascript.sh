@@ -1,32 +1,73 @@
 #!/bin/sh
-# bootstrap/bun
+# bootstrap/node
 #
-# Bun-finding script for all `sh` environments, including Linux, MSYS2,
+# Node-finding script for all `sh` environments, including Linux, MSYS2,
 # Git for Windows, and GitHub Desktop. Invokable from CLI or automation.
 #
-# If a bun executable installed by a bootstrapper is present, it will be used.
-# Otherwise, this script requires a system `bun` to be provided.
+# If a node.exe installed by `node_.ps1` is present, it will be used.
+# Otherwise, this script requires a system `node` to be provided.
 set -e
 
-# Load Bun version from dependencies.sh
+# Convenience variables
+Bootstrap="$(dirname "$0")"
+Cache="$Bootstrap/.cache"
+if [ "$TG_BOOTSTRAP_CACHE" ]; then
+	Cache="$TG_BOOTSTRAP_CACHE"
+fi
 OldPWD="$PWD"
-cd "$(dirname "$0")/../.."
-. ./dependencies.sh  # sets BUN_VERSION (define this in dependencies.sh)
+cd "$Bootstrap/../.."
+. ./dependencies.sh  # sets NODE_VERSION
 cd "$OldPWD"
-BunVersion="$BUN_VERSION"
-BunFullVersion="bun-v$BunVersion"
+NodeVersion="$NODE_VERSION"
+NodeFullVersion="node-v$NodeVersion-win-x64"
+NodeDir="$Cache/$NodeFullVersion"
+NodeExe="$NodeDir/node.exe"
+is_vendored="1"
 
-# If Bun is not present, install using the official installer.
-if ! command -v bun >/dev/null 2>&1; then
-    echo "Bun not found, installing with official installer..."
-    curl -fsSL https://bun.sh/install | bash -s $BunFullVersion
-    if [ -d "$HOME/.bun/bin" ]; then
-        export PATH="$HOME/.bun/bin:$PATH"
-    else
-        echo "Bun installation directory not found. Please check the installation."
-        exit 1
-    fi
+# If a bootstrapped Node is not present, search on $PATH.
+if [ "$(uname)" = "Linux" ] || [ ! -f "$NodeExe" ]; then
+	if [ "$TG_BOOTSTRAP_NODE_LINUX" ]; then
+		NodeFullVersion="node-v$NodeVersion-linux-x64"
+		NodeDir="$Cache/$NodeFullVersion/bin"
+		NodeExe="$NodeDir/node"
+
+		if [ ! -f "$NodeExe" ]; then
+			mkdir -p "$Cache"
+			Archive="$(realpath "$Cache/node-v$NodeVersion.tar.gz")"
+			curl "https://nodejs.org/download/release/v$NodeVersion/$NodeFullVersion.tar.gz" -o "$Archive"
+			(cd "$Cache" && tar xf "$Archive")
+		fi
+	elif command -v node >/dev/null 2>&1; then
+		NodeExe="node"
+		is_vendored="0"
+	else
+		echo
+		if command -v apt-get >/dev/null 2>&1; then
+			# Ubuntu advice
+			echo "Please install Node using your system's package manager:"
+			echo "    sudo apt-get install nodejs"
+		elif uname | grep -q MSYS; then
+			# MSYS2 (not packaged) or Git for Windows advice
+			echo "Please run bootstrap/javascript.bat instead of bootstrap/javascript once"
+			echo "to install Node automatically, or install it from https://nodejs.org/"
+		elif command -v pacman >/dev/null 2>&1; then
+			# Arch advice
+			echo "Please install Node using your system's package manager:"
+			echo "    sudo pacman -S nodejs"
+		else
+			# Generic advice
+			echo "Please install Node from https://nodejs.org/ or using your system's package manager."
+		fi
+		echo
+		exit 1
+	fi
 fi
 
-echo "Using Bun $(bun --version)"
-exec bun "$@"
+# Invoke Node with all command-line arguments
+if [ "$is_vendored" = "1" ]; then
+	PATH="$(readlink -f "$NodeDir"):$PATH"
+	echo "Using vendored Node $("$NodeExe" --version)"
+else
+	echo "Using system-wide Node $("$NodeExe" --version)"
+fi
+exec "$NodeExe" "$@"
