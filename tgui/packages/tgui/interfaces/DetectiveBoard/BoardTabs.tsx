@@ -2,15 +2,16 @@ import { Box, Button } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
-import type { DataCase } from './DataTypes';
+import type { DataCase } from './types';
 
-type BoardTabsData = {
+type Data = {
   cases: DataCase[];
   current_case: number;
 };
 
-const BoardTab = (props) => {
-  const { color, selected, onClick = () => {}, children } = props;
+function BoardTab(props) {
+  const { color, selected, onClick, children } = props;
+
   return (
     <Box
       onClick={onClick}
@@ -23,18 +24,19 @@ const BoardTab = (props) => {
       <Box className={'BoardTab__Contain'}>{children}</Box>
     </Box>
   );
-};
+}
 
-export const BoardTabs = (props) => {
-  const { act, data } = useBackend<BoardTabsData>();
+export function BoardTabs(props) {
+  const { act, data } = useBackend<Data>();
   const { cases, current_case } = data;
+
   return (
     <Box className="BoardTabs">
       {cases?.map((item, index) => (
         <BoardTab
           selected={index + 1 === current_case}
           color={item.color}
-          key={index}
+          key={item.ref}
           onClick={() => act('set_case', { case: index + 1 })}
         >
           <span className="BoardTab__Text">{item.name}</span>
@@ -61,4 +63,4 @@ export const BoardTabs = (props) => {
       <Button color="transparent" icon="plus" onClick={() => act('add_case')} />
     </Box>
   );
-};
+}

@@ -9,7 +9,7 @@ import {
   type Position,
 } from '../common/Connections';
 import { BoardTabs } from './BoardTabs';
-import type { DataCase, DataEvidence } from './DataTypes';
+import type { DataCase, DataEvidence, XYCoords } from './types';
 import { Evidence } from './Evidence';
 
 type Data = {
@@ -25,6 +25,14 @@ type TypedConnection = {
 const PIN_Y_OFFSET = 15;
 
 const PIN_CONNECTING_Y_OFFSET = -60;
+
+function getPinPositionByPosition(position: XYCoords) {
+  return { x: position.x + 15, y: position.y + PIN_Y_OFFSET };
+}
+
+function getPinPosition(evidence: DataEvidence) {
+  return getPinPositionByPosition({ x: evidence.x, y: evidence.y });
+}
 
 export function DetectiveBoard(props) {
   const { act, data } = useBackend<Data>();
@@ -44,9 +52,27 @@ export function DetectiveBoard(props) {
     current_case - 1 < cases.length ? cases[current_case - 1].connections : [],
   );
 
+  useEffect(() => {
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, []);
+
+  useEffect(() => {
+    setConnections(
+      current_case - 1 < cases.length
+        ? cases[current_case - 1].connections
+        : [],
+    );
+  }, [current_case]);
+
   function handlePinStartConnecting(
     evidence: DataEvidence,
-    mousePos: Position,
+    mousePos: XYCoords,
   ) {
     setConnectingEvidence(evidence);
     setConnection({
@@ -56,15 +82,7 @@ export function DetectiveBoard(props) {
     });
   }
 
-  function getPinPositionByPosition(evidence: Position) {
-    return { x: evidence.x + 15, y: evidence.y + PIN_Y_OFFSET };
-  }
-
-  function getPinPosition(evidence: DataEvidence) {
-    return getPinPositionByPosition({ x: evidence.x, y: evidence.y });
-  }
-
-  function handlePinConnected(evidence: DataEvidence) {
+  function handlePinConnected() {
     setConnection(null);
     setConnectingEvidence(null);
   }
@@ -101,43 +119,51 @@ export function DetectiveBoard(props) {
     }
   }
 
-  useEffect(() => {
-    if (!connectingEvidence) {
-      return () => {
-        window.removeEventListener('mousemove', handleMouseMove);
-        window.removeEventListener('mouseup', handleMouseUp);
-      };
-    }
+  function handleMouseMove(args: MouseEvent) {
+    if (!connectingEvidence) return;
 
-    function handleMouseMove(args: MouseEvent) {
-      if (connectingEvidence) {
-        setConnection({
-          color: 'red',
+    setConnection({
+      color: 'red',
+      from: getPinPosition(connectingEvidence),
+      to: { x: args.clientX, y: args.clientY - 60 },
+    });
+  }
+
+  function handleMouseUp() {
+    if (!connectingEvidence || !movingEvidenceConnections) return;
+
+    const new_connections: Connection[] = [];
+    for (const con of movingEvidenceConnections) {
+      if (con.type === 'from') {
+        new_connections.push({
+          color: con.connection.color,
           from: getPinPosition(connectingEvidence),
-          to: { x: args.clientX, y: args.clientY - 60 },
+          to: con.connection.to,
+        });
+      } else {
+        new_connections.push({
+          color: con.connection.color,
+          from: con.connection.from,
+          to: getPinPosition(connectingEvidence),
         });
       }
     }
+    setConnections([...connections, ...new_connections]);
+    setMovingEvidenceConnections(null);
+  }
 
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp);
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, [connectingEvidence]);
+  function handleMouseUpOnPin(evidence: DataEvidence) {
+    if (
+      !connectingEvidence ||
+      connectingEvidence.ref === evidence.ref ||
+      connectingEvidence.connections.includes(evidence.ref) ||
+      evidence.connections.includes(connectingEvidence.ref)
+    ) {
+      return;
+    }
 
-  useEffect(() => {
-    setConnections(
-      current_case - 1 < cases.length
-        ? cases[current_case - 1].connections
-        : [],
-    );
-  }, [current_case]);
-
-  function handleMouseUp(args: MouseEvent) {
-    if (movingEvidenceConnections && connectingEvidence) {
-      const new_connections: Connection[] = [];
+    const new_connections: Connection[] = [];
+    if (movingEvidenceConnections) {
       for (const con of movingEvidenceConnections) {
         if (con.type === 'from') {
           new_connections.push({
@@ -153,59 +179,30 @@ export function DetectiveBoard(props) {
           });
         }
       }
-      setConnections([...connections, ...new_connections]);
-      setMovingEvidenceConnections(null);
     }
-  }
-
-  function handleMouseUpOnPin(evidence: DataEvidence, args) {
-    if (
-      connectingEvidence &&
-      connectingEvidence.ref !== evidence.ref &&
-      !connectingEvidence.connections.includes(evidence.ref) &&
-      !evidence.connections.includes(connectingEvidence.ref)
-    ) {
-      const new_connections: Connection[] = [];
-      if (movingEvidenceConnections) {
-        for (const con of movingEvidenceConnections) {
-          if (con.type === 'from') {
-            new_connections.push({
-              color: con.connection.color,
-              from: getPinPosition(connectingEvidence),
-              to: con.connection.to,
-            });
-          } else {
-            new_connections.push({
-              color: con.connection.color,
-              from: con.connection.from,
-              to: getPinPosition(connectingEvidence),
-            });
-          }
-        }
-      }
-      setConnections([
-        ...connections,
-        ...new_connections,
-        {
-          color: 'red',
-          from: getPinPosition(connectingEvidence),
-          to: getPinPosition(evidence),
-        },
-      ]);
-      act('add_connection', {
-        from_ref: connectingEvidence.ref,
-        to_ref: evidence.ref,
-      });
-      setConnection(null);
-      setConnectingEvidence(null);
-      setMovingEvidenceConnections(null);
-    }
+    setConnections([
+      ...connections,
+      ...new_connections,
+      {
+        color: 'red',
+        from: getPinPosition(connectingEvidence),
+        to: getPinPosition(evidence),
+      },
+    ]);
+    act('add_connection', {
+      from_ref: connectingEvidence.ref,
+      to_ref: evidence.ref,
+    });
+    setConnection(null);
+    setConnectingEvidence(null);
+    setMovingEvidenceConnections(null);
   }
 
   function handleEvidenceStartMoving(evidence: DataEvidence) {
     const moving_connections: TypedConnection[] = [];
     const pinPosition = getPinPosition(evidence);
     const new_connections: Connection[] = [];
+
     for (const con of connections) {
       if (con.from.x === pinPosition.x && con.from.y === pinPosition.y) {
         moving_connections.push({ type: 'from', connection: con });
@@ -219,55 +216,55 @@ export function DetectiveBoard(props) {
     setConnections(new_connections);
   }
 
-  function handleEvidenceMoving(evidence: DataEvidence, position: Position) {
-    if (movingEvidenceConnections) {
-      const new_connections: TypedConnection[] = [];
-      for (const con of movingEvidenceConnections) {
-        if (con.type === 'from') {
-          new_connections.push({
-            type: con.type,
-            connection: {
-              color: con.connection.color,
-              from: getPinPositionByPosition({ x: position.x, y: position.y }),
-              to: con.connection.to,
-            },
-          });
-        } else {
-          new_connections.push({
-            type: con.type,
-            connection: {
-              color: con.connection.color,
-              from: con.connection.from,
-              to: getPinPositionByPosition({ x: position.x, y: position.y }),
-            },
-          });
-        }
+  function handleEvidenceMoving(position: XYCoords) {
+    if (!movingEvidenceConnections) return;
+
+    const new_connections: TypedConnection[] = [];
+    for (const con of movingEvidenceConnections) {
+      if (con.type === 'from') {
+        new_connections.push({
+          type: con.type,
+          connection: {
+            color: con.connection.color,
+            from: getPinPositionByPosition({ x: position.x, y: position.y }),
+            to: con.connection.to,
+          },
+        });
+      } else {
+        new_connections.push({
+          type: con.type,
+          connection: {
+            color: con.connection.color,
+            from: con.connection.from,
+            to: getPinPositionByPosition({ x: position.x, y: position.y }),
+          },
+        });
       }
-      setMovingEvidenceConnections(new_connections);
     }
+    setMovingEvidenceConnections(new_connections);
   }
 
   function handleEvidenceStopMoving(evidence: DataEvidence) {
-    if (movingEvidenceConnections) {
-      const new_connections: Connection[] = [];
-      for (const con of movingEvidenceConnections) {
-        if (con.type === 'from') {
-          new_connections.push({
-            color: con.connection.color,
-            from: getPinPosition(evidence),
-            to: con.connection.to,
-          });
-        } else {
-          new_connections.push({
-            color: con.connection.color,
-            from: con.connection.from,
-            to: getPinPosition(evidence),
-          });
-        }
+    if (!movingEvidenceConnections) return;
+
+    const new_connections: Connection[] = [];
+    for (const con of movingEvidenceConnections) {
+      if (con.type === 'from') {
+        new_connections.push({
+          color: con.connection.color,
+          from: getPinPosition(evidence),
+          to: con.connection.to,
+        });
+      } else {
+        new_connections.push({
+          color: con.connection.color,
+          from: con.connection.from,
+          to: getPinPosition(evidence),
+        });
       }
-      setConnections([...connections, ...new_connections]);
-      setMovingEvidenceConnections(null);
     }
+    setConnections([...connections, ...new_connections]);
+    setMovingEvidenceConnections(null);
   }
 
   function retrieveConnections(typedConnections: TypedConnection[]) {
@@ -310,12 +307,11 @@ export function DetectiveBoard(props) {
                       connections={connections}
                       zLayer={1}
                     />
-                    {item?.evidences?.map((evidence, index) => (
+                    {item?.evidences?.map((evidence) => (
                       <Evidence
                         key={evidence.ref}
                         evidence={evidence}
-                        case_ref={item.ref}
-                        act={act}
+                        caseRef={item.ref}
                         onPinStartConnecting={handlePinStartConnecting}
                         onPinConnected={handlePinConnected}
                         onPinMouseUp={handleMouseUpOnPin}
@@ -343,11 +339,9 @@ export function DetectiveBoard(props) {
                   </Box>
                 </Stack.Item>
                 <Stack.Item align="center" grow={3}>
-                  <Button
-                    icon="plus"
-                    content="Create case"
-                    onClick={() => act('add_case')}
-                  />
+                  <Button icon="plus" onClick={() => act('add_case')}>
+                    Create case
+                  </Button>
                 </Stack.Item>
               </Stack>
             </Stack.Item>

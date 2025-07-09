@@ -1,111 +1,92 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Box, Button, Flex, Stack } from 'tgui-core/components';
 
-import type { DataEvidence } from './DataTypes';
+import { useBackend } from '../../backend';
 import { Pin } from './Pin';
+import type { DataEvidence, EvidenceFn, EvidenceXYFn, XYCoords } from './types';
 
-type EvidenceProps = {
-  case_ref: string;
+type Props = {
+  caseRef: string;
   evidence: DataEvidence;
-  act: Function;
-  onPinStartConnecting: Function;
-  onPinConnected: Function;
-  onPinMouseUp: Function;
-  onEvidenceRemoved: Function;
-  onStartMoving: Function;
-  onStopMoving: Function;
-  onMoving: Function;
+  onEvidenceRemoved: EvidenceFn;
+  onMoving: (position: XYCoords) => void;
+  onPinConnected: () => void;
+  onPinMouseUp: EvidenceFn;
+  onPinStartConnecting: EvidenceXYFn;
+  onStartMoving: EvidenceFn;
+  onStopMoving: EvidenceFn;
 };
 
-type Position = {
-  x: number;
-  y: number;
-};
-
-export function Evidence(props: EvidenceProps) {
-  const { evidence, case_ref, act } = props;
+export function Evidence(props: Props) {
+  const { act } = useBackend();
+  const { evidence, caseRef } = props;
 
   const [dragging, setDragging] = useState(false);
-
   const [canDrag, setCanDrag] = useState(true);
-
-  const [dragPosition, setDragPosition] = useState<Position>({
+  const [dragPosition, setDragPosition] = useState<XYCoords>({
     x: evidence.x,
     y: evidence.y,
   });
-
-  const [lastMousePosition, setLastMousePosition] = useState<Position | null>(
+  const [lastMousePosition, setLastMousePosition] = useState<XYCoords | null>(
     null,
   );
 
   const randomRotation = useMemo(() => Math.random() * 2 - 1, []);
 
-  function handleMouseDown(args) {
-    if (canDrag) {
-      setDragging(true);
-      props.onStartMoving(evidence);
-      setLastMousePosition({ x: args.screenX, y: args.screenY });
-    }
-  }
-
   useEffect(() => {
-    if (!dragging) {
-      return;
-    }
-
-    const handleMouseUp = (args: MouseEvent) => {
-      if (canDrag && dragPosition && dragging && lastMousePosition) {
-        act('set_evidence_cords', {
-          evidence_ref: evidence.ref,
-          case_ref: case_ref,
-          rel_x: dragPosition.x - (lastMousePosition.x - args.screenX),
-          rel_y: dragPosition.y - (lastMousePosition.y - args.screenY),
-        });
-        props.onStopMoving({
-          ...evidence,
-          y: dragPosition.y - (lastMousePosition.y - args.screenY),
-          x: dragPosition.x - (lastMousePosition.x - args.screenX),
-        });
-      }
-      setDragging(false);
-      setLastMousePosition(null);
-    };
     window.addEventListener('mouseup', handleMouseUp);
-    return () => {
-      window.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, [dragging]);
-
-  useEffect(() => {
-    if (!dragging) {
-      return;
-    }
-
-    const onMouseMove = (args: MouseEvent) => {
-      if (canDrag) {
-        if (lastMousePosition) {
-          const newX = dragPosition.x - (lastMousePosition.x - args.screenX);
-          const newY = dragPosition.y - (lastMousePosition.y - args.screenY);
-
-          setDragPosition({
-            x: newX,
-            y: newY,
-          });
-          props.onMoving(evidence, {
-            x: newX,
-            y: newY,
-          });
-        }
-
-        setLastMousePosition({ x: args.screenX, y: args.screenY });
-      }
-    };
-
     window.addEventListener('mousemove', onMouseMove);
     return () => {
+      window.removeEventListener('mouseup', handleMouseUp);
       window.removeEventListener('mousemove', onMouseMove);
     };
-  }, [evidence.x, evidence.y, dragging]);
+  }, []);
+
+  function handleMouseDown(event: React.MouseEvent<HTMLDivElement>) {
+    if (!canDrag) return;
+
+    setDragging(true);
+    props.onStartMoving(evidence);
+    setLastMousePosition({ x: event.screenX, y: event.screenY });
+  }
+
+  function handleMouseUp(event: MouseEvent) {
+    if (canDrag && dragPosition && dragging && lastMousePosition) {
+      act('set_evidence_cords', {
+        evidence_ref: evidence.ref,
+        case_ref: caseRef,
+        rel_x: dragPosition.x - (lastMousePosition.x - event.screenX),
+        rel_y: dragPosition.y - (lastMousePosition.y - event.screenY),
+      });
+      props.onStopMoving({
+        ...evidence,
+        y: dragPosition.y - (lastMousePosition.y - event.screenY),
+        x: dragPosition.x - (lastMousePosition.x - event.screenX),
+      });
+    }
+    setDragging(false);
+    setLastMousePosition(null);
+  }
+
+  function onMouseMove(event: MouseEvent) {
+    if (!canDrag || !dragging) return;
+
+    if (lastMousePosition) {
+      const newX = dragPosition.x - (lastMousePosition.x - event.screenX);
+      const newY = dragPosition.y - (lastMousePosition.y - event.screenY);
+
+      setDragPosition({
+        x: newX,
+        y: newY,
+      });
+      props.onMoving({
+        x: newX,
+        y: newY,
+      });
+    }
+
+    setLastMousePosition({ x: event.screenX, y: event.screenY });
+  }
 
   return (
     <Box
@@ -128,18 +109,18 @@ export function Evidence(props: EvidenceProps) {
                   evidence={evidence}
                   onStartConnecting={(
                     evidence: DataEvidence,
-                    mousePos: Position,
+                    mousePos: XYCoords,
                   ) => {
                     setCanDrag(false);
                     props.onPinStartConnecting(evidence, mousePos);
                   }}
-                  onConnected={(evidence: DataEvidence) => {
+                  onConnected={() => {
                     setCanDrag(true);
-                    props.onPinConnected(evidence);
+                    props.onPinConnected();
                   }}
-                  onMouseUp={(evidence: DataEvidence, args) => {
+                  onMouseUp={(evidence: DataEvidence) => {
                     setCanDrag(true);
-                    props.onPinMouseUp(evidence, args);
+                    props.onPinMouseUp(evidence);
                   }}
                 />
               </Flex.Item>
@@ -166,7 +147,7 @@ export function Evidence(props: EvidenceProps) {
             <Box
               onClick={() =>
                 act('look_evidence', {
-                  case_ref: case_ref,
+                  case_ref: caseRef,
                   evidence_ref: evidence.ref,
                 })
               }
@@ -174,7 +155,6 @@ export function Evidence(props: EvidenceProps) {
               {evidence.type === 'photo' ? (
                 <img className="Evidence__Icon" src={evidence.photo_url} />
               ) : (
-                // eslint-disable-next-line react/no-danger
                 <div dangerouslySetInnerHTML={{ __html: evidence.text }} />
               )}
             </Box>

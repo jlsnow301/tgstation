@@ -2,48 +2,41 @@ import { useEffect, useState } from 'react';
 import { Box, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
-import type { DataEvidence } from './DataTypes';
+import type { DataEvidence, EvidenceFn, EvidenceXYFn } from './types';
 
-type PinProps = {
+type Props = {
   evidence: DataEvidence;
-  onStartConnecting: Function;
-  onConnected: Function;
-  onMouseUp: Function;
+  onStartConnecting: EvidenceXYFn;
+  onConnected: () => void;
+  onMouseUp: EvidenceFn;
 };
 
-export function Pin(props: PinProps) {
-  const { evidence, onStartConnecting, onConnected, onMouseUp } = props;
+export function Pin(props: Props) {
+  const { evidence } = props;
+
   const [creatingRope, setCreatingRope] = useState(false);
 
-  function handleMouseDown(args) {
-    setCreatingRope(true);
-    onStartConnecting(evidence, {
-      x: args.clientX,
-      y: args.clientY,
-    });
-  }
-
   useEffect(() => {
-    if (!creatingRope) {
-      return;
-    }
-    const handleMouseUp = (args: MouseEvent) => {
-      if (creatingRope) {
-        setCreatingRope(false);
-        onConnected(evidence, {
-          evidence_ref: 'not used',
-          position: {
-            x: args.clientX,
-            y: args.clientY,
-          },
-        });
-      }
-    };
     window.addEventListener('mouseup', handleMouseUp);
     return () => {
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [creatingRope]);
+  }, []);
+
+  function handleMouseDown(event: React.MouseEvent<HTMLDivElement>) {
+    setCreatingRope(true);
+    props.onStartConnecting(evidence, {
+      x: event.clientX,
+      y: event.clientY,
+    });
+  }
+
+  function handleMouseUp() {
+    if (!creatingRope) return;
+
+    setCreatingRope(false);
+    props.onConnected();
+  }
 
   return (
     <Stack>
@@ -55,7 +48,7 @@ export function Pin(props: PinProps) {
           ])}
           textAlign="center"
           onMouseDown={handleMouseDown}
-          onMouseUp={(args) => onMouseUp(evidence, args)}
+          onMouseUp={() => props.onMouseUp(evidence)}
         />
       </Stack.Item>
     </Stack>
