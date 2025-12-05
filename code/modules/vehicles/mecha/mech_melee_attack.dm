@@ -100,9 +100,14 @@
 	if(!isnull(user) && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to harm other living beings!"))
 		return
+
 	mecha_attacker.do_attack_animation(src)
 	if(mecha_attacker.damtype == BRUTE)
 		step_away(src, mecha_attacker, 15)
+
+	if(check_block(mecha_attacker, mecha_attacker.force * 3, "the [mecha_attacker.attack_verbs[1]]", attack_type = OVERWHELMING_ATTACK))
+		return
+
 	switch(mecha_attacker.damtype)
 		if(BRUTE)
 			if(mecha_attacker.force > 35) // durand and other heavy mechas
@@ -110,7 +115,7 @@
 			else if(mecha_attacker.force > 20 && !IsKnockdown()) // lightweight mechas like gygax
 				mecha_attacker.melee_attack_effect(src, heavy = FALSE)
 			playsound(src, mecha_attacker.brute_attack_sound, 50, TRUE)
-		if(FIRE)
+		if(BURN)
 			playsound(src, mecha_attacker.burn_attack_sound, 50, TRUE)
 		if(TOX)
 			playsound(src, mecha_attacker.tox_attack_sound, 50, TRUE)
@@ -123,7 +128,7 @@
 			return
 
 	var/damage = rand(mecha_attacker.force * 0.5, mecha_attacker.force)
-	if (mecha_attacker.damtype == BRUTE || mecha_attacker.damtype == FIRE)
+	if (mecha_attacker.damtype == BRUTE || mecha_attacker.damtype == BURN)
 		var/def_zone = get_random_valid_zone(user.zone_selected, even_weights = TRUE)
 		var/zone_readable = parse_zone_with_bodypart(def_zone)
 		apply_damage(damage, mecha_attacker.damtype, def_zone, run_armor_check(

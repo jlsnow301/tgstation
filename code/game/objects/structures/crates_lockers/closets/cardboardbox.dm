@@ -9,6 +9,7 @@
 	can_weld_shut = 0
 	cutting_tool = /obj/item/wirecutters
 	material_drop = /obj/item/stack/sheet/cardboard
+	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT * 4)
 	delivery_icon = "deliverybox"
 	anchorable = FALSE
 	open_sound = 'sound/machines/cardboard_box.ogg'
@@ -37,14 +38,15 @@
 
 /obj/structure/closet/cardboard/proc/on_speed_potioned(datum/source)
 	SIGNAL_HANDLER
-	move_speed_multiplier *= 2
+	move_speed_multiplier *= 0.2
 
 /obj/structure/closet/cardboard/relaymove(mob/living/user, direction)
 	if(opened || move_delay || user.incapacitated || !isturf(loc) || !has_gravity(loc))
 		return
 	move_delay = TRUE
 	var/oldloc = loc
-	try_step_multiz(direction);
+	try_step_multiz(direction)
+	user.setDir(dir)
 	if(oldloc != loc)
 		addtimer(CALLBACK(src, PROC_REF(ResetMoveDelay)), CONFIG_GET(number/movedelay/walk_delay) * move_speed_multiplier)
 	else

@@ -50,20 +50,18 @@
 		balloon_alert(user, "currently [active ? "unsealing" : "sealing"]!")
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
-	var/deploy = FALSE
+	var/deploy = TRUE
 	for(var/obj/item/part as anything in get_parts())
 		if(part.loc != src)
-			continue
-		deploy = TRUE
-		break
+			deploy = FALSE
+			break
 	wearer.visible_message(span_notice("[wearer]'s [src] [deploy ? "deploys" : "retracts"] its parts with a mechanical hiss."),
 		span_notice("[src] [deploy ? "deploys" : "retracts"] its parts with a mechanical hiss."),
 		span_hear("You hear a mechanical hiss."))
 	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	for(var/obj/item/part as anything in get_parts())
 		if(deploy && part.loc == src)
-			if(!deploy(null, part))
-				continue
+			deploy(null, part)
 		else if(!deploy && part.loc != src)
 			retract(null, part)
 	if(deploy)
@@ -85,12 +83,10 @@
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 	if(part_datum.can_overslot)
 		var/obj/item/overslot = wearer.get_item_by_slot(part.slot_flags)
-		if(overslot && istype(overslot, /obj/item/clothing))
-			var/obj/item/clothing/clothing = overslot
-			if(clothing.clothing_flags & CLOTHING_MOD_OVERSLOTTING)
-				part_datum.overslotting = overslot
-				wearer.transferItemToLoc(overslot, part, force = TRUE)
-				RegisterSignal(part, COMSIG_ATOM_EXITED, PROC_REF(on_overslot_exit))
+		if(istype(overslot, /obj/item/clothing))
+			part_datum.overslotting = overslot
+			wearer.transferItemToLoc(overslot, part, force = TRUE)
+			RegisterSignal(part, COMSIG_ATOM_EXITED, PROC_REF(on_overslot_exit))
 	if(wearer.equip_to_slot_if_possible(part, part.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 		ADD_TRAIT(part, TRAIT_NODROP, MOD_TRAIT)
 		wearer.update_clothing(slot_flags|part.slot_flags)
@@ -273,7 +269,7 @@
 		part.alternate_worn_layer = part_datum.unsealed_layer
 	update_speed()
 	wearer.update_clothing(part.slot_flags | slot_flags)
-	wearer.update_obscured_slots(part.visor_flags_inv)
+	wearer.refresh_obscured()
 	if((part.clothing_flags & (MASKINTERNALS|HEADINTERNALS)) && wearer.invalid_internals())
 		wearer.cutoff_internals()
 	SEND_SIGNAL(src, COMSIG_MOD_PART_SEALED, part_datum)
@@ -283,7 +279,7 @@
 		for(var/obj/item/mod/module/module as anything in modules)
 			if(module.part_activated || !module.has_required_parts(mod_parts, need_active = TRUE))
 				continue
-				module.on_part_activation()
+			module.on_part_activation()
 			module.part_activated = TRUE
 	else
 		for(var/obj/item/mod/module/module as anything in modules)
@@ -304,14 +300,19 @@
 		for(var/obj/item/mod/module/module as anything in modules)
 			if(!module.part_activated && module.has_required_parts(mod_parts, need_active = TRUE))
 				module.on_part_activation()
+				module.part_activated = TRUE
 	else
 		for(var/obj/item/mod/module/module as anything in modules)
 			if(!module.part_activated)
 				continue
 			module.on_part_deactivation()
+			module.part_activated = FALSE
 	update_charge_alert()
 	update_appearance(UPDATE_ICON_STATE)
-	wearer.update_clothing()
+	var/updated_slots = slot_flags
+	for (var/slot_key in mod_parts)
+		updated_slots |= text2num(slot_key)
+	wearer.update_clothing(updated_slots)
 
 /// Quickly deploys all the suit parts and if successful, seals them and turns on the suit. Intended mostly for outfits.
 /obj/item/mod/control/proc/quick_activation()

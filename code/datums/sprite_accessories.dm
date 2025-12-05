@@ -50,7 +50,7 @@
 
 /datum/sprite_accessory/blank
 	name = SPRITE_ACCESSORY_NONE
-	icon_state = "None"
+	icon_state = SPRITE_ACCESSORY_NONE
 
 ////////////////
 // Hair Masks //
@@ -64,7 +64,7 @@
 	var/strict_coverage_zones = NONE
 
 /datum/hair_mask/standard_hat_middle
-	icon_state = "hide_above_45deg_medium"
+	icon_state = "hide_above_45deg"
 	strict_coverage_zones = HAIR_APPENDAGE_TOP
 
 /datum/hair_mask/standard_hat_low
@@ -908,7 +908,7 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	name = "Tress Shoulder"
 	icon_state = "hair_tressshoulder"
 	hair_appendages_inner = list("hair_tressshoulder_a1" = HAIR_APPENDAGE_HANGING_FRONT)
-	hair_appendages_outer = list("hair_tressshoulder_a10" = HAIR_APPENDAGE_HANGING_FRONT)
+	hair_appendages_outer = list("hair_tressshoulder_a1o" = HAIR_APPENDAGE_HANGING_FRONT)
 
 /datum/sprite_accessory/hair/trimmed
 	name = "Trimmed"
@@ -2113,6 +2113,11 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 /datum/sprite_accessory/ears/cat/round
 	name = "Round"
 	icon_state = "round"
+
+/datum/sprite_accessory/ears/cat/cybernetic
+	name = "Cybernetic"
+	icon_state = "cyber"
+	locked = TRUE
 
 /datum/sprite_accessory/ears/fox
 	icon = 'icons/mob/human/fox_features.dmi'

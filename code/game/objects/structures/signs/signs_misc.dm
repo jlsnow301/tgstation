@@ -38,7 +38,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/xenobio_guide, 32)
 	var/tram_serial
 	name = "tram information plate"
 	sign_change_name = "Information - Tram Statistics"
-	icon_state = "commission_tram"
+	icon_state = "tram_plate"
 	max_integrity = 150
 	armor_type = /datum/armor/tram_structure
 	is_editable = FALSE
@@ -109,3 +109,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/xenobio_guide, 32)
 	return data
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/tram_plate, 32)
+
+/obj/structure/sign/nanotrasen
+	name = "\improper Nanotrasen logo sign"
+	sign_change_name = "Corporate Logo - Nanotrasen"
+	desc = "A sign with the Nanotrasen logo on it. Glory to Nanotrasen!"
+	icon_state = "nanotrasen"
+	is_editable = TRUE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/nanotrasen, 32)
+
+/obj/structure/sign/logo
+	name = "\improper Nanotrasen logo sign"
+	desc = "The Nanotrasen corporate logo."
+	icon_state = "nanotrasen_sign1"
+	buildable_sign = FALSE
