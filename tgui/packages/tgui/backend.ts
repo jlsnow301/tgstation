@@ -1,52 +1,57 @@
-import { bus } from ".";
-import { sendAct } from "./events/act";
-import { useChunkingStore } from "./events/stores/chunking";
-import { useConfigStore } from "./events/stores/config";
-import { type DebugState, useDebugStore } from "./events/stores/debug";
-import { useGameStore } from "./events/stores/game";
-import { useSharedStore } from "./events/stores/shared";
-import { useWindowStore } from "./events/stores/suspense";
+import { useAtomValue } from 'jotai';
+import { bus } from '.';
+import { sendAct } from './events/act';
+import {
+  configAtom,
+  debugLayoutAtom,
+  gameDataAtom,
+  gameStaticDataAtom,
+  kitchenSinkAtom,
+  outgoingPayloadQueuesAtom,
+  sharedAtom,
+  store,
+  suspendedAtom,
+  suspendingAtom,
+} from './events/store';
 
 /**
  * Reactive backend state hook. Please use a type to define what the data is
  * intended to be.
  */
 export function useBackend<TData extends Record<string, unknown>>() {
-	const config = useConfigStore((state) => state.config);
+  const config = useAtomValue(configAtom);
 
-	const fastData = useGameStore((state) => state.data);
-	const staticData = useGameStore((state) => state.static_data);
-	const data = {
-		...fastData,
-		...staticData,
-	} as TData;
+  const fastData = useAtomValue(gameDataAtom);
+  const staticData = useAtomValue(gameStaticDataAtom);
+  const data = {
+    ...fastData,
+    ...staticData,
+  } as TData;
 
-	const debugLayout = useDebugStore((state) => state.debugLayout);
-	const kitchenSink = useDebugStore((state) => state.kitchenSink);
-	const debug: DebugState = {
-		debugLayout,
-		kitchenSink,
-	};
+  const debugLayout = useAtomValue(debugLayoutAtom);
+  const kitchenSink = useAtomValue(kitchenSinkAtom);
+  const debug = {
+    debugLayout,
+    kitchenSink,
+  };
 
-	const outgoingPayloadQueues = useChunkingStore(
-		(state) => state.outgoingPayloadQueues,
-	);
+  const outgoingPayloadQueues = useAtomValue(outgoingPayloadQueuesAtom);
 
-	const shared = useSharedStore((state) => state.shared);
+  const shared = useAtomValue(sharedAtom);
 
-	const suspending = useWindowStore((state) => state.suspending);
-	const suspended = useWindowStore((state) => state.suspended);
+  const suspending = useAtomValue(suspendingAtom);
+  const suspended = useAtomValue(suspendedAtom);
 
-	return {
-		act: sendAct,
-		config,
-		data,
-		debug,
-		shared,
-		outgoingPayloadQueues,
-		suspending,
-		suspended,
-	};
+  return {
+    act: sendAct,
+    config,
+    data,
+    debug,
+    shared,
+    outgoingPayloadQueues,
+    suspending,
+    suspended,
+  };
 }
 
 /**
@@ -54,17 +59,17 @@ export function useBackend<TData extends Record<string, unknown>>() {
  * It doesn't respond to state updates!
  */
 export function getNonreactiveBackend<TData extends Record<string, unknown>>() {
-	const fastData = useGameStore.getState().data;
-	const staticData = useGameStore.getState().static_data;
-	const data = {
-		...fastData,
-		...staticData,
-	} as TData;
+  const fastData = store.get(gameDataAtom);
+  const staticData = store.get(gameStaticDataAtom);
+  const data = {
+    ...fastData,
+    ...staticData,
+  } as TData;
 
-	return {
-		act: sendAct,
-		data,
-	};
+  return {
+    act: sendAct,
+    data,
+  };
 }
 
 /**
@@ -87,27 +92,28 @@ type StateWithSetter<T> = [T, (nextState: T) => void];
  * @deprecated Use useState and useEffect when you can. Pass the state as a prop.
  */
 export const useLocalState = <TState>(
-	key: string,
-	initialState: TState,
+  key: string,
+  initialState: TState,
 ): StateWithSetter<TState> => {
-	const sharedStates = useSharedStore.getState().shared;
-	const sharedState = key in sharedStates ? sharedStates[key] : initialState;
+  const sharedStates = useAtomValue(sharedAtom);
+  const sharedState = key in sharedStates ? sharedStates[key] : initialState;
 
-	return [
-		sharedState,
-		(nextState) => {
-			bus.dispatch({
-				type: "setSharedState",
-				payload: {
-					key,
-					nextState:
-						typeof nextState === "function"
-							? nextState(sharedState)
-							: nextState,
-				},
-			});
-		},
-	];
+  return [
+    sharedState,
+    (nextState) => {
+      bus.dispatch({
+        type: 'setSharedState',
+
+        payload: {
+          key,
+          nextState:
+            typeof nextState === 'function'
+              ? nextState(sharedState)
+              : nextState,
+        },
+      });
+    },
+  ];
 };
 
 /**
@@ -125,25 +131,26 @@ export const useLocalState = <TState>(
  * @param initialState Initializes your global variable with this value.
  */
 export const useSharedState = <TState>(
-	key: string,
-	initialState: TState,
+  key: string,
+  initialState: TState,
 ): StateWithSetter<TState> => {
-	const sharedStates = useSharedStore.getState().shared;
-	const sharedState = key in sharedStates ? sharedStates[key] : initialState;
+  const sharedStates = useAtomValue(sharedAtom);
+  const sharedState = key in sharedStates ? sharedStates[key] : initialState;
 
-	return [
-		sharedState,
-		(nextState) => {
-			Byond.sendMessage({
-				type: "setSharedState",
-				key,
-				value:
-					JSON.stringify(
-						typeof nextState === "function"
-							? nextState(sharedState)
-							: nextState,
-					) || "",
-			});
-		},
-	];
+  return [
+    sharedState,
+    (nextState) => {
+      Byond.sendMessage({
+        type: 'setSharedState',
+
+        key,
+        value:
+          JSON.stringify(
+            typeof nextState === 'function'
+              ? nextState(sharedState)
+              : nextState,
+          ) || '',
+      });
+    },
+  ];
 };

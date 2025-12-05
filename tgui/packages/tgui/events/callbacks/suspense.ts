@@ -1,7 +1,7 @@
 import { focusMap } from '../../focus';
 import { logger } from '../../logging';
 import { suspendRenderer } from '../../renderer';
-import { useChunkingStore } from '../stores/chunking';
+import { useChunkingStore } from '../store';
 import { useConfigStore } from '../stores/config';
 import { useDebugStore } from '../stores/debug';
 import { useGameStore } from '../stores/game';

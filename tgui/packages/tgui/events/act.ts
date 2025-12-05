@@ -16,7 +16,7 @@ export function sendAct(action: string, payload?: Record<string, unknown>) {
 
   const stringifiedPayload = JSON.stringify(payload);
   const urlSize = Object.entries({
-    type: 'act/' + action,
+    type: `act/${action}`,
     payload: stringifiedPayload,
     tgui: 1,
     windowId: Byond.windowId,
@@ -28,18 +28,18 @@ export function sendAct(action: string, payload?: Record<string, unknown>) {
   ).length;
 
   if (urlSize > 2048) {
-    let chunks: string[] = stringifiedPayload.split(chunkSplitter);
+    const chunks: string[] = stringifiedPayload.split(chunkSplitter);
     const id = `${Date.now()}`;
     bus.dispatch({ type: 'createQueue', payload: { id, chunks } });
     Byond.sendMessage('oversizedPayloadRequest', {
-      type: 'act/' + action,
+      type: `act/${action}`,
       id,
       chunkCount: chunks.length,
     });
     return;
   }
 
-  Byond.sendMessage('act/' + action, payload);
+  Byond.sendMessage(`act/${action}`, payload);
 }
 
 function encodedLengthBinarySearch(haystack: string[], length: number): number {
@@ -70,7 +70,7 @@ const chunkSplitter = {
   [Symbol.split]: (string: string) => {
     const charSeq = string[Symbol.iterator]().toArray();
     const length = charSeq.length;
-    let chunks: string[] = [];
+    const chunks: string[] = [];
     let startIndex = 0;
     let endIndex = 1024;
     while (startIndex < length) {

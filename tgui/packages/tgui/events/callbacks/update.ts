@@ -4,7 +4,7 @@ import { deepEqual } from 'fast-equals';
 import { setupDrag } from '../../drag';
 import { logger } from '../../logging';
 import { resumeRenderer } from '../../renderer';
-import { type QueueState } from '../stores/chunking';
+import type { QueueState } from '../store';
 import { type ConfigState, useConfigStore } from '../stores/config';
 import { type GameState, useGameStore } from '../stores/game';
 import { type SharedState, useSharedStore } from '../stores/shared';

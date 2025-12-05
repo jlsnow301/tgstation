@@ -1,4 +1,4 @@
-import { useChunkingStore } from '../stores/chunking';
+import { outgoingPayloadQueuesAtom, store } from '../store';
 
 type CreateQueuePayload = {
   id: string;
@@ -8,9 +8,10 @@ type CreateQueuePayload = {
 export function createQueue(payload: CreateQueuePayload): void {
   const { id, chunks } = payload;
 
-  useChunkingStore.getState().create({
+  store.set(outgoingPayloadQueuesAtom, (prev) => ({
+    ...prev,
     [id]: chunks,
-  });
+  }));
 }
 
 type OversizePayload = {
@@ -24,22 +25,38 @@ export function oversizeResponse(payload: OversizePayload): void {
   if (allow) {
     nextChunk(id);
   } else {
-    useChunkingStore.getState().remove(id);
+    store.set(outgoingPayloadQueuesAtom, (prev) => {
+      const { [id]: _, ...otherQueues } = prev;
+      return otherQueues;
+    });
   }
 }
 
 export function acknowledgeChunk(payload: OversizePayload): void {
   const { id } = payload;
 
-  useChunkingStore.getState().dequeue(id);
+  store.set(outgoingPayloadQueuesAtom, (prev) => {
+    const { [id]: targetQueue, ...otherQueues } = prev;
+    const [_, ...rest] = targetQueue || [];
+
+    return rest.length
+      ? {
+          ...otherQueues,
+          [id]: rest,
+        }
+      : otherQueues;
+  });
   nextChunk(id);
 }
 
 function nextChunk(id: string): void {
-  const chunk = useChunkingStore.getState().outgoingPayloadQueues[id][0];
+  const queues = store.get(outgoingPayloadQueuesAtom);
+  const chunk = queues[id]?.[0];
 
-  Byond.sendMessage('payloadChunk', {
-    id,
-    chunk,
-  });
+  if (chunk) {
+    Byond.sendMessage('payloadChunk', {
+      id,
+      chunk,
+    });
+  }
 }

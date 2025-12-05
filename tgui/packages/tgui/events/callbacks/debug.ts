@@ -1,12 +1,12 @@
 import { logger } from '../../logging';
-import { useDebugStore } from '../stores/debug';
+import { debugLayoutAtom, kitchenSinkAtom, store } from '../store';
 
 export function toggleKitchenSink(): void {
-  useDebugStore.getState().toggleKitchenSink();
+  store.set(kitchenSinkAtom, (prev) => !prev);
 }
 
 export function toggleDebugLayout(): void {
-  useDebugStore.getState().toggleDebugLayout();
+  store.set(debugLayoutAtom, (prev) => !prev);
 }
 
 export function openExternalBrowser(url: string): void {
