@@ -1,56 +1,22 @@
 import { useAtomValue } from 'jotai';
 import { bus } from '.';
 import { sendAct } from './events/act';
-import {
-  configAtom,
-  debugLayoutAtom,
-  gameDataAtom,
-  gameStaticDataAtom,
-  kitchenSinkAtom,
-  outgoingPayloadQueuesAtom,
-  sharedAtom,
-  store,
-  suspendedAtom,
-  suspendingAtom,
-} from './events/store';
+import { backendStateAtom, sharedAtom, store } from './events/store';
+import type { BackendState } from './events/types';
 
 /**
  * Reactive backend state hook. Please use a type to define what the data is
  * intended to be.
  */
-export function useBackend<TData extends Record<string, unknown>>() {
-  const config = useAtomValue(configAtom);
-
-  const fastData = useAtomValue(gameDataAtom);
-  const staticData = useAtomValue(gameStaticDataAtom);
-  const data = {
-    ...fastData,
-    ...staticData,
-  } as TData;
-
-  const debugLayout = useAtomValue(debugLayoutAtom);
-  const kitchenSink = useAtomValue(kitchenSinkAtom);
-  const debug = {
-    debugLayout,
-    kitchenSink,
-  };
-
-  const outgoingPayloadQueues = useAtomValue(outgoingPayloadQueuesAtom);
-
-  const shared = useAtomValue(sharedAtom);
-
-  const suspending = useAtomValue(suspendingAtom);
-  const suspended = useAtomValue(suspendedAtom);
+export function useBackend<
+  TData extends Record<string, unknown>,
+>(): BackendState<TData> {
+  const state = useAtomValue(backendStateAtom);
 
   return {
     act: sendAct,
-    config,
-    data,
-    debug,
-    shared,
-    outgoingPayloadQueues,
-    suspending,
-    suspended,
+    ...state,
+    data: state.data as TData,
   };
 }
 
@@ -58,17 +24,15 @@ export function useBackend<TData extends Record<string, unknown>>() {
  * This is a holdover for UIs breaking the rule of hooks.
  * It doesn't respond to state updates!
  */
-export function getNonreactiveBackend<TData extends Record<string, unknown>>() {
-  const fastData = store.get(gameDataAtom);
-  const staticData = store.get(gameStaticDataAtom);
-  const data = {
-    ...fastData,
-    ...staticData,
-  } as TData;
+export function getNonreactiveBackend<
+  TData extends Record<string, unknown>,
+>(): BackendState<TData> {
+  const state = store.get(backendStateAtom);
 
   return {
     act: sendAct,
-    data,
+    ...state,
+    data: state.data as TData,
   };
 }
 

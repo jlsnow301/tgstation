@@ -6,6 +6,7 @@
 		"dateformat": "^5.0.3",
 		"dompurify": "^3.2.5",
 		"es-toolkit": "^1.39.3",
+		"fast-equals": "^5.3.3",
 		"highlight.js": "^11.11.1",
 		"jotai": "^2.15.2",
 		"js-yaml": "^4.1.0",

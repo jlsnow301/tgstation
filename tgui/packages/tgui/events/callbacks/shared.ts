@@ -1,4 +1,4 @@
-import { useSharedStore } from '../stores/shared';
+import { sharedAtom, store } from '../store';
 
 type SharedPayload = {
   key: string;
@@ -8,7 +8,8 @@ type SharedPayload = {
 export function setSharedState(payload: SharedPayload): void {
   const { key, nextState } = payload;
 
-  useSharedStore.getState().updateShared({
+  store.set(sharedAtom, (prev) => ({
+    ...prev,
     [key]: nextState,
-  });
+  }));
 }

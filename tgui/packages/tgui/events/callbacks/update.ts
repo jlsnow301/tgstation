@@ -1,28 +1,25 @@
 import { perf } from 'common/perf';
-import { deepEqual } from 'fast-equals';
-
 import { setupDrag } from '../../drag';
 import { logger } from '../../logging';
 import { resumeRenderer } from '../../renderer';
-import type { QueueState } from '../store';
-import { type ConfigState, useConfigStore } from '../stores/config';
-import { type GameState, useGameStore } from '../stores/game';
-import { type SharedState, useSharedStore } from '../stores/shared';
-import { useWindowStore, type WindowState } from '../stores/suspense';
+import {
+  configAtom,
+  gameDataAtom,
+  gameStaticDataAtom,
+  sharedAtom,
+  store,
+  suspendedAtom,
+} from '../store';
+import type { BackendState } from '../types';
 
-interface UpdatePayload
-  extends ConfigState,
-    GameState,
-    QueueState,
-    SharedState,
-    WindowState {
+type UpdatePayload = Omit<BackendState<Record<string, unknown>>, 'act'> & {
   static_data: Record<string, unknown>;
-}
+};
 
 export function update(payload: UpdatePayload): void {
   setFancy(payload);
   updateData(payload);
-  if (useWindowStore.getState().suspended) {
+  if (store.get(suspendedAtom)) {
     resume(payload);
   }
 }
@@ -40,7 +37,7 @@ function resume(payload: UpdatePayload): void {
   setTimeout(() => {
     perf.mark('resume/start');
     // Doublecheck if we are not re-suspended.
-    if (useWindowStore.getState().suspended) {
+    if (store.get(suspendedAtom)) {
       return;
     }
 
@@ -59,10 +56,17 @@ function resume(payload: UpdatePayload): void {
 /** React to changes in fancy mode */
 function setFancy(payload: UpdatePayload): void {
   const fancy = payload.config?.window?.fancy;
-  const fancyState = useConfigStore.getState().config.window?.fancy;
+  const fancyState = store.get(configAtom).window?.fancy;
 
   if (fancyState !== fancy) {
-    useConfigStore.getState().setFancy(fancy);
+    store.set(configAtom, (prev) => ({
+      ...prev,
+      window: {
+        ...prev.window,
+        fancy,
+      },
+    }));
+
     Byond.winset(Byond.windowId, {
       titlebar: !fancy,
       'can-resize': !fancy,
@@ -72,21 +76,25 @@ function setFancy(payload: UpdatePayload): void {
 
 /** Delegates update data to the appropriate store */
 function updateData(payload: UpdatePayload): void {
-  const configState = useConfigStore.getState();
-  if (!deepEqual(payload.config, configState.config)) {
-    configState.updateConfig(payload.config);
+  if (payload.config) {
+    store.set(configAtom, (prev) => ({
+      ...prev,
+      ...payload.config,
+    }));
   }
 
-  // If the static data has changed, we do a full update
-  const gameState = useGameStore.getState();
   if (payload.static_data) {
-    gameState.fullUpdate({
-      data: payload.data,
-      static_data: payload.static_data,
-    });
-  } else if (!deepEqual(payload.data, gameState.data)) {
-    // else, conditionally update ui data
-    gameState.updateData(payload.data);
+    store.set(gameStaticDataAtom, (prev) => ({
+      ...prev,
+      ...payload.static_data,
+    }));
+  }
+
+  if (payload.data) {
+    store.set(gameDataAtom, (prev) => ({
+      ...prev,
+      ...payload.data,
+    }));
   }
 
   if (payload.shared) {
@@ -100,11 +108,16 @@ function updateData(payload: UpdatePayload): void {
         newShared[key] = JSON.parse(value);
       }
     }
-    useSharedStore.getState().updateShared(newShared);
+
+    store.set(sharedAtom, (prev) => ({
+      ...prev,
+      ...newShared,
+    }));
   }
 
-  const windowState = useWindowStore.getState();
-  if (windowState.suspended) {
-    useWindowStore.getState().updateSuspended(0);
+  store.set(suspendedAtom, 0);
+
+  if (payload.suspending) {
+    store.set(suspendedAtom, payload.suspending);
   }
 }

@@ -7,8 +7,8 @@
 // Themes
 import './styles/main.scss';
 
-import { EventBus } from 'common/eventbus';
 import { perf } from 'common/perf';
+import { EventBus } from 'tgui-core/eventbus';
 import { setupGlobalEvents } from 'tgui-core/events';
 import { setupHotKeys } from 'tgui-core/hotkeys';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
