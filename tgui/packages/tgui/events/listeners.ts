@@ -1,21 +1,21 @@
-import { loadMappings, loadStyleSheet } from './callbacks/assets';
+import { loadMappings, loadStyleSheet } from './handlers/assets';
 import {
   acknowledgeChunk,
   createQueue,
   oversizeResponse,
-} from './callbacks/chunking';
+} from './handlers/chunking';
 import {
   openExternalBrowser,
   toggleDebugLayout,
   toggleKitchenSink,
-} from './callbacks/debug';
-import { ping } from './callbacks/ping';
-import { setSharedState } from './callbacks/shared';
-import { suspend, suspendStart } from './callbacks/suspense';
-import { update } from './callbacks/update';
+} from './handlers/debug';
+import { ping } from './handlers/ping';
+import { setSharedState } from './handlers/shared';
+import { suspend, suspendStart } from './handlers/suspense';
+import { update } from './handlers/update';
 
 /**
- * A string/callback map.
+ * A string/handler map.
  * Ideally, these reference a function named after the respective event type.
  */
 export const listeners = {

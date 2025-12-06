@@ -1,6 +1,8 @@
+import type { ExtractAtomValue } from 'jotai';
 import type { sendAct } from './act';
+import type { backendStateAtom } from './store';
 
-export type BinaryIO = 0 | 1;
+type BinaryIO = 0 | 1;
 
 type Client = {
   address: string;
@@ -36,19 +38,12 @@ export type Config = {
   window: TguiWindow;
 };
 
-type DebugState = {
+export type DebugState = {
   debugLayout: boolean;
   kitchenSink: boolean;
 };
 
-export type BackendState<TData> = {
+export type BackendState<TData> = ExtractAtomValue<typeof backendStateAtom> & {
   act: typeof sendAct;
-  config: Config;
   data: TData;
-  debug: DebugState;
-  outgoingPayloadQueues: Record<string, string[]>;
-  shared: Record<string, any>;
-  /** A timestamp. */
-  suspended: number;
-  suspending: BinaryIO;
 };

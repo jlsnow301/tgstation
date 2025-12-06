@@ -1,16 +1,16 @@
 import { atom, createStore } from 'jotai';
-import type { BinaryIO, Config } from './types';
+import type { Config } from './types';
 
 export const chunkingAtom = atom<Record<string, any>>({});
 export const configAtom = atom<Config>({} as Config);
 export const debugLayoutAtom = atom(false);
+export const fancyAtom = atom(false);
 export const gameDataAtom = atom<Record<string, any>>({});
 export const gameStaticDataAtom = atom<Record<string, any>>({});
 export const kitchenSinkAtom = atom(false);
-export const outgoingPayloadQueuesAtom = atom<Record<string, string[]>>({});
 export const sharedAtom = atom<Record<string, any>>({});
-export const suspendedAtom = atom<number>(0);
-export const suspendingAtom = atom<BinaryIO>(0);
+export const suspendedAtom = atom<number | false>(Date.now()); // Start as suspended
+export const suspendingAtom = atom(false);
 
 export const backendStateAtom = atom((get) => ({
   config: get(configAtom),
@@ -22,7 +22,8 @@ export const backendStateAtom = atom((get) => ({
     debugLayout: get(debugLayoutAtom),
     kitchenSink: get(kitchenSinkAtom),
   },
-  outgoingPayloadQueues: get(outgoingPayloadQueuesAtom),
+  fancy: get(fancyAtom),
+  outgoingPayloadQueues: get(chunkingAtom),
   shared: get(sharedAtom),
   staticData: get(gameStaticDataAtom),
   suspended: get(suspendedAtom),
@@ -32,14 +33,7 @@ export const backendStateAtom = atom((get) => ({
 export const store = createStore();
 
 export function resetStore() {
-  store.set(chunkingAtom, {});
-  store.set(configAtom, {} as Config);
-  store.set(debugLayoutAtom, false);
   store.set(gameDataAtom, {});
   store.set(gameStaticDataAtom, {});
-  store.set(kitchenSinkAtom, false);
-  store.set(outgoingPayloadQueuesAtom, {});
   store.set(sharedAtom, {});
-  store.set(suspendedAtom, 0);
-  store.set(suspendingAtom, 0);
 }

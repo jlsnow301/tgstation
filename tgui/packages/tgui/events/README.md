@@ -2,39 +2,58 @@
 
 ## Philosophy
 
-This event system is designed to stay as close to vanilla JavaScript as possible. It uses a plain object to map event types to their respective handlers. Handlers can be swapped out or the store solution replaced entirely with minimal effort.
+This event system is designed to stay as close to vanilla JavaScript as possible. The abstractions are intentionally kept simple. It uses a plain object to map event types to their respective handlers, making replacement easy.
 
-It avoids using action creators, modular reducers, or distinguishing middleware. The abstractions are kept intentionally simple. The sole goal is to process an event and allow the handler to directly mutate the state, whether it's from the store or Byond.
+There are three layers to this:
+
+1. The event bus, which maintains the list of handlers.
+2. The handlers, which delegate actions and update application state.
+3. The store, ie the application state.
 
 ## Usage
 
-1. Creating your event handler:
-   > events/callbacks/someFunc.ts
+### 1. Creating your event handler:
+
+> events/handlers/someFunc.ts
 
 ```ts
 type ExpectedPayload = {
-  greeting: string;
+	greeting: string;
 };
 
 export function someFunc(payload: ExpectedPayload) {
-  // Do something with the payload
-  logger.log('Received: ', payload.greeting);
+	// Do something with the payload
+	logger.log('Received: ', payload.greeting);
 }
 ```
 
-2. Registering the event handler:
-   > events/listeners.ts
+### 2. Registering the event handler:
+
+> events/listeners.ts
 
 ```ts
-import { someFunc } from 'callbacks/someFunc';
+import { someFunc } from 'handlers/someFunc';
 
 export const listeners = {
-  eventType: someFunc,
+	eventType: someFunc,
 } as const;
 ```
 
-3. Configuring your event dispatch
-   > index.tsx
+You can even shorten this by naming your function the same as the event type. An event of type 'myType' would call the myType function directly,
+
+```ts
+export function myType(payload: MyPayload) {
+	logger.log('whatever!');
+}
+
+export const listeners = {
+	myType,
+};
+```
+
+### 3. Setting up your event dispatch
+
+> index.tsx
 
 ```ts
 import { EventBus } from 'common/eventbus';
@@ -43,8 +62,9 @@ import { listeners } from 'events/listeners';
 const busName = new EventBus(listeners);
 ```
 
-4. Subscribe to byond events
-   > index.tsx
+### 4. Subscribe to byond events
+
+> index.tsx
 
 ```ts
 /// somewhere in setup logic
@@ -59,9 +79,9 @@ See:
 import { busName } from 'index.tsx';
 
 busName.dispatch({
-  type: 'eventType', // This must match the key in the listeners object or it will throw a TypeScript error.
-  payload: {
-    greeting: 'Hello, world!',
-  },
+	type: 'eventType', // This must match the key in the listeners object or it will throw a TypeScript error.
+	payload: {
+		greeting: 'Hello, world!',
+	},
 });
 ```

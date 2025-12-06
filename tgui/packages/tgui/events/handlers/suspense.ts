@@ -1,7 +1,13 @@
 import { focusMap } from '../../focus';
 import { logger } from '../../logging';
 import { suspendRenderer } from '../../renderer';
-import { resetStore } from '../store';
+import {
+  configAtom,
+  resetStore,
+  store,
+  suspendedAtom,
+  suspendingAtom,
+} from '../store';
 
 let suspendInterval: NodeJS.Timeout | null = null;
 
@@ -15,6 +21,8 @@ function suspendMsg(): void {
 export function suspendStart(): void {
   if (suspendInterval) clearInterval(suspendInterval);
 
+  store.set(suspendingAtom, true);
+
   logger.log(`suspending (${Byond.windowId})`);
   suspendMsg();
   suspendInterval = setInterval(suspendMsg, TWO_SECONDS);
@@ -26,6 +34,14 @@ export function suspend(): void {
   resetStore();
 
   if (suspendInterval) clearInterval(suspendInterval);
+
+  store.set(configAtom, (prev) => ({
+    ...prev,
+    title: '',
+    status: 1,
+  }));
+  store.set(suspendingAtom, false);
+  store.set(suspendedAtom, Date.now());
 
   Byond.winset(Byond.windowId, {
     'is-visible': false,

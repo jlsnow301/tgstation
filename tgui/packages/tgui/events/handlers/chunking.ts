@@ -1,4 +1,4 @@
-import { outgoingPayloadQueuesAtom, store } from '../store';
+import { chunkingAtom, store } from '../store';
 
 type CreateQueuePayload = {
   id: string;
@@ -8,7 +8,7 @@ type CreateQueuePayload = {
 export function createQueue(payload: CreateQueuePayload): void {
   const { id, chunks } = payload;
 
-  store.set(outgoingPayloadQueuesAtom, (prev) => ({
+  store.set(chunkingAtom, (prev) => ({
     ...prev,
     [id]: chunks,
   }));
@@ -25,7 +25,7 @@ export function oversizeResponse(payload: OversizePayload): void {
   if (allow) {
     nextChunk(id);
   } else {
-    store.set(outgoingPayloadQueuesAtom, (prev) => {
+    store.set(chunkingAtom, (prev) => {
       const { [id]: _, ...otherQueues } = prev;
       return otherQueues;
     });
@@ -35,7 +35,7 @@ export function oversizeResponse(payload: OversizePayload): void {
 export function acknowledgeChunk(payload: OversizePayload): void {
   const { id } = payload;
 
-  store.set(outgoingPayloadQueuesAtom, (prev) => {
+  store.set(chunkingAtom, (prev) => {
     const { [id]: targetQueue, ...otherQueues } = prev;
     const [_, ...rest] = targetQueue || [];
 
@@ -50,7 +50,7 @@ export function acknowledgeChunk(payload: OversizePayload): void {
 }
 
 function nextChunk(id: string): void {
-  const queues = store.get(outgoingPayloadQueuesAtom);
+  const queues = store.get(chunkingAtom);
   const chunk = queues[id]?.[0];
 
   if (chunk) {

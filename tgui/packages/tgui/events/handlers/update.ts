@@ -4,6 +4,7 @@ import { logger } from '../../logging';
 import { resumeRenderer } from '../../renderer';
 import {
   configAtom,
+  fancyAtom,
   gameDataAtom,
   gameStaticDataAtom,
   sharedAtom,
@@ -18,16 +19,18 @@ type UpdatePayload = Omit<BackendState<Record<string, unknown>>, 'act'> & {
 
 export function update(payload: UpdatePayload): void {
   setFancy(payload);
-  updateData(payload);
   if (store.get(suspendedAtom)) {
     resume(payload);
   }
+  store.set(suspendedAtom, false);
+
+  updateData(payload);
 }
 
 /** Resumes the tgui window if suspended */
 function resume(payload: UpdatePayload): void {
   // Show the payload
-  logger.log('resume', payload);
+  logger.log('Resuming:', payload);
   // Signal renderer that we have resumed
   resumeRenderer();
   // Setup drag
@@ -55,17 +58,11 @@ function resume(payload: UpdatePayload): void {
 
 /** React to changes in fancy mode */
 function setFancy(payload: UpdatePayload): void {
-  const fancy = payload.config?.window?.fancy;
-  const fancyState = store.get(configAtom).window?.fancy;
+  const fancy = !!payload.config?.window?.fancy;
+  const fancyState = store.get(fancyAtom);
 
   if (fancyState !== fancy) {
-    store.set(configAtom, (prev) => ({
-      ...prev,
-      window: {
-        ...prev.window,
-        fancy,
-      },
-    }));
+    store.set(fancyAtom, fancy);
 
     Byond.winset(Byond.windowId, {
       titlebar: !fancy,
@@ -113,11 +110,5 @@ function updateData(payload: UpdatePayload): void {
       ...prev,
       ...newShared,
     }));
-  }
-
-  store.set(suspendedAtom, 0);
-
-  if (payload.suspending) {
-    store.set(suspendedAtom, payload.suspending);
   }
 }
