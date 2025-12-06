@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { useDispatch, useSelector } from 'tgui/oldBackend';
+import { useDispatch, useSelector } from '../store/backend';
 
 import { toggleSettings, updateSettings } from './actions';
 import { selectSettings } from './selectors';

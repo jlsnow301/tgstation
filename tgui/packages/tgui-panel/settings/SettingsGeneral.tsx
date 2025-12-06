@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'tgui/oldBackend';
 import {
   Button,
   Collapsible,
@@ -12,8 +11,8 @@ import {
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
 import { capitalize } from 'tgui-core/string';
-
 import { clearChat, saveChatToDisk } from '../chat/actions';
+import { useDispatch, useSelector } from '../store/backend';
 import { THEMES } from '../themes';
 import { exportSettings, updateSettings } from './actions';
 import { FONTS } from './constants';

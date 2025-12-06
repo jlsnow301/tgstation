@@ -4,8 +4,6 @@
  * @license MIT
  */
 
-import { useDebug } from 'tgui/debug/hooks';
-import { KitchenSink } from 'tgui/debug/KitchenSink';
 import { Pane } from 'tgui/layouts';
 import { Button, Section, Stack } from 'tgui-core/components';
 
@@ -21,13 +19,6 @@ export const Panel = (props) => {
   const audio = useAudio();
   const settings = useSettings();
   const game = useGame();
-  const debug = useDebug();
-
-  if (process.env.NODE_ENV !== 'production') {
-    if (debug.kitchenSink) {
-      return <KitchenSink panel />;
-    }
-  }
 
   return (
     <Pane theme={settings.theme}>

@@ -4,7 +4,6 @@
  * @license MIT
  */
 
-import { useDispatch, useSelector } from 'tgui/oldBackend';
 import {
   Button,
   Collapsible,
@@ -13,6 +12,7 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
+import { useDispatch, useSelector } from '../store/backend';
 
 import {
   moveChatPageLeft,

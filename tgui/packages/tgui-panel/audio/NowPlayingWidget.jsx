@@ -4,11 +4,10 @@
  * @license MIT
  */
 
-import { useDispatch, useSelector } from 'tgui/oldBackend';
 import { Button, Collapsible, Flex, Knob, Section } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
-
 import { useSettings } from '../settings';
+import { useDispatch, useSelector } from '../store/backend';
 import { selectAudio } from './selectors';
 
 export const NowPlayingWidget = (props) => {

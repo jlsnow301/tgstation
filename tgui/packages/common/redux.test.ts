@@ -7,7 +7,7 @@ import {
   createAction,
   createStore,
   type Reducer,
-} from './redux';
+} from '../tgui-panel/store/redux';
 
 // Dummy Reducer
 const counterReducer: Reducer<number, Action<string>> = (state = 0, action) => {

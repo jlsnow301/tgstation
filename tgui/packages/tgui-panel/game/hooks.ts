@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { useSelector } from 'tgui/oldBackend';
+import { useSelector } from '../store/backend';
 
 import { selectGame } from './selectors';
 

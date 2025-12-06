@@ -12,13 +12,12 @@
  */
 
 import { perf } from 'common/perf';
-import { createAction } from 'common/redux';
+import { setupDrag } from 'tgui/drag';
+import { focusMap } from 'tgui/focus';
+import { createLogger } from 'tgui/logging';
+import { resumeRenderer, suspendRenderer } from 'tgui/renderer';
 import type { BooleanLike } from 'tgui-core/react';
-
-import { setupDrag } from './drag';
-import { focusMap } from './focus';
-import { createLogger } from './logging';
-import { resumeRenderer, suspendRenderer } from './renderer';
+import { createAction } from './redux';
 
 const logger = createLogger('backend');
 

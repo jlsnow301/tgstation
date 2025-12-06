@@ -9,14 +9,10 @@ import './styles/main.scss';
 import './styles/themes/light.scss';
 
 import { perf } from 'common/perf';
-import { combineReducers } from 'common/redux';
 import { captureExternalLinks } from 'tgui/links';
-import { setGlobalStore } from 'tgui/oldBackend';
 import { render } from 'tgui/renderer';
-import { configureStore } from 'tgui/store';
 import { setupGlobalEvents } from 'tgui-core/events';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
-
 import { audioMiddleware, audioReducer } from './audio';
 import { chatMiddleware, chatReducer } from './chat';
 import { gameMiddleware, gameReducer } from './game';
@@ -24,6 +20,9 @@ import { Panel } from './Panel';
 import { setupPanelFocusHacks } from './panelFocus';
 import { pingMiddleware, pingReducer } from './ping';
 import { settingsMiddleware, settingsReducer } from './settings';
+import { setGlobalStore } from './store/backend';
+import { combineReducers } from './store/redux';
+import { configureStore } from './store/store';
 import { telemetryMiddleware } from './telemetry';
 
 perf.mark('inception', window.performance?.timeOrigin);

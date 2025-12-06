@@ -4,10 +4,10 @@
  * @license MIT
  */
 
-import { useSelector } from 'tgui/oldBackend';
 import { Color } from 'tgui-core/color';
 import { Box } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
+import { useSelector } from '../store/backend';
 
 import { selectPing } from './selectors';
 

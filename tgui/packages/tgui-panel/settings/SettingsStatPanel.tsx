@@ -1,4 +1,3 @@
-import { useDispatch, useSelector } from 'tgui/oldBackend';
 import {
   Button,
   LabeledList,
@@ -9,6 +8,7 @@ import {
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
 import { capitalize } from 'tgui-core/string';
+import { useDispatch, useSelector } from '../store/backend';
 
 import { updateSettings } from './actions';
 import { selectSettings } from './selectors';

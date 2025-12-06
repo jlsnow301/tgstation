@@ -1,5 +1,6 @@
+import { loadedMappings } from '../../assets';
+
 const EXCLUDED_PATTERNS = [/v4shim/i];
-export const loadedMappings: Record<string, string> = {};
 
 export function loadStyleSheet(payload: string): void {
   Byond.loadCss(payload);

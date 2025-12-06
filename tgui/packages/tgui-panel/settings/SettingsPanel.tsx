@@ -4,15 +4,14 @@
  * @license MIT
  */
 
-import { useDispatch, useSelector } from 'tgui/oldBackend';
 import { Section, Stack, Tabs } from 'tgui-core/components';
-
 import { ChatPageSettings } from '../chat';
+import { useDispatch, useSelector } from '../store/backend';
 import { changeSettingsTab } from './actions';
 import { SETTINGS_TABS } from './constants';
-import { selectActiveTab } from './selectors';
 import { SettingsGeneral } from './SettingsGeneral';
 import { SettingsStatPanel } from './SettingsStatPanel';
+import { selectActiveTab } from './selectors';
 import { TextHighlightSettings } from './TextHighlight';
 
 export function SettingsPanel(props) {

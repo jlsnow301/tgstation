@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { useDispatch, useSelector } from 'tgui/oldBackend';
+import { useDispatch, useSelector } from '../store/backend';
 
 import { selectAudio } from './selectors';
 

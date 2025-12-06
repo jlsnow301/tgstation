@@ -4,10 +4,8 @@
  * @license MIT
  */
 
-import type { Store } from 'common/redux';
 import { storage } from 'common/storage';
 import DOMPurify from 'dompurify';
-
 import {
   addHighlightSetting,
   importSettings,
@@ -17,6 +15,7 @@ import {
   updateSettings,
 } from '../settings/actions';
 import { selectSettings } from '../settings/selectors';
+import type { Store } from '../store/redux';
 import {
   addChatPage,
   changeChatPage,

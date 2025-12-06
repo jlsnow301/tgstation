@@ -1,4 +1,3 @@
-import { useDispatch, useSelector } from 'tgui/oldBackend';
 import {
   Box,
   Button,
@@ -10,8 +9,8 @@ import {
   Stack,
   TextArea,
 } from 'tgui-core/components';
-
 import { rebuildChat } from '../chat/actions';
+import { useDispatch, useSelector } from '../store/backend';
 import {
   addHighlightSetting,
   removeHighlightSetting,

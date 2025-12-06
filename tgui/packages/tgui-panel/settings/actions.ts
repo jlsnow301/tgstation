@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { createAction } from 'common/redux';
+import { createAction } from '../store/redux';
 
 import { createHighlightSetting } from './model';
 

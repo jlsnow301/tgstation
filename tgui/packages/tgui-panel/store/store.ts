@@ -4,6 +4,10 @@
  * @license MIT
  */
 
+import { createLogger } from 'tgui/logging';
+import { flow } from 'tgui-core/fp';
+import { assetMiddleware } from './assets';
+import { backendMiddleware, backendReducer } from './backend';
 import {
   applyMiddleware,
   combineReducers,
@@ -11,14 +15,7 @@ import {
   type Middleware,
   type Reducer,
   type Store,
-} from 'common/redux';
-import { flow } from 'tgui-core/fp';
-
-import { assetMiddleware } from './assets';
-import { debugMiddleware, relayMiddleware } from './debug/middleware';
-import { debugReducer } from './debug/reducer';
-import { createLogger } from './logging';
-import { backendMiddleware, backendReducer } from './oldBackend';
+} from './redux';
 
 type ConfigureStoreOptions = {
   sideEffects?: boolean;
@@ -31,18 +28,12 @@ type ConfigureStoreOptions = {
 
 type StackAugmentor = (stack: string, error?: Error) => string;
 
-type StoreProviderProps = {
-  store: Store;
-  children: any;
-};
-
 const logger = createLogger('store');
 
 export const configureStore = (options: ConfigureStoreOptions = {}): Store => {
   const { sideEffects = true, reducer, middleware } = options;
   const rootReducer: Reducer = flow([
     combineReducers({
-      debug: debugReducer,
       backend: backendReducer,
     }),
     reducer as any,
@@ -61,7 +52,7 @@ export const configureStore = (options: ConfigureStoreOptions = {}): Store => {
     // We are using two if statements because Webpack is capable of
     // removing this specific block as dead code.
     if (sideEffects) {
-      middlewares.unshift(loggingMiddleware, debugMiddleware, relayMiddleware);
+      middlewares.unshift(loggingMiddleware);
     }
   }
 
