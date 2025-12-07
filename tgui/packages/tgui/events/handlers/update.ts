@@ -21,9 +21,8 @@ export function update(payload: UpdatePayload): void {
   setFancy(payload);
   if (store.get(suspendedAtom)) {
     resume(payload);
+    store.set(suspendedAtom, false);
   }
-  store.set(suspendedAtom, false);
-
   updateData(payload);
 }
 
