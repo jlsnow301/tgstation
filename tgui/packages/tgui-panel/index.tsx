@@ -14,11 +14,13 @@ import { setGlobalStore } from 'tgui/backend';
 import { captureExternalLinks } from 'tgui/links';
 import { render } from 'tgui/renderer';
 import { configureStore } from 'tgui/store';
+import { EventBus } from 'tgui-core/eventbus';
 import { setupGlobalEvents } from 'tgui-core/events';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
-
+import { App } from './app';
 import { audioMiddleware, audioReducer } from './audio';
 import { chatMiddleware, chatReducer } from './chat';
+import { listeners } from './events/listeners';
 import { gameMiddleware, gameReducer } from './game';
 import { Panel } from './Panel';
 import { setupPanelFocusHacks } from './panelFocus';
@@ -48,6 +50,7 @@ const store = configureStore({
     ],
   },
 });
+const bus = new EventBus(listeners);
 
 function setupApp() {
   // Delay setup
@@ -69,7 +72,10 @@ function setupApp() {
   store.subscribe(() => render(<Panel />));
 
   // Dispatch incoming messages as store actions
-  Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
+  Byond.subscribe((type, payload) => {
+    store.dispatch({ type, payload });
+    bus.dispatch({ type, payload } as any);
+  });
 
   // Unhide the panel
   Byond.winset('output_selector.legacy_output_selector', {
@@ -99,7 +105,7 @@ function setupApp() {
         './telemetry',
       ],
       () => {
-        render(<Panel />);
+        render(<App />);
       },
     );
   }

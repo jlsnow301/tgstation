@@ -4,34 +4,38 @@
  * @license MIT
  */
 
-import { useDispatch, useSelector } from 'tgui/backend';
+import { useAtomValue } from 'jotai';
 import { Button, Collapsible, Flex, Knob, Section } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
-
+import { player } from '../events/handlers/audio';
+import { metaAtom, playingAtom } from '../events/store';
 import { useSettings } from '../settings';
-import { selectAudio } from './selectors';
 
 export const NowPlayingWidget = (props) => {
-  const audio = useSelector(selectAudio),
-    dispatch = useDispatch(),
-    settings = useSettings(),
-    title = audio.meta?.title,
-    URL = audio.meta?.link,
-    Artist = audio.meta?.artist || 'Unknown Artist',
-    upload_date = audio.meta?.upload_date || 'Unknown Date',
-    album = audio.meta?.album || 'Unknown Album',
-    duration = audio.meta?.duration,
-    date = !Number.isNaN(upload_date)
-      ? upload_date?.substring(0, 4) +
-        '-' +
-        upload_date?.substring(4, 6) +
-        '-' +
-        upload_date?.substring(6, 8)
-      : upload_date;
+  const settings = useSettings();
+  const meta = useAtomValue(metaAtom);
+  const {
+    album = 'Unknown Album',
+    artist = 'Unknown Artist',
+    duration,
+    link,
+    title,
+    upload_date = 'Unknown Data',
+  } = meta || {};
+
+  const playing = useAtomValue(playingAtom);
+
+  const date = !Number.isNaN(upload_date)
+    ? upload_date?.substring(0, 4) +
+      '-' +
+      upload_date?.substring(4, 6) +
+      '-' +
+      upload_date?.substring(6, 8)
+    : upload_date;
 
   return (
     <Flex align="center">
-      {(audio.playing && (
+      {playing ? (
         <Flex.Item
           mx={0.5}
           grow={1}
@@ -44,18 +48,18 @@ export const NowPlayingWidget = (props) => {
           {
             <Collapsible title={title || 'Unknown Track'} color={'blue'}>
               <Section>
-                {URL !== 'Song Link Hidden' && (
+                {link !== 'Song Link Hidden' && (
                   <Flex.Item grow={1} color="label">
-                    URL: <a href={URL}>{URL}</a>
+                    URL: <a href={link}>{link}</a>
                   </Flex.Item>
                 )}
                 <Flex.Item grow={1} color="label">
                   Duration: {duration}
                 </Flex.Item>
-                {Artist !== 'Song Artist Hidden' &&
-                  Artist !== 'Unknown Artist' && (
+                {artist !== 'Song Artist Hidden' &&
+                  artist !== 'Unknown Artist' && (
                     <Flex.Item grow={1} color="label">
-                      Artist: {Artist}
+                      Artist: {artist}
                     </Flex.Item>
                   )}
                 {album !== 'Song Album Hidden' && album !== 'Unknown Album' && (
@@ -73,22 +77,14 @@ export const NowPlayingWidget = (props) => {
             </Collapsible>
           }
         </Flex.Item>
-      )) || (
+      ) : (
         <Flex.Item grow={1} color="label">
           Nothing to play.
         </Flex.Item>
       )}
-      {audio.playing && (
+      {playing && (
         <Flex.Item mx={0.5} fontSize="0.9em">
-          <Button
-            tooltip="Stop"
-            icon="stop"
-            onClick={() =>
-              dispatch({
-                type: 'audio/stopMusic',
-              })
-            }
-          />
+          <Button tooltip="Stop" icon="stop" onClick={player.stop} />
         </Flex.Item>
       )}
       <Flex.Item mx={0.5} fontSize="0.9em">

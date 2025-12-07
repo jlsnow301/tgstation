@@ -7,18 +7,12 @@
 import { clamp01, scale } from 'tgui-core/math';
 
 import { pingFail, pingSuccess } from './actions';
+import type { PingState } from './atoms';
 import {
   PING_MAX_FAILS,
   PING_ROUNDTRIP_BEST,
   PING_ROUNDTRIP_WORST,
 } from './constants';
-
-type PingState = {
-  roundtrip: number | undefined;
-  roundtripAvg: number | undefined;
-  failCount: number;
-  networkQuality: number;
-};
 
 export const pingReducer = (state = {} as PingState, action) => {
   const { type, payload } = action;
