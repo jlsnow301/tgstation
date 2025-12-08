@@ -1,4 +1,5 @@
-import { metaAtom, playingAtom, store, visibleAtom } from '../events/store';
+import { store } from '../events/store';
+import { metaAtom, playingAtom, visibleAtom } from './atoms';
 import { AudioPlayer } from './player';
 
 export const player = new AudioPlayer();
@@ -12,6 +13,8 @@ player.onStop(() => {
   store.set(visibleAtom, false);
   store.set(metaAtom, null);
 });
+
+// ------- Event Handlers --------------------------------------------------- //
 
 type PlayPayload = {
   url: string;

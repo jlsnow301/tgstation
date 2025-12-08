@@ -1,5 +1,6 @@
 import { scale } from 'tgui-core/math';
 import { store } from '../events/store';
+import { setLastPing } from '../game/handlers';
 import { pingAtom } from './atoms';
 import {
   PING_QUEUE_SIZE,
@@ -77,6 +78,8 @@ function handleInitialize(): void {
     initialized = true;
     sendPing();
   }
+
+  setLastPing();
 }
 
 function pingSuccess(roundtrip: number): void {
