@@ -7,9 +7,9 @@
 import { useAtomValue } from 'jotai';
 import { Button, Collapsible, Flex, Knob, Section } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
-import { player } from '../events/handlers/audio';
 import { metaAtom, playingAtom } from '../events/store';
 import { useSettings } from '../settings';
+import { player } from './handlers';
 
 export const NowPlayingWidget = (props) => {
   const settings = useSettings();

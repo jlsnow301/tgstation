@@ -18,13 +18,10 @@ import { EventBus } from 'tgui-core/eventbus';
 import { setupGlobalEvents } from 'tgui-core/events';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { App } from './app';
-import { audioMiddleware, audioReducer } from './audio';
 import { chatMiddleware, chatReducer } from './chat';
 import { listeners } from './events/listeners';
 import { gameMiddleware, gameReducer } from './game';
-import { Panel } from './Panel';
 import { setupPanelFocusHacks } from './panelFocus';
-import { pingMiddleware, pingReducer } from './ping';
 import { settingsMiddleware, settingsReducer } from './settings';
 import { telemetryMiddleware } from './telemetry';
 
@@ -33,19 +30,15 @@ perf.mark('init');
 
 const store = configureStore({
   reducer: combineReducers({
-    audio: audioReducer,
     chat: chatReducer,
     game: gameReducer,
-    ping: pingReducer,
     settings: settingsReducer,
   }),
   middleware: {
     pre: [
       chatMiddleware,
-      pingMiddleware,
       telemetryMiddleware,
       settingsMiddleware,
-      audioMiddleware,
       gameMiddleware,
     ],
   },
@@ -69,7 +62,7 @@ function setupApp() {
   captureExternalLinks();
 
   // Re-render UI on store updates
-  store.subscribe(() => render(<Panel />));
+  store.subscribe(() => render(<App />));
 
   // Dispatch incoming messages as store actions
   Byond.subscribe((type, payload) => {
@@ -95,12 +88,12 @@ function setupApp() {
 
     import.meta.webpackHot.accept(
       [
-        './audio',
+        // './audio/',
         './chat',
         './game',
         './Notifications',
         './Panel',
-        './ping',
+        // './ping',
         './settings',
         './telemetry',
       ],

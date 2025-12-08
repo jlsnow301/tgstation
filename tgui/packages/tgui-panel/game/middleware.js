@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { pingSoft, pingSuccess } from '../ping/actions';
+import { pingSoft, pingSuccess } from '../ping/handlers';
 import { connectionLost, connectionRestored, roundRestarted } from './actions';
 import { CONNECTION_LOST_AFTER } from './constants';
 import { selectGame } from './selectors';
