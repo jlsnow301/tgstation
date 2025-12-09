@@ -32,6 +32,7 @@ type SoftPingPayload = {
 export function pingSoft(payload: SoftPingPayload): void {
   const { afk } = payload;
   handleInitialize();
+
   // On each soft ping where client is not flagged as afk,
   // initiate a new ping.
   if (!afk) {

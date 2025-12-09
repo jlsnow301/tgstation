@@ -7,7 +7,7 @@
 import { useAtom, useAtomValue } from 'jotai';
 import { Pane } from 'tgui/layouts';
 import { Button, Section, Stack } from 'tgui-core/components';
-import {  visibleAtom } from './audio/atoms';
+import { visibleAtom } from './audio/atoms';
 import { NowPlayingWidget } from './audio/NowPlayingWidget';
 import { ChatPanel, ChatTabs } from './chat';
 import { gameAtom } from './game/atoms';

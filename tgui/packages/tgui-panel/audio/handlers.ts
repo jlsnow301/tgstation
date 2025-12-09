@@ -23,7 +23,7 @@ type PlayPayload = {
   end: number;
 };
 
-export function playMusic(payload: PlayPayload) {
+export function playMusic(payload: PlayPayload): void {
   const { url, ...options } = payload;
   player.play(url, options);
   store.set(metaAtom, payload as any);

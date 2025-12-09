@@ -20,7 +20,6 @@ import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { App } from './app';
 import { chatMiddleware, chatReducer } from './chat';
 import { listeners } from './events/listeners';
-import { gameMiddleware, gameReducer } from './game';
 import { setupPanelFocusHacks } from './panelFocus';
 import { settingsMiddleware, settingsReducer } from './settings';
 import { telemetryMiddleware } from './telemetry';
@@ -31,18 +30,13 @@ perf.mark('init');
 const store = configureStore({
   reducer: combineReducers({
     chat: chatReducer,
-    game: gameReducer,
     settings: settingsReducer,
   }),
   middleware: {
-    pre: [
-      chatMiddleware,
-      telemetryMiddleware,
-      settingsMiddleware,
-      gameMiddleware,
-    ],
+    pre: [chatMiddleware, telemetryMiddleware, settingsMiddleware],
   },
 });
+
 const bus = new EventBus(listeners);
 
 function setupApp() {
@@ -67,7 +61,7 @@ function setupApp() {
   // Dispatch incoming messages as store actions
   Byond.subscribe((type, payload) => {
     store.dispatch({ type, payload });
-    bus.dispatch({ type, payload } as any);
+    bus.dispatch({ type, payload });
   });
 
   // Unhide the panel
