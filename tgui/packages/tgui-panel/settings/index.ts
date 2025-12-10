@@ -5,6 +5,6 @@
  */
 
 export { useSettings } from './hooks';
-export { settingsMiddleware } from './middleware';
+export { settingsMiddleware } from './handlers';
 export { settingsReducer } from './reducer';
 export { SettingsPanel } from './SettingsPanel';

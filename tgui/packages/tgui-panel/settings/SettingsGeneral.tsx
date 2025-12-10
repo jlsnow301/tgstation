@@ -1,3 +1,4 @@
+import { useAtomValue } from 'jotai';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'tgui/backend';
 import {
@@ -12,19 +13,17 @@ import {
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
 import { capitalize } from 'tgui-core/string';
-
 import { clearChat, saveChatToDisk } from '../chat/actions';
-import { THEMES } from '../themes';
 import { exportSettings, updateSettings } from './actions';
 import { FONTS } from './constants';
 import { resetPaneSplitters, setEditPaneSplitters } from './scaling';
 import { selectSettings } from './selectors';
 import { importChatSettings } from './settingsImExport';
+import { THEMES } from './themes';
 
 export function SettingsGeneral(props) {
-  const { theme, fontFamily, fontSize, lineHeight } =
-    useSelector(selectSettings);
-  const dispatch = useDispatch();
+  const [settings, setSettings] =
+    useAtomValue(selectSettings);
   const [freeFont, setFreeFont] = useState(false);
 
   const [editingPanes, setEditingPanes] = useState(false);
