@@ -5,8 +5,6 @@
  */
 
 import { storage } from 'common/storage';
-
-import { setClientTheme } from '../themes';
 import {
   addHighlightSetting,
   exportSettings,
@@ -18,8 +16,8 @@ import {
 } from './actions';
 import { FONTS_DISABLED } from './constants';
 import { setDisplayScaling } from './scaling';
-import { selectSettings } from './selectors';
 import { exportChatSettings } from './settingsImExport';
+import { setClientTheme } from './themes';
 
 let statFontTimer: NodeJS.Timeout;
 let statTabsTimer: NodeJS.Timeout;
@@ -112,6 +110,7 @@ export function settingsMiddleware(store) {
     ) {
       return next(action);
     }
+    console.log(type);
 
     // Set client theme
     const theme = payload?.theme;
