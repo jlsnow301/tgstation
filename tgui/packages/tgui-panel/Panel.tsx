@@ -21,14 +21,6 @@ export const Panel = (props) => {
   const game = useAtomValue(gameAtom);
   const [audioVisible, setAudioVisible] = useAtom(visibleAtom);
 
-  // if (process.env.NODE_ENV !== 'production') {
-  //   const { useDebug, KitchenSink } = require('tgui/debug');
-  //   const debug = useDebug();
-  //   if (debug.kitchenSink) {
-  //     return <KitchenSink panel />;
-  //   }
-  // }
-
   return (
     <Pane theme={settings.theme}>
       <Stack fill vertical>
