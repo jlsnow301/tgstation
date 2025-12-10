@@ -1,23 +1,29 @@
+import { useAtom } from 'jotai';
 import { useEffect } from 'react';
-import { store } from '../events/store';
 import { connectionLostAtAtom } from './atoms';
 import { CONNECTION_LOST_AFTER } from './constants';
-import { connectionLost, connectionRestored, lastPingedAt } from './handlers';
+
+let lastPingedAt: number;
+
+export function setLastPing() {
+  lastPingedAt = Date.now();
+}
 
 /** React hook to periodically get UI status */
 export function useKeepAlive() {
+  const [connectionLostAt, setConnectionLostAt] = useAtom(connectionLostAtAtom);
+
   useEffect(() => {
     const interval = setInterval(() => {
-      const connectionLostAt = store.get(connectionLostAtAtom);
       if (!connectionLostAt) return;
 
       const pingsAreFailing =
         lastPingedAt && Date.now() >= lastPingedAt + CONNECTION_LOST_AFTER;
       if (!connectionLostAt && pingsAreFailing) {
-        connectionLost();
+        setConnectionLostAt(Date.now());
       }
       if (connectionLostAt && !pingsAreFailing) {
-        connectionRestored();
+        setConnectionLostAt(null);
       }
     }, 1000);
 

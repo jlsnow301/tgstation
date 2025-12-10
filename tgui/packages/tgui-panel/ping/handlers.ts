@@ -1,6 +1,6 @@
 import { scale } from 'tgui-core/math';
 import { store } from '../events/store';
-import { setLastPing } from '../game/handlers';
+import { setLastPing } from '../game/hooks';
 import { pingAtom } from './atoms';
 import {
   PING_QUEUE_SIZE,
