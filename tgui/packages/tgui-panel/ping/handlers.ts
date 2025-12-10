@@ -31,13 +31,16 @@ type SoftPingPayload = {
  */
 export function pingSoft(payload: SoftPingPayload): void {
   const { afk } = payload;
-  handleInitialize();
+  if (!initialized) {
+    initialized = true;
+  }
 
   // On each soft ping where client is not flagged as afk,
   // initiate a new ping.
-  if (!afk) {
-    sendPing();
-  }
+  if (afk) return;
+
+  sendPing();
+  setLastPing();
 }
 
 type ReplyPingPayload = {
@@ -46,7 +49,9 @@ type ReplyPingPayload = {
 
 export function pingReply(payload: ReplyPingPayload) {
   const { index } = payload;
-  handleInitialize();
+  if (!initialized) {
+    initialized = true;
+  }
 
   const ping = pings[index];
   if (!ping) return; // This ping was already marked as failed due to timeout.
@@ -68,19 +73,11 @@ function sendPing(): void {
       pingFail();
     }
   }
+
   const ping = { index, sentAt: Date.now() };
   pings[index] = ping;
   Byond.sendMessage('ping', { index });
   index = (index + 1) % PING_QUEUE_SIZE;
-}
-
-function handleInitialize(): void {
-  if (!initialized) {
-    initialized = true;
-    sendPing();
-  }
-
-  setLastPing();
 }
 
 function pingSuccess(roundtrip: number): void {
@@ -97,6 +94,8 @@ function pingSuccess(roundtrip: number): void {
     failCount: 0,
     networkQuality,
   });
+
+  setLastPing();
 }
 
 function pingFail(): void {

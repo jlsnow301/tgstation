@@ -15,8 +15,6 @@ export function useKeepAlive() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (!connectionLostAt) return;
-
       const pingsAreFailing =
         lastPingedAt && Date.now() >= lastPingedAt + CONNECTION_LOST_AFTER;
       if (!connectionLostAt && pingsAreFailing) {

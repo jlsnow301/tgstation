@@ -16,7 +16,7 @@ import { PingIndicator } from './ping/PingIndicator';
 import { ReconnectButton } from './reconnect';
 import { SettingsPanel, useSettings } from './settings';
 
-export const Panel = (props) => {
+export function Panel(props) {
   const settings = useSettings();
   const game = useAtomValue(gameAtom);
   const [audioVisible, setAudioVisible] = useAtom(visibleAtom);
@@ -95,4 +95,4 @@ export const Panel = (props) => {
       </Stack>
     </Pane>
   );
-};
+}
