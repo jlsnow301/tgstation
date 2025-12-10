@@ -84,7 +84,7 @@ function setupApp() {
       [
         // './audio/',
         './chat',
-        './game',
+        // './game',
         './Notifications',
         './Panel',
         // './ping',
