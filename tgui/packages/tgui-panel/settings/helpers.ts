@@ -128,12 +128,8 @@ function migrateSettings(
     ...current,
     ...next,
     initialized: true,
+    view: current.view, // Preserve view state
   };
-
-  // Validate version and/or migrate state
-  if (!next?.version) {
-    return nextState;
-  }
 
   return nextState;
 }
@@ -148,8 +144,10 @@ export function startSettingsMigration(
   const currentHighlight = store.get(highlightsAtom);
 
   const migratedSettings = migrateSettings(currentSettings, next);
-  const migratedHighlights = migrateHighlights(currentHighlight, next);
-
   store.set(settingsAtom, migratedSettings);
-  store.set(highlightsAtom, migratedHighlights);
+
+  if (next.version) {
+    const migratedHighlights = migrateHighlights(currentHighlight, next);
+    store.set(highlightsAtom, migratedHighlights);
+  }
 }
