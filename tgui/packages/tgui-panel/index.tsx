@@ -21,7 +21,6 @@ import { App } from './app';
 import { chatMiddleware, chatReducer } from './chat';
 import { listeners } from './events/listeners';
 import { setupPanelFocusHacks } from './panelFocus';
-import { settingsMiddleware, settingsReducer } from './settings';
 import { telemetryMiddleware } from './telemetry';
 
 perf.mark('inception', window.performance?.timeOrigin);
@@ -30,10 +29,9 @@ perf.mark('init');
 const store = configureStore({
   reducer: combineReducers({
     chat: chatReducer,
-    settings: settingsReducer,
   }),
   middleware: {
-    pre: [chatMiddleware, telemetryMiddleware, settingsMiddleware],
+    pre: [chatMiddleware, telemetryMiddleware],
   },
 });
 

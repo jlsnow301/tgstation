@@ -12,11 +12,11 @@ import {
 } from 'tgui-core/components';
 import { rebuildChat } from '../chat/actions';
 import { WARN_AFTER_HIGHLIGHT_AMT } from './constants';
-import { useHighlightSettings } from './use-hightlight-settings';
+import { useHighlightSettings } from './use-highlight-settings';
 
 export function TextHighlightSettings(props) {
   const {
-    highlightSettings: { highlightSettings },
+    highlightState: { highlightSettings },
     addHighlightSetting,
   } = useHighlightSettings();
   const dispatch = useDispatch();
@@ -66,7 +66,7 @@ export function TextHighlightSettings(props) {
 function TextHighlightSetting(props) {
   const { id, ...rest } = props;
   const {
-    highlightSettings: { highlightSettingById },
+    highlightState: { highlightSettingById },
     updateHighlightSetting,
     removeHighlightSetting,
   } = useHighlightSettings();

@@ -20,7 +20,7 @@ export type SettingsState = {
   lineHeight: number;
   statFontSize: number;
   statLinked: boolean;
-  statTabsStyle: 'default' | 'compact' | 'minimal';
+  statTabsStyle: string;
   theme: 'light' | 'dark';
   version: number;
   view: View;

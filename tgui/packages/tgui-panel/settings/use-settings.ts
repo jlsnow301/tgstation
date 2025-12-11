@@ -12,11 +12,10 @@ import type { SettingsState } from './types';
 
 let initialized = false;
 
+/** Custom hook that handles loading and updating settings from storage. */
 export function useSettings() {
   const [settings, setSettings] = useAtom(settingsAtom);
-  const [highlightSettings, setHighlightSettings] = useAtom(
-    highlightSettingsAtom,
-  );
+  const [highlightState, setHighlightSettings] = useAtom(highlightSettingsAtom);
 
   /** Load and migrate settings */
   useEffect(() => {
@@ -29,7 +28,7 @@ export function useSettings() {
         generalSettingsHandler(storedSettings);
 
         const migrateHighlights = migrateHighlightSettings(
-          highlightSettings,
+          highlightState,
           storedSettings,
         );
         const migratedSettings = migrateSettings(settings, storedSettings);
@@ -56,7 +55,7 @@ export function useSettings() {
 
     generalSettingsHandler(newSettings);
     setSettings(newSettings);
-    storage.set('panel-settings', newSettings);
+    storage.set('panel-settings', { ...newSettings, ...highlightState });
   }
 
   return { settings, updateSettings };

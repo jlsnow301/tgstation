@@ -125,9 +125,9 @@ export function migrateHighlightSettings(
   const highlightSetting =
     nextState.highlightSettingById[defaultHighlightSetting.id];
   highlightSetting.highlightColor =
-    nextState.highlightColor || defaultHighlightSetting.highlightColor;
+    nextState.highlightColor ?? defaultHighlightSetting.highlightColor;
   highlightSetting.highlightText =
-    nextState.highlightText || defaultHighlightSetting.highlightText;
+    nextState.highlightText ?? defaultHighlightSetting.highlightText;
 
   return nextState;
 }

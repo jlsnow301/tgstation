@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from 'tgui/backend';
+import { useDispatch, useSelector } from 'tgui/backend';
 import {
   Button,
   Collapsible,
@@ -13,6 +13,7 @@ import {
 import { toFixed } from 'tgui-core/math';
 import { capitalize } from 'tgui-core/string';
 import { clearChat, saveChatToDisk } from '../chat/actions';
+import { selectChatPages } from '../chat/selectors';
 import { FONTS, THEMES } from './constants';
 import { resetPaneSplitters, setEditPaneSplitters } from './scaling';
 import { exportChatSettings, importChatSettings } from './settingsImExport';
@@ -22,6 +23,7 @@ export function SettingsGeneral(props) {
   const { settings, updateSettings } = useSettings();
   const [freeFont, setFreeFont] = useState(false);
   const dispatch = useDispatch();
+  const chat = useSelector(selectChatPages);
 
   const [editingPanes, setEditingPanes] = useState(false);
 
@@ -165,7 +167,7 @@ export function SettingsGeneral(props) {
           <Button
             icon="compact-disc"
             tooltip="Export chat settings"
-            onClick={() => exportChatSettings(settings, {} as any)}
+            onClick={() => exportChatSettings(settings, chat)}
           >
             Export settings
           </Button>

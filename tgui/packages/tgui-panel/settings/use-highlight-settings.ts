@@ -8,22 +8,21 @@ import {
 } from './atoms';
 import type { HighlightSetting } from './types';
 
+/** Custom hook with utility functions for updating highlight settings */
 export function useHighlightSettings() {
-  const [highlightSettings, setHighlightSettings] = useAtom(
-    highlightSettingsAtom,
-  );
+  const [highlightState, setHighlightSettings] = useAtom(highlightSettingsAtom);
   const settings = useAtomValue(settingsAtom);
 
   function updateHighlightSetting(
     update: Partial<HighlightSetting> & { id: string },
   ): void {
     const { id } = update;
-    const current = highlightSettings.highlightSettingById[id];
+    const current = highlightState.highlightSettingById[id];
     if (!current) return;
 
     // Update the specific highlight setting by id
     const updatedIds = {
-      ...highlightSettings.highlightSettingById,
+      ...highlightState.highlightSettingById,
       [id]: {
         ...current,
         ...update,
@@ -47,9 +46,9 @@ export function useHighlightSettings() {
   function removeHighlightSetting(id: string) {
     const next = {};
     // Rebuild the highlight settings without the specified id
-    for (const key in highlightSettings.highlightSettingById) {
+    for (const key in highlightState.highlightSettingById) {
       if (key !== id) {
-        next[key] = highlightSettings.highlightSettingById[key];
+        next[key] = highlightState.highlightSettingById[key];
       }
     }
 
@@ -75,16 +74,13 @@ export function useHighlightSettings() {
 
     // Append to the existing highlight settings
     const updatedIds = {
-      ...highlightSettings.highlightSettingById,
+      ...highlightState.highlightSettingById,
       [newSetting.id]: newSetting,
     };
 
     // Reconstruct the overall highlight settings structure
     const newHighlightSettings = {
-      highlightSettings: [
-        ...highlightSettings.highlightSettings,
-        newSetting.id,
-      ],
+      highlightSettings: [...highlightState.highlightSettings, newSetting.id],
       highlightSettingById: updatedIds,
     };
 
@@ -96,7 +92,7 @@ export function useHighlightSettings() {
   }
 
   return {
-    highlightSettings,
+    highlightState,
     updateHighlightSetting,
     removeHighlightSetting,
     addHighlightSetting,
