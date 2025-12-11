@@ -26,7 +26,7 @@ export type SettingsState = {
   view: View;
 };
 
-export type HighlightSettingsState = {
+export type HighlightState = {
   /** Keep this for compatibility with other servers */
   highlightColor?: string;
   highlightSettings: string[];

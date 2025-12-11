@@ -1,12 +1,8 @@
 import { storage } from 'common/storage';
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
-import { highlightSettingsAtom, settingsAtom } from './atoms';
-import {
-  generalSettingsHandler,
-  migrateHighlightSettings,
-  migrateSettings,
-} from './helpers';
+import { highlightsAtom, settingsAtom } from './atoms';
+import { generalSettingsHandler, startSettingsMigration } from './helpers';
 import { setDisplayScaling } from './scaling';
 import type { SettingsState } from './types';
 
@@ -15,7 +11,7 @@ let initialized = false;
 /** Custom hook that handles loading and updating settings from storage. */
 export function useSettings() {
   const [settings, setSettings] = useAtom(settingsAtom);
-  const [highlightState, setHighlightSettings] = useAtom(highlightSettingsAtom);
+  const [highlights] = useAtom(highlightsAtom);
 
   /** Load and migrate settings */
   useEffect(() => {
@@ -25,16 +21,9 @@ export function useSettings() {
     async function fetchSettings() {
       try {
         const storedSettings = await storage.get('panel-settings');
-        generalSettingsHandler(storedSettings);
+        if (!storedSettings) return;
 
-        const migrateHighlights = migrateHighlightSettings(
-          highlightState,
-          storedSettings,
-        );
-        const migratedSettings = migrateSettings(settings, storedSettings);
-
-        setSettings(migratedSettings);
-        setHighlightSettings(migrateHighlights);
+        startSettingsMigration(storedSettings);
       } catch (error) {
         console.error('Failed to load panel settings:', error);
       }
@@ -55,7 +44,7 @@ export function useSettings() {
 
     generalSettingsHandler(newSettings);
     setSettings(newSettings);
-    storage.set('panel-settings', { ...newSettings, ...highlightState });
+    storage.set('panel-settings', { ...newSettings, ...highlights });
   }
 
   return { settings, updateSettings };

@@ -12,13 +12,13 @@ import {
 } from 'tgui-core/components';
 import { rebuildChat } from '../chat/actions';
 import { WARN_AFTER_HIGHLIGHT_AMT } from './constants';
-import { useHighlightSettings } from './use-highlight-settings';
+import { useHighlights } from './use-highlights';
 
 export function TextHighlightSettings(props) {
   const {
-    highlightState: { highlightSettings },
-    addHighlightSetting,
-  } = useHighlightSettings();
+    highlights: { highlightSettings },
+    addHighlight,
+  } = useHighlights();
   const dispatch = useDispatch();
 
   return (
@@ -36,7 +36,7 @@ export function TextHighlightSettings(props) {
             <Button
               color="transparent"
               icon="plus"
-              onClick={() => addHighlightSetting()}
+              onClick={() => addHighlight()}
             >
               Add Highlight Setting
             </Button>
@@ -66,10 +66,10 @@ export function TextHighlightSettings(props) {
 function TextHighlightSetting(props) {
   const { id, ...rest } = props;
   const {
-    highlightState: { highlightSettingById },
-    updateHighlightSetting,
-    removeHighlightSetting,
-  } = useHighlightSettings();
+    highlights: { highlightSettingById },
+    updateHighlight,
+    removeHighlight,
+  } = useHighlights();
   const {
     highlightColor,
     highlightText,
@@ -85,7 +85,7 @@ function TextHighlightSetting(props) {
           <Button
             color="transparent"
             icon="times"
-            onClick={() => removeHighlightSetting(id)}
+            onClick={() => removeHighlight(id)}
           >
             Delete
           </Button>
@@ -95,7 +95,7 @@ function TextHighlightSetting(props) {
             checked={highlightWholeMessage}
             tooltip="If this option is selected, the entire message will be highlighted in yellow."
             onClick={() =>
-              updateHighlightSetting({
+              updateHighlight({
                 id,
                 highlightWholeMessage: !highlightWholeMessage,
               })
@@ -110,7 +110,7 @@ function TextHighlightSetting(props) {
             tooltipPosition="bottom-start"
             tooltip="If this option is selected, only exact matches (no extra letters before or after) will trigger. Not compatible with punctuation. Overriden if regex is used."
             onClick={() =>
-              updateHighlightSetting({
+              updateHighlight({
                 id,
                 matchWord: !matchWord,
               })
@@ -124,7 +124,7 @@ function TextHighlightSetting(props) {
             tooltip="If this option is selected, the highlight will be case-sensitive."
             checked={matchCase}
             onClick={() =>
-              updateHighlightSetting({
+              updateHighlight({
                 id,
                 matchCase: !matchCase,
               })
@@ -141,7 +141,7 @@ function TextHighlightSetting(props) {
             placeholder="#ffffff"
             value={highlightColor}
             onBlur={(value) =>
-              updateHighlightSetting({
+              updateHighlight({
                 id,
                 highlightColor: value,
               })
@@ -155,7 +155,7 @@ function TextHighlightSetting(props) {
         value={highlightText}
         placeholder="Put words to highlight here. Separate terms with commas, i.e. (term1, term2, term3)"
         onBlur={(value) =>
-          updateHighlightSetting({
+          updateHighlight({
             id: id,
             highlightText: value,
           })

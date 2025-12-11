@@ -177,7 +177,7 @@ export function SettingsGeneral(props) {
             accept=".json"
             tooltip="Import chat settings"
             icon="arrow-up-from-bracket"
-            onSelectFiles={(files) => importChatSettings(files)}
+            onSelectFiles={importChatSettings}
           >
             Import settings
           </Button.File>

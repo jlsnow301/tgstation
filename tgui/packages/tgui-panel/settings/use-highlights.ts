@@ -1,28 +1,24 @@
 import { storage } from 'common/storage';
 import { useAtom, useAtomValue } from 'jotai';
 import { createUuid } from 'tgui-core/uuid';
-import {
-  defaultHighlightSetting,
-  highlightSettingsAtom,
-  settingsAtom,
-} from './atoms';
+import { defaultHighlightSetting, highlightsAtom, settingsAtom } from './atoms';
 import type { HighlightSetting } from './types';
 
 /** Custom hook with utility functions for updating highlight settings */
-export function useHighlightSettings() {
-  const [highlightState, setHighlightSettings] = useAtom(highlightSettingsAtom);
+export function useHighlights() {
+  const [highlights, setHighlights] = useAtom(highlightsAtom);
   const settings = useAtomValue(settingsAtom);
 
-  function updateHighlightSetting(
+  function updateHighlight(
     update: Partial<HighlightSetting> & { id: string },
   ): void {
     const { id } = update;
-    const current = highlightState.highlightSettingById[id];
+    const current = highlights.highlightSettingById[id];
     if (!current) return;
 
     // Update the specific highlight setting by id
     const updatedIds = {
-      ...highlightState.highlightSettingById,
+      ...highlights.highlightSettingById,
       [id]: {
         ...current,
         ...update,
@@ -30,25 +26,25 @@ export function useHighlightSettings() {
     };
 
     // Reconstruct the overall highlight settings structure
-    const newHighlightSettings = {
+    const newHighlights = {
       highlightSettings: Object.keys(updatedIds),
       highlightSettingById: updatedIds,
     };
 
     // Update state and persist to storage
-    setHighlightSettings(newHighlightSettings);
+    setHighlights(newHighlights);
     storage.set('panel-settings', {
       ...settings,
-      ...newHighlightSettings,
+      ...newHighlights,
     });
   }
 
-  function removeHighlightSetting(id: string) {
+  function removeHighlight(id: string) {
     const next = {};
     // Rebuild the highlight settings without the specified id
-    for (const key in highlightState.highlightSettingById) {
+    for (const key in highlights.highlightSettingById) {
       if (key !== id) {
-        next[key] = highlightState.highlightSettingById[key];
+        next[key] = highlights.highlightSettingById[key];
       }
     }
 
@@ -59,14 +55,14 @@ export function useHighlightSettings() {
     };
 
     // Update state and persist to storage
-    setHighlightSettings(updatedHighlightSettings);
+    setHighlights(updatedHighlightSettings);
     storage.set('panel-settings', {
       ...settings,
       ...updatedHighlightSettings,
     });
   }
 
-  function addHighlightSetting() {
+  function addHighlight() {
     const newSetting = {
       ...defaultHighlightSetting,
       id: createUuid(),
@@ -74,17 +70,17 @@ export function useHighlightSettings() {
 
     // Append to the existing highlight settings
     const updatedIds = {
-      ...highlightState.highlightSettingById,
+      ...highlights.highlightSettingById,
       [newSetting.id]: newSetting,
     };
 
     // Reconstruct the overall highlight settings structure
     const newHighlightSettings = {
-      highlightSettings: [...highlightState.highlightSettings, newSetting.id],
+      highlightSettings: [...highlights.highlightSettings, newSetting.id],
       highlightSettingById: updatedIds,
     };
 
-    setHighlightSettings(newHighlightSettings);
+    setHighlights(newHighlightSettings);
     storage.set('panel-settings', {
       ...settings,
       ...newHighlightSettings,
@@ -92,9 +88,9 @@ export function useHighlightSettings() {
   }
 
   return {
-    highlightState,
-    updateHighlightSetting,
-    removeHighlightSetting,
-    addHighlightSetting,
+    highlights,
+    updateHighlight,
+    removeHighlight,
+    addHighlight,
   };
 }

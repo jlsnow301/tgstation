@@ -4,10 +4,11 @@
  * @license MIT
  */
 
-import { defaultHighlightSetting } from './atoms';
+import { store } from '../events/store';
+import { defaultHighlightSetting, highlightsAtom, settingsAtom } from './atoms';
 import { FONTS_DISABLED } from './constants';
 import { setClientTheme } from './themes';
-import type { HighlightSettingsState, SettingsState } from './types';
+import type { HighlightState, SettingsState } from './types';
 
 let statFontTimer: NodeJS.Timeout;
 let statTabsTimer: NodeJS.Timeout;
@@ -69,8 +70,6 @@ function setStatTabsStyle(style: string) {
   }, 1500);
 }
 
-//------- Helpers ------------------------------------------------------------//
-
 export function generalSettingsHandler(update: SettingsState) {
   // Set client theme
   const theme = update?.theme;
@@ -87,22 +86,11 @@ export function generalSettingsHandler(update: SettingsState) {
   updateGlobalOverrideRule();
 }
 
-function mergeInitialize(
-  current: SettingsState,
-  next: SettingsState,
-): SettingsState {
-  return {
-    ...current,
-    ...next,
-    initialized: true,
-  };
-}
-
-export function migrateHighlightSettings(
-  current: HighlightSettingsState,
-  next: HighlightSettingsState,
-): HighlightSettingsState {
-  const nextState: HighlightSettingsState = { ...current, ...next };
+function migrateHighlights(
+  current: HighlightState,
+  next: HighlightState,
+): HighlightState {
+  const nextState: HighlightState = { ...current, ...next };
 
   // Lazy init the list for compatibility reasons
   if (!nextState.highlightSettings) {
@@ -132,11 +120,15 @@ export function migrateHighlightSettings(
   return nextState;
 }
 
-export function migrateSettings(
+function migrateSettings(
   current: SettingsState,
   next: SettingsState,
 ): SettingsState {
-  const nextState = mergeInitialize(current, next);
+  const nextState = {
+    ...current,
+    ...next,
+    initialized: true,
+  };
 
   // Validate version and/or migrate state
   if (!next?.version) {
@@ -144,4 +136,20 @@ export function migrateSettings(
   }
 
   return nextState;
+}
+
+/** A bit of a chunky procedural function. Handles imported and loaded settings */
+export function startSettingsMigration(
+  next: SettingsState & HighlightState,
+): void {
+  generalSettingsHandler(next);
+
+  const currentSettings = store.get(settingsAtom);
+  const currentHighlight = store.get(highlightsAtom);
+
+  const migratedSettings = migrateSettings(currentSettings, next);
+  const migratedHighlights = migrateHighlights(currentHighlight, next);
+
+  store.set(settingsAtom, migratedSettings);
+  store.set(highlightsAtom, migratedHighlights);
 }

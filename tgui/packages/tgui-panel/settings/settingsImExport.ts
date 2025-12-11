@@ -1,7 +1,8 @@
 import { useDispatch } from 'tgui/backend';
-
 import type { Page } from '../chat/types';
+
 import { importSettings } from './actions';
+import { startSettingsMigration } from './helpers';
 
 export function exportChatSettings(
   settings: Record<string, any>,
@@ -53,4 +54,5 @@ export function importChatSettings(settings: string | string[]): void {
   }
 
   dispatch(importSettings(ourImport, pageRecord));
+  startSettingsMigration(ourImport);
 }
