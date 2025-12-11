@@ -5,6 +5,7 @@
  */
 
 import { useAtom, useAtomValue } from 'jotai';
+import { useState } from 'react';
 import { Pane } from 'tgui/layouts';
 import { Button, Section, Stack } from 'tgui-core/components';
 import { visibleAtom } from './audio/atoms';
@@ -14,12 +15,14 @@ import { gameAtom } from './game/atoms';
 import { Notifications } from './Notifications';
 import { PingIndicator } from './ping/PingIndicator';
 import { ReconnectButton } from './reconnect';
-import { SettingsPanel, useSettings } from './settings';
+import { SettingsPanel } from './settings';
+import { settingsAtom } from './settings/atoms';
 
 export function Panel(props) {
-  const settings = useSettings();
-  const game = useAtomValue(gameAtom);
   const [audioVisible, setAudioVisible] = useAtom(visibleAtom);
+  const [settingsVisible, setSettingsVisible] = useState(false);
+  const game = useAtomValue(gameAtom);
+  const settings = useAtomValue(settingsAtom);
 
   return (
     <Pane theme={settings.theme}>
@@ -47,13 +50,11 @@ export function Panel(props) {
               </Stack.Item>
               <Stack.Item>
                 <Button
-                  icon={settings.visible ? 'times' : 'cog'}
-                  selected={settings.visible}
-                  tooltip={
-                    settings.visible ? 'Close settings' : 'Open settings'
-                  }
+                  icon={settingsVisible ? 'times' : 'cog'}
+                  selected={settingsVisible}
+                  tooltip={settingsVisible ? 'Close settings' : 'Open settings'}
                   tooltipPosition="bottom-start"
-                  onClick={() => settings.toggle()}
+                  onClick={() => setSettingsVisible((v) => !v)}
                 />
               </Stack.Item>
             </Stack>
@@ -66,7 +67,7 @@ export function Panel(props) {
             </Section>
           </Stack.Item>
         )}
-        {settings.visible && (
+        {settingsVisible && (
           <Stack.Item>
             <SettingsPanel />
           </Stack.Item>

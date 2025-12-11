@@ -1,6 +1,5 @@
-import { useAtomValue } from 'jotai';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'tgui/backend';
+import { useDispatch } from 'tgui/backend';
 import {
   Button,
   Collapsible,
@@ -14,17 +13,15 @@ import {
 import { toFixed } from 'tgui-core/math';
 import { capitalize } from 'tgui-core/string';
 import { clearChat, saveChatToDisk } from '../chat/actions';
-import { exportSettings, updateSettings } from './actions';
-import { FONTS } from './constants';
+import { FONTS, THEMES } from './constants';
 import { resetPaneSplitters, setEditPaneSplitters } from './scaling';
-import { selectSettings } from './selectors';
-import { importChatSettings } from './settingsImExport';
-import { THEMES } from './themes';
+import { exportChatSettings, importChatSettings } from './settingsImExport';
+import { useSettings } from './use-settings';
 
 export function SettingsGeneral(props) {
-  const [settings, setSettings] =
-    useAtomValue(selectSettings);
+  const { settings, updateSettings } = useSettings();
   const [freeFont, setFreeFont] = useState(false);
+  const dispatch = useDispatch();
 
   const [editingPanes, setEditingPanes] = useState(false);
 
@@ -35,14 +32,12 @@ export function SettingsGeneral(props) {
           {THEMES.map((THEME) => (
             <Button
               key={THEME}
-              selected={theme === THEME}
+              selected={settings.theme === THEME}
               color="transparent"
               onClick={() =>
-                dispatch(
-                  updateSettings({
-                    theme: THEME,
-                  }),
-                )
+                updateSettings({
+                  theme: THEME,
+                })
               }
             >
               {capitalize(THEME)}
@@ -76,8 +71,8 @@ export function SettingsGeneral(props) {
           <Stack.Item>
             {!freeFont ? (
               <Collapsible
-                title={fontFamily}
-                width={'100%'}
+                title={settings.fontFamily}
+                width="100%"
                 buttons={
                   <Button
                     icon={freeFont ? 'lock-open' : 'lock'}
@@ -94,14 +89,12 @@ export function SettingsGeneral(props) {
                   <Button
                     key={FONT}
                     fontFamily={FONT}
-                    selected={fontFamily === FONT}
+                    selected={settings.fontFamily === FONT}
                     color="transparent"
                     onClick={() =>
-                      dispatch(
-                        updateSettings({
-                          fontFamily: FONT,
-                        }),
-                      )
+                      updateSettings({
+                        fontFamily: FONT,
+                      })
                     }
                   >
                     {FONT}
@@ -112,13 +105,11 @@ export function SettingsGeneral(props) {
               <Stack>
                 <Input
                   fluid
-                  value={fontFamily}
+                  value={settings.fontFamily}
                   onBlur={(value) =>
-                    dispatch(
-                      updateSettings({
-                        fontFamily: value,
-                      }),
-                    )
+                    updateSettings({
+                      fontFamily: value,
+                    })
                   }
                 />
                 <Button
@@ -144,12 +135,10 @@ export function SettingsGeneral(props) {
                 stepPixelSize={20}
                 minValue={8}
                 maxValue={32}
-                value={fontSize}
+                value={settings.fontSize}
                 unit="px"
                 format={(value) => toFixed(value)}
-                onChange={(e, value) =>
-                  dispatch(updateSettings({ fontSize: value }))
-                }
+                onChange={(e, value) => updateSettings({ fontSize: value })}
               />
             </Stack.Item>
           </Stack>
@@ -160,14 +149,12 @@ export function SettingsGeneral(props) {
             step={0.01}
             minValue={0.8}
             maxValue={5}
-            value={lineHeight}
+            value={settings.lineHeight}
             format={(value) => toFixed(value, 2)}
             onChange={(e, value) =>
-              dispatch(
-                updateSettings({
-                  lineHeight: value,
-                }),
-              )
+              updateSettings({
+                lineHeight: value,
+              })
             }
           />
         </LabeledList.Item>
@@ -178,7 +165,7 @@ export function SettingsGeneral(props) {
           <Button
             icon="compact-disc"
             tooltip="Export chat settings"
-            onClick={() => dispatch(exportSettings())}
+            onClick={() => exportChatSettings(settings, {} as any)}
           >
             Export settings
           </Button>
