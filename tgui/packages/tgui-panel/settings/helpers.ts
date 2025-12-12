@@ -4,11 +4,9 @@
  * @license MIT
  */
 
-import { store } from '../events/store';
-import { defaultHighlightSetting, highlightsAtom, settingsAtom } from './atoms';
 import { FONTS_DISABLED } from './constants';
 import { setClientTheme } from './themes';
-import type { HighlightState, SettingsState } from './types';
+import type { SettingsState } from './types';
 
 let statFontTimer: NodeJS.Timeout;
 let statTabsTimer: NodeJS.Timeout;
@@ -17,7 +15,7 @@ let overrideFontFamily: string | undefined;
 let overrideFontSize: string;
 
 /** Updates the global CSS rule to override the font family and size. */
-function updateGlobalOverrideRule() {
+function updateGlobalOverrideRule(): void {
   let fontFamily = '';
 
   if (overrideFontFamily !== undefined) {
@@ -43,7 +41,7 @@ function setGlobalFontSize(
   fontSize: string | number,
   statFontSize: string | number,
   statLinked: boolean,
-) {
+): void {
   overrideFontSize = `${fontSize}px`;
 
   // Used solution from theme.ts
@@ -58,11 +56,11 @@ function setGlobalFontSize(
   }, 1500);
 }
 
-function setGlobalFontFamily(fontFamily: string) {
+function setGlobalFontFamily(fontFamily: string): void {
   overrideFontFamily = fontFamily === FONTS_DISABLED ? undefined : fontFamily;
 }
 
-function setStatTabsStyle(style: string) {
+function setStatTabsStyle(style: string): void {
   clearInterval(statTabsTimer);
   Byond.command(`.output statbrowser:set_tabs_style ${style}`);
   statTabsTimer = setTimeout(() => {
@@ -70,7 +68,7 @@ function setStatTabsStyle(style: string) {
   }, 1500);
 }
 
-export function generalSettingsHandler(update: SettingsState) {
+export function generalSettingsHandler(update: SettingsState): void {
   // Set client theme
   const theme = update?.theme;
   if (theme) {
@@ -84,70 +82,4 @@ export function generalSettingsHandler(update: SettingsState) {
   setGlobalFontSize(update.fontSize, update.statFontSize, update.statLinked);
   setGlobalFontFamily(update.fontFamily);
   updateGlobalOverrideRule();
-}
-
-function migrateHighlights(
-  current: HighlightState,
-  next: HighlightState,
-): HighlightState {
-  const nextState: HighlightState = { ...current, ...next };
-
-  // Lazy init the list for compatibility reasons
-  if (!nextState.highlightSettings) {
-    nextState.highlightSettings = [defaultHighlightSetting.id];
-    nextState.highlightSettingById[defaultHighlightSetting.id] =
-      defaultHighlightSetting;
-  }
-  // Compensating for mishandling of default highlight settings
-  else if (!nextState.highlightSettingById[defaultHighlightSetting.id]) {
-    nextState.highlightSettings = [
-      defaultHighlightSetting.id,
-      ...nextState.highlightSettings,
-    ];
-    nextState.highlightSettingById[defaultHighlightSetting.id] =
-      defaultHighlightSetting;
-  }
-
-  // Update the highlight settings for default highlight
-  // settings compatibility
-  const highlightSetting =
-    nextState.highlightSettingById[defaultHighlightSetting.id];
-  highlightSetting.highlightColor =
-    nextState.highlightColor ?? defaultHighlightSetting.highlightColor;
-  highlightSetting.highlightText =
-    nextState.highlightText ?? defaultHighlightSetting.highlightText;
-
-  return nextState;
-}
-
-function migrateSettings(
-  current: SettingsState,
-  next: SettingsState,
-): SettingsState {
-  const nextState = {
-    ...current,
-    ...next,
-    initialized: true,
-    view: current.view, // Preserve view state
-  };
-
-  return nextState;
-}
-
-/** A bit of a chunky procedural function. Handles imported and loaded settings */
-export function startSettingsMigration(
-  next: SettingsState & HighlightState,
-): void {
-  generalSettingsHandler(next);
-
-  const currentSettings = store.get(settingsAtom);
-  const currentHighlight = store.get(highlightsAtom);
-
-  const migratedSettings = migrateSettings(currentSettings, next);
-  store.set(settingsAtom, migratedSettings);
-
-  if (next.version) {
-    const migratedHighlights = migrateHighlights(currentHighlight, next);
-    store.set(highlightsAtom, migratedHighlights);
-  }
 }

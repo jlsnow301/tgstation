@@ -7,12 +7,12 @@
 import { useAtomValue } from 'jotai';
 import { Button, Collapsible, Flex, Knob, Section } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
-import { useSettings } from '../settings';
+import { useSettings } from '../settings/use-settings';
 import { metaAtom, playingAtom } from './atoms';
 import { player } from './handlers';
 
 export const NowPlayingWidget = (props) => {
-  const settings = useSettings();
+  const { settings, updateSettings } = useSettings();
   const meta = useAtomValue(metaAtom);
   const {
     album = 'Unknown Album',
@@ -96,7 +96,7 @@ export const NowPlayingWidget = (props) => {
           stepPixelSize={1}
           format={(value) => `${toFixed(value * 100)}%`}
           onChange={(e, value) =>
-            settings.update({
+            updateSettings({
               adminMusicVolume: value,
             })
           }

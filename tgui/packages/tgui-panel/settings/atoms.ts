@@ -2,7 +2,7 @@ import { atom } from 'jotai';
 import { FONTS, SETTINGS_TABS } from './constants';
 import type { HighlightSetting, HighlightState, SettingsState } from './types';
 
-const initialState: SettingsState = {
+export const defaultSettings: SettingsState = {
   adminMusicVolume: 0.5,
   fontFamily: FONTS[0],
   fontSize: 13,
@@ -28,7 +28,7 @@ export const defaultHighlightSetting: HighlightSetting = {
   matchCase: false,
 };
 
-const initialHighlights: HighlightState = {
+export const defaultHighlights: HighlightState = {
   highlightSettings: ['default'],
   highlightSettingById: {
     default: defaultHighlightSetting,
@@ -39,6 +39,12 @@ const initialHighlights: HighlightState = {
   // END compatibility state vars
 };
 
-export const settingsAtom = atom(initialState);
+export const settingsAtom = atom(defaultSettings);
 export const settingsVisibleAtom = atom(false);
-export const highlightsAtom = atom(initialHighlights);
+
+export const highlightsAtom = atom(defaultHighlights);
+
+export const storedSettingsAtom = atom((get) => ({
+  ...get(settingsAtom),
+  ...get(highlightsAtom),
+}));

@@ -86,7 +86,7 @@ function setupApp() {
         './Notifications',
         './Panel',
         // './ping',
-        './settings',
+        // './settings',
         './telemetry',
       ],
       () => {
