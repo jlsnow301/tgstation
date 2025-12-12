@@ -1,6 +1,6 @@
 import { Provider } from 'jotai';
 import { store } from './events/store';
-import { useKeepAlive } from './game/hooks';
+import { useKeepAlive } from './game/use-keep-alive';
 import { Panel } from './Panel';
 
 /** Just an expandable wrapper for setup shenanigans and providers */

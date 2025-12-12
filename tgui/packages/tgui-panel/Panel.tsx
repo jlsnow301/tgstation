@@ -5,7 +5,6 @@
  */
 
 import { useAtom, useAtomValue } from 'jotai';
-import { useState } from 'react';
 import { Pane } from 'tgui/layouts';
 import { Button, Section, Stack } from 'tgui-core/components';
 import { visibleAtom } from './audio/atoms';
@@ -15,14 +14,15 @@ import { gameAtom } from './game/atoms';
 import { Notifications } from './Notifications';
 import { PingIndicator } from './ping/PingIndicator';
 import { ReconnectButton } from './reconnect';
-import { SettingsPanel } from './settings';
-import { settingsAtom } from './settings/atoms';
+import { settingsVisibleAtom } from './settings/atoms';
+import { SettingsPanel } from './settings/SettingsPanel';
+import { useSettings } from './settings/use-settings';
 
 export function Panel(props) {
   const [audioVisible, setAudioVisible] = useAtom(visibleAtom);
-  const [settingsVisible, setSettingsVisible] = useState(false);
   const game = useAtomValue(gameAtom);
-  const settings = useAtomValue(settingsAtom);
+  const { settings } = useSettings();
+  const [settingsVisible, setSettingsVisible] = useAtom(settingsVisibleAtom);
 
   return (
     <Pane theme={settings.theme}>

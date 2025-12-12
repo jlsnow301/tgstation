@@ -14,8 +14,6 @@ player.onStop(() => {
   store.set(metaAtom, null);
 });
 
-// ------- Event Handlers --------------------------------------------------- //
-
 type PlayPayload = {
   url: string;
   pitch: number;
