@@ -11,7 +11,13 @@ import { settingsVisibleAtom } from '../settings/atoms';
 import { addChatPage, changeChatPage } from './actions';
 import { selectChatPages, selectCurrentChatPage } from './selectors';
 
-function UnreadCountWidget({ value }: { value: number }) {
+type UnreadCountWidgetProps = {
+  value: number;
+};
+
+function UnreadCountWidget(props: UnreadCountWidgetProps) {
+  const { value } = props;
+
   return <Box className="UnreadCount">{Math.min(value, 99)}</Box>;
 }
 

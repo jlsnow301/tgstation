@@ -10,7 +10,7 @@ import { Box } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
 import { pingAtom } from './atoms';
 
-export const PingIndicator = (props) => {
+export function PingIndicator(props) {
   const ping = useAtomValue(pingAtom);
 
   const color = Color.lookup(ping.networkQuality, [
@@ -27,4 +27,4 @@ export const PingIndicator = (props) => {
       {roundtrip}
     </div>
   );
-};
+}
