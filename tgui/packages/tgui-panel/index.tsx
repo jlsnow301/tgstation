@@ -9,7 +9,6 @@ import './styles/main.scss';
 import './styles/themes/light.scss';
 
 import { perf } from 'common/perf';
-import { combineReducers } from 'common/redux';
 import { setGlobalStore } from 'tgui/backend';
 import { captureExternalLinks } from 'tgui/links';
 import { render } from 'tgui/renderer';
@@ -18,7 +17,6 @@ import { EventBus } from 'tgui-core/eventbus';
 import { setupGlobalEvents } from 'tgui-core/events';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { App } from './app';
-import { chatMiddleware, chatReducer } from './chat';
 import { listeners } from './events/listeners';
 import { setupPanelFocusHacks } from './panelFocus';
 import { telemetryMiddleware } from './telemetry';
@@ -27,11 +25,8 @@ perf.mark('inception', window.performance?.timeOrigin);
 perf.mark('init');
 
 const store = configureStore({
-  reducer: combineReducers({
-    chat: chatReducer,
-  }),
   middleware: {
-    pre: [chatMiddleware, telemetryMiddleware],
+    pre: [telemetryMiddleware],
   },
 });
 

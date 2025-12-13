@@ -2,7 +2,7 @@ import { storage } from 'common/storage';
 import { useAtomValue } from 'jotai';
 import { useEffect } from 'react';
 import { settingsAtom } from '../settings/atoms';
-import { chatAtom } from './atom';
+import { allChatAtom } from './atom';
 import { MAX_PERSISTED_MESSAGES, MESSAGE_SAVE_INTERVAL } from './constants';
 import { loadChatFromStorage } from './helpers';
 import { serializeMessage } from './model';
@@ -10,8 +10,12 @@ import { chatRenderer } from './renderer';
 
 let initialized = false;
 
+/**
+ * Custom hook that initializes chat from local storage and periodically saves
+ * it back
+ */
 export function useChatPersistance() {
-  const chat = useAtomValue(chatAtom);
+  const chat = useAtomValue(allChatAtom);
   const settings = useAtomValue(settingsAtom);
 
   useEffect(() => {
