@@ -5,8 +5,6 @@
  */
 
 import type { Store } from 'common/redux';
-import { store as jotaiStore } from '../events/store';
-import { settingsAtom } from '../settings/atoms';
 import {
   addChatPage,
   changeChatPage,
@@ -18,16 +16,11 @@ import {
   toggleAcceptedType,
   updateMessageCount,
 } from './actions';
-import { MESSAGE_SAVE_INTERVAL } from './constants';
 import { chatRenderer } from './renderer';
 import { selectCurrentChatPage } from './selectors';
-import { loadChatFromStorage, saveChatToStorage } from './store';
 
 export const chatMiddleware = (store: Store) => {
-  let initialized = false;
   let loaded = false;
-  const sequences: number[] = [];
-  const sequences_requested: number[] = [];
   chatRenderer.events.on('batchProcessed', (countByType) => {
     // Use this flag to workaround unread messages caused by
     // loading them from storage. Side effect of that, is that
@@ -41,15 +34,6 @@ export const chatMiddleware = (store: Store) => {
   });
   return (next) => (action) => {
     const { type, payload } = action;
-    const settings = jotaiStore.get(settingsAtom);
-    // Load the chat once settings are loaded
-    if (!initialized && settings.initialized) {
-      setInterval(() => {
-        saveChatToStorage(store);
-      }, MESSAGE_SAVE_INTERVAL);
-      initialized = true;
-      loadChatFromStorage(store);
-    }
 
     if (type === loadChat.type) {
       next(action);

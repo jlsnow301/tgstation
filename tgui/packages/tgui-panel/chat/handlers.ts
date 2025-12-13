@@ -11,12 +11,12 @@ const messageSchema = z.object({
 
 type ChatMessage = z.infer<typeof messageSchema>;
 
-function pushMessage(message: ChatMessage) {
+function pushMessage(message: ChatMessage): void {
   sequences.push(message.sequence);
   chatRenderer.processBatch([message.content]);
 }
 
-export function chatMessage(payload: string) {
+export function chatMessage(payload: string): void {
   let message: ChatMessage;
   try {
     const parsed = JSON.parse(payload);
@@ -48,27 +48,11 @@ export function chatMessage(payload: string) {
   // if we are receiving a message we requested, we can stop reliability checks
   const expected_sequence = sequences[sequences_count - 1] + 1;
   if (message.sequence !== expected_sequence) {
-    for (
-      let requesting = expected_sequence;
-      requesting < message.sequence;
-      requesting++
-    ) {
-      sequences_requested.push(requesting);
-      Byond.sendMessage('chat/resend', requesting);
+    for (let req = expected_sequence; req < message.sequence; req++) {
+      sequences_requested.push(req);
+      Byond.sendMessage('chat/resend', req);
     }
   }
 
   pushMessage(message);
-}
-
-export function chatRebuild() {
-  chatRenderer.rebuildChat();
-}
-
-export function chatSaveToDisk() {
-  chatRenderer.saveToDisk();
-}
-
-export function chatClear() {
-  chatRenderer.clearChat();
 }
