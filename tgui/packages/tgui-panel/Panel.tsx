@@ -11,7 +11,9 @@ import { visibleAtom } from './audio/atoms';
 import { NowPlayingWidget } from './audio/NowPlayingWidget';
 import { ChatPanel } from './chat/ChatPanel';
 import { ChatTabs } from './chat/ChatTabs';
+import { useChatPersistence } from './chat/use-chat-persistence';
 import { gameAtom } from './game/atoms';
+import { useKeepAlive } from './game/use-keep-alive';
 import { Notifications } from './Notifications';
 import { PingIndicator } from './ping/PingIndicator';
 import { ReconnectButton } from './reconnect';
@@ -24,6 +26,8 @@ export function Panel(props) {
   const game = useAtomValue(gameAtom);
   const { settings } = useSettings();
   const [settingsVisible, setSettingsVisible] = useAtom(settingsVisibleAtom);
+  useChatPersistence();
+  useKeepAlive();
 
   return (
     <Pane theme={settings.theme}>

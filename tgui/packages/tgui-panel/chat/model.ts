@@ -10,7 +10,6 @@ import { MESSAGE_TYPE_INTERNAL, MESSAGE_TYPES } from './constants';
 import type { Page } from './types';
 
 export function canPageAcceptType(page: Page, type: string): boolean {
-  console.log('canPageAcceptType', page, type);
   return type.startsWith(MESSAGE_TYPE_INTERNAL) || page.acceptedTypes[type];
 }
 

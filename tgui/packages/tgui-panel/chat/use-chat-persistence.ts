@@ -49,7 +49,7 @@ export function useChatPersistence() {
   /** Loads or periodically saves chat + chat settings */
   useEffect(() => {
     let saveInterval: NodeJS.Timeout;
-    if (!loaded) {
+    if (!loaded && settingsLoaded) {
       console.log('Initializing chat');
       saveInterval = setInterval(saveChatToStorage, MESSAGE_SAVE_INTERVAL);
 
@@ -90,7 +90,7 @@ export function useChatPersistence() {
 
     // Discard incompatible versions
     if (state && 'version' in state && state.version <= 4) return;
-    console.log('Loaded chat state from storage: ', state);
+    console.log('Loaded chat state from storage:', state);
     handleSettings(state);
   }
 
@@ -150,10 +150,9 @@ export function useChatPersistence() {
     setChatPages(parsed.pages);
     setCurrentPageId(parsed.currentPageId);
     setChatPagesRecord(parsed.pageById);
-    setCurrentPageId(parsed.currentPageId);
 
     chatRenderer.changePage(parsed.pageById[parsed.currentPageId]);
     chatRenderer.onStateLoaded();
-    console.log('Restored chat settings: ', parsed);
+    console.log('Restored chat settings:', parsed);
   }
 }
