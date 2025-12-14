@@ -35,7 +35,7 @@ export function ChatPageSettings(props) {
               color="blue"
               icon="angles-left"
               tooltip="Reorder tab to the left"
-              onClick={() => moveChatLeft(page.id)}
+              onClick={moveChatLeft}
             />
           </Stack.Item>
         )}
@@ -45,7 +45,6 @@ export function ChatPageSettings(props) {
             value={page.name}
             onBlur={(value) =>
               updateChatPage({
-                id: page.id,
                 name: value,
               })
             }
@@ -57,7 +56,7 @@ export function ChatPageSettings(props) {
               color="blue"
               icon="angles-right"
               tooltip="Reorder tab to the right"
-              onClick={() => moveChatRight(page.id)}
+              onClick={moveChatRight}
             />
           </Stack.Item>
         )}
@@ -68,7 +67,6 @@ export function ChatPageSettings(props) {
             tooltip="Disables unread counter"
             onClick={() =>
               updateChatPage({
-                id: page.id,
                 hideUnreadCount: !page.hideUnreadCount,
               })
             }
@@ -78,11 +76,7 @@ export function ChatPageSettings(props) {
         </Stack.Item>
         {!page.isMain && (
           <Stack.Item>
-            <Button
-              color="red"
-              icon="times"
-              onClick={() => removeChatPage(page.id)}
-            >
+            <Button color="red" icon="times" onClick={removeChatPage}>
               Remove
             </Button>
           </Stack.Item>
@@ -96,7 +90,7 @@ export function ChatPageSettings(props) {
           <Button.Checkbox
             key={typeDef.type}
             checked={page.acceptedTypes[typeDef.type]}
-            onClick={() => toggleAcceptedType(page.id, typeDef.type)}
+            onClick={() => toggleAcceptedType(typeDef.type)}
           >
             {typeDef.name}
           </Button.Checkbox>
@@ -108,7 +102,7 @@ export function ChatPageSettings(props) {
             <Button.Checkbox
               key={typeDef.type}
               checked={page.acceptedTypes[typeDef.type]}
-              onClick={() => toggleAcceptedType(page.id, typeDef.type)}
+              onClick={() => toggleAcceptedType(typeDef.type)}
             >
               {typeDef.name}
             </Button.Checkbox>

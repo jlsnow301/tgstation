@@ -1,5 +1,6 @@
 import { storage } from 'common/storage';
 import DOMPurify from 'dompurify';
+import * as z from 'zod';
 import { store } from '../events/store';
 import {
   chatPagesAtom,
@@ -36,7 +37,7 @@ export async function loadChatFromStorage(): Promise<void> {
   ]);
 
   // Discard incompatible versions
-  if (state && state.version <= 4) return;
+  if (state && 'version' in state && state.version <= 4) return;
   if (!messages) return;
 
   for (const message of messages) {
@@ -57,6 +58,60 @@ export async function loadChatFromStorage(): Promise<void> {
   chatRenderer.processBatch(batch, {
     prepend: true,
   });
+
+  console.log(`Restored chat with ${messages.length} messages`);
+  loadChatStateFromStorage(state);
+}
+
+const storedSettingsSchema = z.object({
+  version: z.number(),
+  scrollTracking: z.boolean(),
+  currentPageId: z.string(),
+  pages: z.array(z.string()),
+  pagesById: z.record(z.string(), z.any()),
+});
+
+export function loadChatStateFromStorage(
+  stored: Record<string, unknown>,
+): void {
+  let parsed;
+  try {
+    parsed = storedSettingsSchema.parse(stored);
+  } catch (err) {
+    console.error(err);
+    return;
+  }
+
+  // Validate version and/or migrate state
+  if (stored.version !== store.get(versionAtom)) return;
+
+  // Enable any filters that are not explicitly set, that are
+  // enabled by default on the main page.
+  for (const id of parsed.pages) {
+    const page = parsed.pagesById[id];
+    const filters = page.acceptedTypes;
+
+    const defaultFilters = mainPage.acceptedTypes;
+    for (const type of Object.keys(defaultFilters)) {
+      if (filters[type] === undefined) {
+        filters[type] = defaultFilters[type];
+      }
+    }
+    // Reset page message counts
+    page.unreadCount = 0;
+  }
+
+  store.set(versionAtom, parsed.version);
+  store.set(scrollTrackingAtom, parsed.scrollTracking);
+  store.set(chatPagesAtom, parsed.pages);
+  store.set(currentPageIdAtom, parsed.currentPageId);
+  store.set(chatPagesRecord, parsed.pagesById);
+
+  chatRenderer.changePage(parsed.pages[0]);
+  chatRenderer.onStateLoaded();
+  loaded = true;
+
+  console.log(`Restore chat settings with ${parsed.pages.length} pages`);
 }
 
 export function importChatState(pageRecord: Record<string, Page>): void {
@@ -68,43 +123,8 @@ export function importChatState(pageRecord: Record<string, Page>): void {
   store.set(currentPageIdAtom, newPageIds[0]);
   store.set(chatPagesAtom, newPageIds);
   store.set(chatPagesRecord, pageRecord);
-}
 
-export function loadChatStateFromStorage(payload: any): void {
-  // Validate version and/or migrate state
-  if (payload?.version !== store.get(versionAtom)) {
-    return;
-  }
-  // Enable any filters that are not explicitly set, that are
-  // enabled by default on the main page.
-  // NOTE: This mutates acceptedTypes on the state.
-  for (const id of Object.keys(payload.pagesById)) {
-    const page = payload.pagesById[id];
-    const filters = page.acceptedTypes;
-    const defaultFilters = mainPage.acceptedTypes;
-    for (const type of Object.keys(defaultFilters)) {
-      if (filters[type] === undefined) {
-        filters[type] = defaultFilters[type];
-      }
-    }
-  }
-  // Reset page message counts
-  // NOTE: We are mutably changing the payload on the assumption
-  // that it is a copy that comes straight from the web storage.
-  for (const id of Object.keys(payload.pagesById)) {
-    const page = payload.pagesById[id];
-    page.unreadCount = 0;
-  }
-
-  store.set(versionAtom, payload.version);
-  store.set(scrollTrackingAtom, payload.scrollTracking);
-  store.set(chatPagesAtom, payload.pages);
-  store.set(currentPageIdAtom, payload.currentPageId);
-  store.set(chatPagesRecord, payload.pagesById);
-
-  chatRenderer.changePage(payload.pages[0]);
-  chatRenderer.onStateLoaded();
-  loaded = true;
+  chatRenderer.changePage(pageRecord[newPageIds[0]]);
 }
 
 export function updateScrollTracking(value: boolean): void {
@@ -178,38 +198,41 @@ export function addChatPage(): void {
 }
 
 export function changeChatPage(page: Page): void {
+  const pageId = store.get(currentPageIdAtom);
   const pagesRecord = store.get(chatPagesRecord);
   const draft: Page = {
-    ...pagesRecord[page.id],
+    ...pagesRecord[pageId],
     unreadCount: 0,
   };
 
-  store.set(currentPageIdAtom, page.id);
+  store.set(currentPageIdAtom, pageId);
   store.set(chatPagesRecord, {
     ...pagesRecord,
-    [page.id]: draft,
+    [pageId]: draft,
   });
 
   chatRenderer.changePage(page);
 }
 
-export function updateChatPage(page: Partial<Page> & { id: string }): void {
+export function updateChatPage(page: Partial<Page>): void {
+  const pageId = store.get(currentPageIdAtom);
   const pagesRecord = store.get(chatPagesRecord);
 
   const draft: Page = {
-    ...pagesRecord[page.id],
+    ...pagesRecord[pageId],
     ...page,
   };
 
   store.set(chatPagesRecord, {
     ...pagesRecord,
-    [page.id]: draft,
+    [pageId]: draft,
   });
 
   chatRenderer.changePage(page);
 }
 
-export function toggleAcceptedType(pageId: string, type: string): void {
+export function toggleAcceptedType(type: string): void {
+  const pageId = store.get(currentPageIdAtom);
   const pagesRecord = store.get(chatPagesRecord);
   const current = { ...pagesRecord[pageId] };
 
@@ -229,14 +252,14 @@ export function toggleAcceptedType(pageId: string, type: string): void {
   chatRenderer.changePage(draft);
 }
 
-export function removeChatPage(pageId: string): void {
+export function removeChatPage(): void {
   const pagesRecord = store.get(chatPagesRecord);
   const pages = store.get(chatPagesAtom);
-  const currentPageId = store.get(currentPageIdAtom);
+  const pageId = store.get(currentPageIdAtom);
 
   const draftRecord: Record<string, Page> = {};
   const draftPages: string[] = [];
-  let draftCurrentPageId: string = currentPageId;
+  let draftCurrentPageId: string = pageId;
 
   for (const id of pages) {
     if (id === pageId) continue;
@@ -262,9 +285,10 @@ export function removeChatPage(pageId: string): void {
   chatRenderer.changePage(newCurrentPage);
 }
 
-export function moveChatLeft(pageId: string): void {
+export function moveChatLeft(): void {
   const pages = store.get(chatPagesAtom);
   const pagesRecord = store.get(chatPagesRecord);
+  const pageId = store.get(currentPageIdAtom);
 
   const tmpPage = pagesRecord[pageId];
   const fromIndex = pages.indexOf(tmpPage.id);
@@ -284,9 +308,10 @@ export function moveChatLeft(pageId: string): void {
   chatRenderer.changePage(pagesRecord[pageId]);
 }
 
-export function moveChatRight(pageId: string): void {
+export function moveChatRight(): void {
   const pages = store.get(chatPagesAtom);
   const pagesRecord = store.get(chatPagesRecord);
+  const pageId = store.get(currentPageIdAtom);
 
   const tmpPage = pagesRecord[pageId];
   const fromIndex = pages.indexOf(tmpPage.id);
