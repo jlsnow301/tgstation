@@ -3,6 +3,7 @@ import DOMPurify from 'dompurify';
 import { useAtom, useAtomValue } from 'jotai';
 import { useEffect } from 'react';
 import * as z from 'zod';
+import { settingsLoadedAtom } from '../settings/atoms';
 import {
   allChatAtom,
   chatLoadedAtom,
@@ -25,8 +26,10 @@ const storedSettingsSchema = z.object({
   scrollTracking: z.boolean(),
   currentPageId: z.string(),
   pages: z.array(z.string()),
-  pagesById: z.record(z.string(), z.any()),
+  pageById: z.record(z.string(), z.any()),
 });
+
+type StoredChatSettings = z.infer<typeof storedSettingsSchema>;
 
 /**
  * Custom hook that initializes chat from local storage and periodically saves
@@ -41,6 +44,7 @@ export function useChatPersistance() {
   const [, setChatPagesRecord] = useAtom(chatPagesRecord);
 
   const [loaded, setLoaded] = useAtom(chatLoadedAtom);
+  const settingsLoaded = useAtomValue(settingsLoadedAtom);
 
   /** Loads or periodically saves chat + chat settings */
   useEffect(() => {
@@ -58,7 +62,7 @@ export function useChatPersistance() {
         clearInterval(saveInterval);
       }
     };
-  }, []);
+  }, [settingsLoaded]);
 
   function saveChatToStorage(): void {
     const fromIndex = Math.max(
@@ -86,6 +90,7 @@ export function useChatPersistance() {
     }
 
     if (state && 'version' in state && state.version <= 4) return;
+    console.log('Loaded chat state from storage: ', state);
     handleSettings(state);
   }
 
@@ -112,8 +117,8 @@ export function useChatPersistance() {
     console.log(`Restored chat with ${messages.length} messages`);
   }
 
-  function handleSettings(state: z.infer<typeof storedSettingsSchema>): void {
-    let parsed;
+  function handleSettings(state: StoredChatSettings): void {
+    let parsed: StoredChatSettings;
     try {
       parsed = storedSettingsSchema.parse(state);
     } catch (err) {
@@ -127,7 +132,7 @@ export function useChatPersistance() {
     // Enable any filters that are not explicitly set, that are
     // enabled by default on the main page.
     for (const id of parsed.pages) {
-      const page = parsed.pagesById[id];
+      const page = parsed.pageById[id];
       const filters = page.acceptedTypes;
 
       const defaultFilters = mainPage.acceptedTypes;
@@ -144,7 +149,7 @@ export function useChatPersistance() {
     setScrollTracking(parsed.scrollTracking);
     setChatPages(parsed.pages);
     setCurrentPageId(parsed.currentPageId);
-    setChatPagesRecord(parsed.pagesById);
+    setChatPagesRecord(parsed.pageById);
 
     chatRenderer.changePage(parsed.pages[0]);
     chatRenderer.onStateLoaded();
