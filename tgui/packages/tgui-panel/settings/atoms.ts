@@ -43,7 +43,7 @@ export const defaultHighlights: HighlightState = {
  * Separate from 'initialized' in settings. This is to keep chat from loading
  * settings prior to settings being ready
  */
-export const settingsInitializedAtom = atom(false);
+export const settingsLoadedAtom = atom(false);
 export const settingsAtom = atom(defaultSettings);
 export const settingsVisibleAtom = atom(false);
 

@@ -5,6 +5,7 @@ import {
   chatPagesRecord,
   currentPageAtom,
   currentPageIdAtom,
+  mainPage,
   scrollTrackingAtom,
 } from './atom';
 import { canPageAcceptType } from './model';
@@ -85,9 +86,21 @@ export function importChatState(pageRecord: Record<string, Page>): void {
   const newPageIds: string[] = Object.keys(pageRecord);
   if (!newPageIds) return;
 
-  store.set(currentPageIdAtom, newPageIds[0]);
-  store.set(chatPagesAtom, newPageIds);
-  store.set(chatPagesRecord, pageRecord);
+  // Correct any missing keys from the import
+  const merged: Record<string, Page> = { ...pageRecord };
+  for (const page of newPageIds) {
+    merged[page] = {
+      ...mainPage,
+      ...pageRecord[page],
+      unreadCount: 0,
+    };
+  }
 
-  chatRenderer.changePage(pageRecord[newPageIds[0]]);
+  const first = newPageIds[0];
+
+  store.set(currentPageIdAtom, first);
+  store.set(chatPagesAtom, newPageIds);
+  store.set(chatPagesRecord, merged);
+
+  chatRenderer.changePage(merged[first]);
 }

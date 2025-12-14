@@ -1,7 +1,7 @@
 import { storage } from 'common/storage';
 import { useAtom, useAtomValue } from 'jotai';
 import { useEffect } from 'react';
-import { highlightsAtom, settingsAtom, settingsInitializedAtom } from './atoms';
+import { highlightsAtom, settingsAtom, settingsLoadedAtom } from './atoms';
 import { generalSettingsHandler } from './helpers';
 import { startSettingsMigration } from './migration';
 import { setDisplayScaling } from './scaling';
@@ -11,11 +11,12 @@ import type { SettingsState } from './types';
 export function useSettings() {
   const [settings, setSettings] = useAtom(settingsAtom);
   const highlights = useAtomValue(highlightsAtom);
-  const [initialized, setInitialized] = useAtom(settingsInitializedAtom);
+
+  const [loaded, setLoaded] = useAtom(settingsLoadedAtom);
 
   /** Load and migrate settings */
   useEffect(() => {
-    if (initialized) return;
+    if (loaded) return;
 
     async function fetchSettings(): Promise<void> {
       try {
@@ -29,8 +30,7 @@ export function useSettings() {
 
     fetchSettings();
     setDisplayScaling();
-    console.log('flipping true');
-    setInitialized(true);
+    setLoaded(true);
   }, []);
 
   function storeSettings(update: SettingsState): void {

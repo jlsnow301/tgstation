@@ -35,21 +35,22 @@ const storedSettingsSchema = z.object({
 export function useChatPersistance() {
   const allChat = useAtomValue(allChatAtom);
   const [version, setVersion] = useAtom(versionAtom);
-  const [chatLoaded, setChatLoaded] = useAtom(chatLoadedAtom);
   const [, setScrollTracking] = useAtom(scrollTrackingAtom);
   const [, setChatPages] = useAtom(chatPagesAtom);
   const [, setCurrentPageId] = useAtom(currentPageIdAtom);
   const [, setChatPagesRecord] = useAtom(chatPagesRecord);
 
+  const [loaded, setLoaded] = useAtom(chatLoadedAtom);
+
   /** Loads or periodically saves chat + chat settings */
   useEffect(() => {
     let saveInterval: NodeJS.Timeout;
-    if (!chatLoaded) {
+    if (!loaded) {
       console.log('Initializing chat');
       saveInterval = setInterval(saveChatToStorage, MESSAGE_SAVE_INTERVAL);
 
       loadChatFromStorage();
-      setChatLoaded(true);
+      setLoaded(true);
     }
 
     return () => {
@@ -147,6 +148,6 @@ export function useChatPersistance() {
 
     chatRenderer.changePage(parsed.pages[0]);
     chatRenderer.onStateLoaded();
-    console.log(`Restore chat settings with ${parsed.pages.length} pages`);
+    console.log('Restored chat settings: ', parsed);
   }
 }
