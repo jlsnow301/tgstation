@@ -4,7 +4,6 @@
  * @license MIT
  */
 
-import { useAtomValue } from 'jotai';
 import {
   Button,
   Collapsible,
@@ -13,18 +12,18 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-import { currentPageAtom } from './atom';
 import { MESSAGE_TYPES } from './constants';
-import {
-  moveChatLeft,
-  moveChatRight,
-  removeChatPage,
-  toggleAcceptedType,
-  updateChatPage,
-} from './helpers';
+import { useChatPages } from './use-chat-pages';
 
 export function ChatPageSettings(props) {
-  const page = useAtomValue(currentPageAtom);
+  const {
+    page,
+    moveChatLeft,
+    moveChatRight,
+    updateChatPage,
+    removeChatPage,
+    toggleAcceptedType,
+  } = useChatPages();
 
   return (
     <Section>

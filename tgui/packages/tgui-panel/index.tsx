@@ -74,16 +74,7 @@ function setupApp() {
     setupHotReloading();
 
     import.meta.webpackHot.accept(
-      [
-        // './audio/',
-        './chat',
-        // './game',
-        './Notifications',
-        './Panel',
-        // './ping',
-        // './settings',
-        './telemetry',
-      ],
+      ['./Notifications', './Panel', './telemetry'],
       () => {
         render(<App />);
       },

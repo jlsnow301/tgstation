@@ -3,6 +3,7 @@ import { createMainPage } from './model';
 
 export const mainPage = createMainPage();
 
+export const chatLoadedAtom = atom(false);
 export const versionAtom = atom(5);
 export const scrollTrackingAtom = atom(true);
 export const chatPagesAtom = atom([mainPage.id]);
