@@ -6,16 +6,8 @@ const viewSchema = z.object({
   visible: z.boolean(),
 });
 
-const highlightSettingSchema = z.object({
-  highlightColor: z.string(),
-  highlightText: z.string(),
-  highlightWholeMessage: z.boolean(),
-  id: z.string(),
-  matchCase: z.boolean(),
-  matchWord: z.boolean(),
-});
-
 const settingsSchema = z.object({
+  adminMusicVolume: z.number(),
   fontFamily: z.string(),
   fontSize: z.number(),
   initialized: z.boolean(),
@@ -26,6 +18,15 @@ const settingsSchema = z.object({
   theme: z.string(),
   version: z.number(),
   view: viewSchema,
+});
+
+const highlightSettingSchema = z.object({
+  highlightColor: z.string(),
+  highlightText: z.string(),
+  highlightWholeMessage: z.boolean(),
+  id: z.string(),
+  matchCase: z.boolean(),
+  matchWord: z.boolean(),
 });
 
 const highlightsSchema = z.object({
