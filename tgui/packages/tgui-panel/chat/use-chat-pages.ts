@@ -78,29 +78,21 @@ export function useChatPages() {
   }
 
   function removeChatPage(): void {
-    const draftRecord: Record<string, Page> = {};
-    const draftPages: string[] = [];
-    let draftCurrentPageId: string = currentPageId;
+    const nextPages = pages.filter((id) => id !== currentPageId);
 
-    for (const id of pages) {
-      if (id === currentPageId) continue;
-      draftRecord[id] = pagesRecord[id];
-      draftPages.push(id);
-    }
+    // Always keep at least the main page
+    const finalPages = nextPages.length > 0 ? nextPages : [mainPage.id];
 
-    if (draftPages.length === 0) {
-      draftPages.push(mainPage.id);
-      draftRecord[mainPage.id] = mainPage;
-      draftCurrentPageId = mainPage.id;
-    }
+    const finalRecord =
+      nextPages.length > 0
+        ? (Object.fromEntries(
+            finalPages.map((id) => [id, pagesRecord[id]]),
+          ) as Record<string, Page>)
+        : { [mainPage.id]: mainPage };
 
-    if (!draftCurrentPageId || draftCurrentPageId === currentPageId) {
-      draftCurrentPageId = draftPages[0];
-    }
-
-    setPagesRecord(draftRecord);
-    setPages(draftPages);
-    setCurrentPageId(draftCurrentPageId);
+    setPagesRecord(finalRecord);
+    setPages(finalPages);
+    setCurrentPageId(finalPages[0]);
   }
 
   function toggleAcceptedType(type: string): void {
