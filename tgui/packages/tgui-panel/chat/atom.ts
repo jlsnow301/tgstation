@@ -7,7 +7,7 @@ export const versionAtom = atom(5);
 export const scrollTrackingAtom = atom(true);
 export const chatPagesAtom = atom([mainPage.id]);
 export const currentPageIdAtom = atom(mainPage.id);
-export const chatPagesRecord = atom({
+export const chatPagesRecordAtom = atom({
   [mainPage.id]: mainPage,
 });
 
@@ -19,11 +19,11 @@ export const allChatAtom = atom((get) => ({
   currentPageId: get(currentPageIdAtom),
   scrollTracking: get(scrollTrackingAtom),
   pages: get(chatPagesAtom),
-  pageById: get(chatPagesRecord),
+  pageById: get(chatPagesRecordAtom),
 }));
 
 export const currentPageAtom = atom((get) => {
   const pageId = get(currentPageIdAtom);
-  const pagesById = get(chatPagesRecord);
+  const pagesById = get(chatPagesRecordAtom);
   return pagesById[pageId];
 });

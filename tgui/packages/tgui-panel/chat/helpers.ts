@@ -2,7 +2,7 @@ import { store } from '../events/store';
 import {
   chatLoadedAtom,
   chatPagesAtom,
-  chatPagesRecord,
+  chatPagesRecordAtom,
   currentPageAtom,
   currentPageIdAtom,
   mainPage,
@@ -12,14 +12,17 @@ import { canPageAcceptType } from './model';
 import { chatRenderer } from './renderer';
 import type { Page } from './types';
 
-chatRenderer.events.on('batchProcessed', (countByType) => {
-  // Use this flag to workaround unread messages caused by
-  // loading them from storage. Side effect of that, is that
-  // message count can not be trusted, only unread count.
-  if (store.get(chatLoadedAtom)) {
-    updateMessageCount(countByType);
-  }
-});
+chatRenderer.events.on(
+  'batchProcessed',
+  (countByType: Record<string, number>) => {
+    // Use this flag to workaround unread messages caused by
+    // loading them from storage. Side effect of that, is that
+    // message count can not be trusted, only unread count.
+    if (store.get(chatLoadedAtom)) {
+      updateMessageCount(countByType);
+    }
+  },
+);
 
 chatRenderer.events.on('scrollTrackingChanged', updateScrollTracking);
 
@@ -30,37 +33,37 @@ function updateScrollTracking(value: boolean): void {
   if (!value) return;
 
   const pageId = store.get(currentPageIdAtom);
-  const pagesRecord = store.get(chatPagesRecord);
+  const pagesRecord = store.get(chatPagesRecordAtom);
   const draft = {
     ...pagesRecord[pageId],
     unreadCount: 0,
   };
 
-  store.set(chatPagesRecord, {
+  store.set(chatPagesRecordAtom, {
     ...pagesRecord,
     [pageId]: draft,
   });
 }
 
 function updateMessageCount(countByType: Record<string, number>): void {
-  const pagesRecord = store.get(chatPagesRecord);
-  const pages = store.get(chatPagesAtom).map((id) => pagesRecord[id]);
+  const pagesRecord = store.get(chatPagesRecordAtom);
+  const pages = store.get(chatPagesAtom);
   const currentPage = store.get(currentPageAtom);
   const scrollTracking = store.get(scrollTrackingAtom);
 
   const draftpagesRecord = { ...pagesRecord };
-  for (const page of pages) {
+
+  for (const pageId of pages) {
+    const page = pagesRecord[pageId];
     let unreadCount = 0;
 
-    for (const type of Object.keys(countByType)) {
+    for (const type in countByType) {
       /// Message does not belong here
-      if (!canPageAcceptType(page, type)) {
-        continue;
-      }
+      if (!canPageAcceptType(page, type)) continue;
+
       // Current page scroll tracked
-      if (page === currentPage && scrollTracking) {
-        continue;
-      }
+      if (page === currentPage && scrollTracking) continue;
+
       // This page received the same message which we can read on the current
       // page
       if (page !== currentPage && canPageAcceptType(currentPage, type)) {
@@ -77,7 +80,7 @@ function updateMessageCount(countByType: Record<string, number>): void {
     }
   }
 
-  store.set(chatPagesRecord, draftpagesRecord);
+  store.set(chatPagesRecordAtom, draftpagesRecord);
 }
 
 export function importChatState(pageRecord: Record<string, Page>): void {
@@ -100,7 +103,7 @@ export function importChatState(pageRecord: Record<string, Page>): void {
 
   store.set(currentPageIdAtom, first);
   store.set(chatPagesAtom, newPageIds);
-  store.set(chatPagesRecord, merged);
+  store.set(chatPagesRecordAtom, merged);
 
   chatRenderer.changePage(merged[first]);
 }

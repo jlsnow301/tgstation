@@ -1,13 +1,13 @@
 import { omit, pick } from 'es-toolkit';
 import * as z from 'zod';
-import { chatPagesRecord } from '../chat/atom';
+import { chatPagesRecordAtom } from '../chat/atom';
 import { importChatState } from '../chat/helpers';
 import { store } from '../events/store';
 import { storedSettingsAtom } from './atoms';
 import { startSettingsMigration } from './migration';
 
 export function exportChatSettings(): void {
-  const chatPages = store.get(chatPagesRecord);
+  const chatPages = store.get(chatPagesRecordAtom);
   const settings = store.get(storedSettingsAtom);
 
   const opts: SaveFilePickerOptions = {

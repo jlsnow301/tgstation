@@ -1,7 +1,7 @@
 import { useAtom, useAtomValue } from 'jotai';
 import {
   chatPagesAtom,
-  chatPagesRecord,
+  chatPagesRecordAtom,
   currentPageAtom,
   currentPageIdAtom,
   mainPage,
@@ -12,7 +12,7 @@ import type { Page } from './types';
 /** Custom hook for handling chat pages state */
 export function useChatPages() {
   const [pages, setPages] = useAtom(chatPagesAtom);
-  const [pagesRecord, setPagesRecord] = useAtom(chatPagesRecord);
+  const [pagesRecord, setPagesRecord] = useAtom(chatPagesRecordAtom);
   const [currentPageId, setCurrentPageId] = useAtom(currentPageIdAtom);
   const page = useAtomValue(currentPageAtom);
 
