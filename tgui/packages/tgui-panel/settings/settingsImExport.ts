@@ -1,10 +1,10 @@
 import { omit, pick } from 'es-toolkit';
-import * as z from 'zod';
 import { chatPagesRecordAtom } from '../chat/atom';
 import { importChatState } from '../chat/helpers';
 import { store } from '../events/store';
 import { storedSettingsAtom } from './atoms';
 import { startSettingsMigration } from './migration';
+import { type ExportedSettings, exportedSettingsSchema } from './types';
 
 export function exportChatSettings(): void {
   const chatPages = store.get(chatPagesRecordAtom);
@@ -39,18 +39,13 @@ export function exportChatSettings(): void {
     });
 }
 
-const chatSettingsSchema = z.object({
-  version: z.string(),
-  chatPages: z.record(z.string(), z.any()),
-});
-
 export function importChatSettings(settings: string | string[]): void {
   if (Array.isArray(settings)) return;
 
-  let ourImport;
+  let ourImport: ExportedSettings;
   try {
     const parsed = JSON.parse(settings);
-    ourImport = chatSettingsSchema.parse(parsed);
+    ourImport = exportedSettingsSchema.parse(parsed);
   } catch (err) {
     console.error(err);
     return;
@@ -59,6 +54,6 @@ export function importChatSettings(settings: string | string[]): void {
   const chatPart = pick(ourImport, ['chatPages']);
   const settingsPart = omit(ourImport, ['chatPages']);
 
-  importChatState(chatPart);
-  startSettingsMigration(settingsPart as any);
+  importChatState(chatPart as any);
+  startSettingsMigration(settingsPart);
 }
