@@ -1,7 +1,6 @@
 import { scale } from 'tgui-core/math';
 import { store } from '../events/store';
-import { setLastPing } from '../game/use-keep-alive';
-import { pingAtom } from './atoms';
+import { lastPingedAtAtom, pingAtom } from './atoms';
 import {
   PING_QUEUE_SIZE,
   PING_ROUNDTRIP_BEST,
@@ -48,7 +47,7 @@ export function pingSuccess(roundtrip: number): void {
     networkQuality,
   });
 
-  setLastPing();
+  store.set(lastPingedAtAtom, Date.now());
 }
 
 export function pingFail(): void {

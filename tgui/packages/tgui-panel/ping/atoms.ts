@@ -7,4 +7,5 @@ export type PingState = {
   networkQuality: number;
 };
 
+export const lastPingedAtAtom = atom<number | null>(null);
 export const pingAtom = atom({} as PingState);

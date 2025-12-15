@@ -1,30 +1,16 @@
-import { useAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { useEffect } from 'react';
+import { lastPingedAtAtom } from '../ping/atoms';
 import { connectionLostAtAtom } from './atoms';
-import { CONNECTION_LOST_AFTER } from './constants';
 
-let lastPingedAt: number;
-
-export function setLastPing() {
-  lastPingedAt = Date.now();
-}
-
-/** React hook to periodically get UI status */
+/** Custom hook that checks whether the panel is still receiving pings */
 export function useKeepAlive() {
-  const [connectionLostAt, setConnectionLostAt] = useAtom(connectionLostAtAtom);
+  // Ensure the derived atom (and thus the clock) is subscribed.
+  useAtomValue(connectionLostAtAtom);
 
+  // Optional: clears stale ping timestamp across HMR/reloads to avoid a one-frame “lost” flash.
+  const setLastPingedAt = useSetAtom(lastPingedAtAtom);
   useEffect(() => {
-    const interval = setInterval(() => {
-      const pingsAreFailing =
-        lastPingedAt && Date.now() >= lastPingedAt + CONNECTION_LOST_AFTER;
-      if (!connectionLostAt && pingsAreFailing) {
-        setConnectionLostAt(Date.now());
-      }
-      if (connectionLostAt && !pingsAreFailing) {
-        setConnectionLostAt(null);
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
+    setLastPingedAt(null);
+  }, [setLastPingedAt]);
 }

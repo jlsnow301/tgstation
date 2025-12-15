@@ -1,4 +1,5 @@
-import { setLastPing } from '../game/use-keep-alive';
+import { store } from '../events/store';
+import { lastPingedAtAtom } from './atoms';
 import { pingSuccess, pings, sendPing } from './helpers';
 
 let initialized = false;
@@ -23,7 +24,7 @@ export function pingSoft(payload: SoftPingPayload): void {
   if (afk) return;
 
   sendPing();
-  setLastPing();
+  store.set(lastPingedAtAtom, Date.now());
 }
 
 type ReplyPingPayload = {
