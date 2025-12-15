@@ -27,12 +27,12 @@ let wasRequestedWithPayload;
 export function telemetryRequest(payload: TelemetryRequestPayload): void {
   // Defer telemetry request until we have the actual telemetry
   if (!telemetry) {
-    logger.debug('deferred');
+    logger.debug('deferred telemetry');
     wasRequestedWithPayload = payload;
     return;
   }
 
-  logger.debug('sending');
+  logger.debug('sending telemetry');
   const limits = payload?.limits?.connections;
   // Trim connections according to the server limit
   const connections = telemetry.connections.slice(0, limits);
@@ -66,13 +66,10 @@ export async function handleTelemetryData(
   // Load telemetry
   if (!telemetry) {
     const stored = await storage.get('telemetry');
-    telemetry = stored ?? {
-      connections: [],
+    telemetry = {
+      connections: stored?.connections ?? [],
     };
-    if (!telemetry?.connections) {
-      telemetry!.connections = [];
-    }
-    logger.debug('retrieved telemetry from storage', telemetry);
+    logger.debug('Retrieved telemetry from storage', telemetry);
   }
 
   // Append a connection record
@@ -92,7 +89,7 @@ export async function handleTelemetryData(
 
   // Save telemetry
   if (telemetryMutated) {
-    logger.debug('saving telemetry to storage', telemetry);
+    logger.debug('Saving telemetry to storage', telemetry);
     storage.set('telemetry', telemetry);
   }
 

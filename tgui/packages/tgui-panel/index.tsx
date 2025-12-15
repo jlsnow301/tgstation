@@ -7,11 +7,11 @@
 // Themes
 import './styles/main.scss';
 import './styles/themes/light.scss';
-
 import { perf } from 'common/perf';
+import { setGlobalStore } from 'tgui/backend';
 import { captureExternalLinks } from 'tgui/links';
 import { render } from 'tgui/renderer';
-
+import { configureStore } from 'tgui/store';
 import { EventBus } from 'tgui-core/eventbus';
 import { setupGlobalEvents } from 'tgui-core/events';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
@@ -23,6 +23,7 @@ perf.mark('inception', window.performance?.timeOrigin);
 perf.mark('init');
 
 const bus = new EventBus(listeners);
+const store = configureStore();
 
 function setupApp() {
   // Delay setup
@@ -30,6 +31,8 @@ function setupApp() {
     document.addEventListener('DOMContentLoaded', setupApp);
     return;
   }
+
+  setGlobalStore(store);
 
   setupGlobalEvents({
     ignoreWindowFocus: true,
@@ -53,16 +56,15 @@ function setupApp() {
     });
   });
 
+  store.subscribe(() => render(<App />));
+
   // Enable hot module reloading
   if (import.meta.webpackHot) {
     setupHotReloading();
 
-    import.meta.webpackHot.accept(
-      ['./Notifications', './Panel', './telemetry'],
-      () => {
-        render(<App />);
-      },
-    );
+    import.meta.webpackHot.accept(['./Notifications', './Panel'], () => {
+      render(<App />);
+    });
   }
 }
 

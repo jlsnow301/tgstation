@@ -11,11 +11,11 @@ import { roundrestart } from './handlers/roundrestart';
 export const listeners = {
   'audio/playMusic': playMusic,
   'audio/stopMusic': stopMusic,
-  'backend/update': handleTelemetryData,
   'chat/message': chatMessage,
   'ping/reply': pingReply,
   'ping/soft': pingSoft,
-  'telemetry/request': telemetryRequest,
   roundrestart,
+  'telemetry/request': telemetryRequest,
   testTelemetryCommand,
+  update: handleTelemetryData,
 } as const;
