@@ -4,7 +4,7 @@ import { importChatState } from '../chat/helpers';
 import { store } from '../events/store';
 import { storedSettingsAtom } from './atoms';
 import { startSettingsMigration } from './migration';
-import { type ExportedSettings, exportedSettingsSchema } from './types';
+import type { ExportedSettings } from './types';
 
 export function exportChatSettings(): void {
   const chatPages = store.get(chatPagesRecordAtom);
@@ -44,8 +44,7 @@ export function importChatSettings(settings: string | string[]): void {
 
   let ourImport: ExportedSettings;
   try {
-    const parsed = JSON.parse(settings);
-    ourImport = exportedSettingsSchema.parse(parsed);
+    ourImport = JSON.parse(settings);
   } catch (err) {
     console.error(err);
     return;
@@ -54,6 +53,8 @@ export function importChatSettings(settings: string | string[]): void {
   const chatPart = pick(ourImport, ['chatPages']);
   const settingsPart = omit(ourImport, ['chatPages']);
 
-  importChatState(chatPart as any);
-  startSettingsMigration(settingsPart);
+  if (chatPart) {
+    importChatState(chatPart as any);
+  }
+  startSettingsMigration(settingsPart as any);
 }
