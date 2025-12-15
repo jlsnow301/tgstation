@@ -8,7 +8,7 @@ export function useKeepAlive() {
   // Ensure the derived atom (and thus the clock) is subscribed.
   useAtomValue(connectionLostAtAtom);
 
-  // Optional: clears stale ping timestamp across HMR/reloads to avoid a one-frame “lost” flash.
+  // Clears stale ping timestamp across HMR/reloads to avoid a one-frame “lost” flash.
   const setLastPingedAt = useSetAtom(lastPingedAtAtom);
   useEffect(() => {
     setLastPingedAt(null);

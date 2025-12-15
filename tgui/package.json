@@ -26,5 +26,8 @@
 	},
 	"workspaces": [
 		"packages/*"
-	]
+	],
+	"dependencies": {
+		"tgui-core": "^5.5.10"
+	}
 }
