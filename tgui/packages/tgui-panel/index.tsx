@@ -9,26 +9,18 @@ import './styles/main.scss';
 import './styles/themes/light.scss';
 
 import { perf } from 'common/perf';
-import { setGlobalStore } from 'tgui/backend';
 import { captureExternalLinks } from 'tgui/links';
 import { render } from 'tgui/renderer';
-import { configureStore } from 'tgui/store';
+
 import { EventBus } from 'tgui-core/eventbus';
 import { setupGlobalEvents } from 'tgui-core/events';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { App } from './app';
 import { listeners } from './events/listeners';
 import { setupPanelFocusHacks } from './panelFocus';
-import { telemetryMiddleware } from './telemetry';
 
 perf.mark('inception', window.performance?.timeOrigin);
 perf.mark('init');
-
-const store = configureStore({
-  middleware: {
-    pre: [telemetryMiddleware],
-  },
-});
 
 const bus = new EventBus(listeners);
 
@@ -39,8 +31,6 @@ function setupApp() {
     return;
   }
 
-  setGlobalStore(store);
-
   setupGlobalEvents({
     ignoreWindowFocus: true,
   });
@@ -48,14 +38,8 @@ function setupApp() {
   setupPanelFocusHacks();
   captureExternalLinks();
 
-  // Re-render UI on store updates
-  store.subscribe(() => render(<App />));
-
   // Dispatch incoming messages as store actions
-  Byond.subscribe((type, payload) => {
-    store.dispatch({ type, payload });
-    bus.dispatch({ type, payload });
-  });
+  Byond.subscribe((type, payload) => bus.dispatch({ type, payload }));
 
   // Unhide the panel
   Byond.winset('output_selector.legacy_output_selector', {
