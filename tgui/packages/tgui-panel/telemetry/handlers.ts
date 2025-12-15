@@ -10,7 +10,7 @@ import { MAX_CONNECTIONS_STORED } from './constants';
 import { type ConnectionRecord, connectionsMatch } from './helpers';
 
 type Telemetry = {
-  connections: any[];
+  connections: ConnectionRecord[];
 };
 
 type TelemetryRequestPayload = {
