@@ -16,7 +16,7 @@ nowAtom.onMount = (set) => {
 };
 
 /**
- * Derived: returns the timestamp at which we *became* "lost" (deadline),
+ * Returns the timestamp at which we *became* "lost" (deadline),
  * or null if we're not currently lost.
  *
  * Note: returns a stable value while lost, so `nowAtom` ticking won’t cause
