@@ -1,4 +1,6 @@
+import { useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
+import { getChatPortalsSnapshot, subscribeToChatPortals } from './portal-store';
 
 export type PortalEntry = {
   key: string;
@@ -8,12 +10,14 @@ export type PortalEntry = {
   html: string;
 };
 
-type Props = {
-  entries: PortalEntry[];
-};
+export function ChatPortals() {
+  const entries = useSyncExternalStore(
+    subscribeToChatPortals,
+    getChatPortalsSnapshot,
+    getChatPortalsSnapshot,
+  );
 
-export function PortalHost(props: Props) {
-  const { entries } = props;
+  if (entries.length === 0) return;
 
   return (
     <>

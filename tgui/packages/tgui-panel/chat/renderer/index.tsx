@@ -4,8 +4,6 @@
  * @license MIT
  */
 
-import { flushSync } from 'react-dom';
-import { createRoot } from 'react-dom/client';
 import { createLogger } from 'tgui/logging';
 import { EventEmitter } from 'tgui-core/events';
 import {
@@ -20,6 +18,7 @@ import {
   MESSAGE_TYPES,
 } from '../constants';
 import { canPageAcceptType, createMessage, isSameMessage } from '../model';
+import type { PortalEntry } from './chat-portals';
 import { SCROLL_TRACKING_TOLERANCE, TGUI_CHAT_COMPONENTS } from './constants';
 import {
   createHighlightNode,
@@ -31,7 +30,11 @@ import {
   updateMessageBadge,
 } from './helpers';
 import { highlightNode, linkifyNode } from './nodes';
-import { type PortalEntry, PortalHost } from './portal-host';
+import {
+  clearChatPortals,
+  deleteChatPortals,
+  upsertChatPortals,
+} from './portal-store';
 
 const logger = createLogger('chatRenderer');
 
@@ -49,9 +52,7 @@ class ChatRenderer {
   highlightParsers: Array<any> | null;
   handleScroll: (type: any) => void;
   ensureScrollTracking: () => void;
-  private portalHostNode: HTMLDivElement | null = null;
-  private portalRoot: ReturnType<typeof createRoot> | null = null;
-  private portalEntries: Map<string, PortalEntry> = new Map();
+  private portalKeySeq = 0;
 
   constructor() {
     this.loaded = false;
@@ -112,45 +113,10 @@ class ChatRenderer {
     });
     // Flush the queue
     this.tryFlushQueue();
-
-    this.ensurePortalRoot();
-    this.renderPortals();
-  }
-
-  private ensurePortalRoot() {
-    if (this.portalRoot) {
-      return;
-    }
-    this.portalHostNode = document.createElement('div');
-    // Portals render into mount elements; this node is only a stable root container.
-    // Keep it out of the chat root so `rootNode.textContent = ''` doesn't delete it.
-    document.body.appendChild(this.portalHostNode);
-    this.portalRoot = createRoot(this.portalHostNode);
-  }
-
-  private renderPortals(options: { flush?: boolean } = {}) {
-    if (!this.portalRoot) {
-      return;
-    }
-    const doRender = () => {
-      this.portalRoot!.render(
-        <PortalHost entries={[...this.portalEntries.values()]} />,
-      );
-    };
-    if (options.flush) {
-      flushSync(doRender);
-    } else {
-      doRender();
-    }
   }
 
   private deletePortalEntries(keys: string[] | undefined) {
-    if (!keys || keys.length === 0) {
-      return;
-    }
-    for (const key of keys) {
-      this.portalEntries.delete(key);
-    }
+    deleteChatPortals(keys);
   }
 
   onStateLoaded() {
@@ -338,7 +304,7 @@ class ChatRenderer {
     const fragment = document.createDocumentFragment();
     const countByType = {};
     let node;
-    let didAddPortals = false;
+    const portalEntriesToUpsert: PortalEntry[] = [];
     const newMessageNodes: Array<{ message: any; node: HTMLElement }> = [];
     for (const payload of batch) {
       const message = createMessage(payload);
@@ -398,10 +364,15 @@ class ChatRenderer {
           // Clear the mount point contents; React will fill it.
           mountEl.textContent = '';
 
-          const key = `${messageKeyBase}:${i}`; // stable + unique per message
-          this.portalEntries.set(key, { key, mountEl, Element, props, html });
+          const key = `${messageKeyBase}:${i}:${this.portalKeySeq++}`;
+          portalEntriesToUpsert.push({
+            key,
+            mountEl,
+            Element,
+            props,
+            html,
+          });
           messagePortalKeys.push(key);
-          didAddPortals = true;
         }
 
         if (messagePortalKeys.length > 0) {
@@ -447,10 +418,8 @@ class ChatRenderer {
       this.events.emit('batchProcessed', countByType);
     }
 
-    if (didAddPortals) {
-      this.ensurePortalRoot();
-      // Ensure portal content is mounted before we run highlight/linkify.
-      this.renderPortals({ flush: true });
+    if (portalEntriesToUpsert.length > 0) {
+      upsertChatPortals(portalEntriesToUpsert);
     }
 
     // Post-process newly created nodes (after portals are mounted)
@@ -531,8 +500,6 @@ class ChatRenderer {
         logger.log(`pruned ${fromIndex} stored messages`);
       }
     }
-
-    this.renderPortals();
   }
 
   rebuildChat() {
@@ -554,8 +521,7 @@ class ChatRenderer {
     this.messages = [];
     this.visibleMessages = [];
 
-    this.portalEntries.clear();
-    this.renderPortals();
+    clearChatPortals();
     // Repopulate the chat log
     this.processBatch(messages, {
       notifyListeners: false,
@@ -584,8 +550,6 @@ class ChatRenderer {
       (message) => message.node !== 'pruned',
     );
     logger.log(`Cleared chat`);
-
-    this.renderPortals();
   }
 
   saveToDisk() {

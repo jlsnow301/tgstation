@@ -1,4 +1,5 @@
 import { Provider } from 'jotai';
+import { ChatPortals } from './chat/renderer/chat-portals';
 import { store } from './events/store';
 import { Panel } from './Panel';
 
@@ -7,6 +8,7 @@ export function App() {
   return (
     <Provider store={store}>
       <Panel />
+      <ChatPortals />
     </Provider>
   );
 }
