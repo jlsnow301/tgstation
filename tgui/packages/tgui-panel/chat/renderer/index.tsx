@@ -4,16 +4,13 @@
  * @license MIT
  */
 
+import { flushSync } from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { createLogger } from 'tgui/logging';
-import { Tooltip } from 'tgui-core/components';
 import { EventEmitter } from 'tgui-core/events';
-import { classes } from 'tgui-core/react';
 import {
   COMBINE_MAX_MESSAGES,
   COMBINE_MAX_TIME_WINDOW,
-  IMAGE_RETRY_DELAY,
-  IMAGE_RETRY_LIMIT,
   IMAGE_RETRY_MESSAGE_AGE,
   MAX_PERSISTED_MESSAGES,
   MAX_VISIBLE_MESSAGES,
@@ -21,102 +18,22 @@ import {
   MESSAGE_TYPE_INTERNAL,
   MESSAGE_TYPE_UNKNOWN,
   MESSAGE_TYPES,
-} from './constants';
-import { canPageAcceptType, createMessage, isSameMessage } from './model';
-import { highlightNode, linkifyNode } from './replaceInTextNode';
+} from '../constants';
+import { canPageAcceptType, createMessage, isSameMessage } from '../model';
+import { SCROLL_TRACKING_TOLERANCE, TGUI_CHAT_COMPONENTS } from './constants';
+import {
+  createHighlightNode,
+  createMessageNode,
+  createReconnectedNode,
+  findNearestScrollableParent,
+  handleImageError,
+  parseProps,
+  updateMessageBadge,
+} from './helpers';
+import { highlightNode, linkifyNode } from './nodes';
+import { type PortalEntry, PortalHost } from './portal-host';
 
 const logger = createLogger('chatRenderer');
-
-// We consider this as the smallest possible scroll offset
-// that is still trackable.
-const SCROLL_TRACKING_TOLERANCE = 24;
-
-// List of injectable component names to the actual type
-export const TGUI_CHAT_COMPONENTS = {
-  Tooltip,
-};
-
-// List of injectable attibute names mapped to their proper prop
-// We need this because attibutes don't support lowercase names
-export const TGUI_CHAT_ATTRIBUTES_TO_PROPS = {
-  position: 'position',
-  content: 'content',
-};
-
-function findNearestScrollableParent(startingNode) {
-  const body = document.body;
-  let node = startingNode;
-  while (node && node !== body) {
-    // This definitely has a vertical scrollbar, because it reduces
-    // scrollWidth of the element. Might not work if element uses
-    // overflow: hidden.
-    if (node.scrollWidth < node.offsetWidth) {
-      return node;
-    }
-    node = node.parentNode;
-  }
-  return window;
-}
-
-function createHighlightNode(text, color) {
-  const node = document.createElement('span');
-  node.className = 'Chat__highlight';
-  node.setAttribute('style', `background-color:${color}`);
-  node.textContent = text;
-  return node;
-}
-
-function createMessageNode() {
-  const node = document.createElement('div');
-  node.className = 'ChatMessage';
-  return node;
-}
-
-function createReconnectedNode() {
-  const node = document.createElement('div');
-  node.className = 'Chat__reconnected';
-  return node;
-}
-
-function handleImageError(e) {
-  setTimeout(() => {
-    /** @type {HTMLImageElement} */
-    const node = e.target;
-    if (!node) {
-      return;
-    }
-    const attempts = parseInt(node.getAttribute('data-reload-n'), 10) || 0;
-    if (attempts >= IMAGE_RETRY_LIMIT) {
-      logger.error(`failed to load an image after ${attempts} attempts`);
-      return;
-    }
-    const src = node.src;
-    node.src = null;
-    node.src = `${src}#${attempts}`;
-    node.setAttribute('data-reload-n', attempts + 1);
-  }, IMAGE_RETRY_DELAY);
-}
-
-/**
- * Assigns a "times-repeated" badge to the message.
- */
-function updateMessageBadge(message) {
-  const { node, times } = message;
-  if (!node || !times) {
-    // Nothing to update
-    return;
-  }
-  const foundBadge = node.querySelector('.Chat__badge');
-  const badge = foundBadge || document.createElement('div');
-  badge.textContent = times;
-  badge.className = classes(['Chat__badge', 'Chat__badge--animate']);
-  requestAnimationFrame(() => {
-    badge.className = 'Chat__badge';
-  });
-  if (!foundBadge) {
-    node.appendChild(badge);
-  }
-}
 
 class ChatRenderer {
   loaded: boolean;
@@ -132,6 +49,9 @@ class ChatRenderer {
   highlightParsers: Array<any> | null;
   handleScroll: (type: any) => void;
   ensureScrollTracking: () => void;
+  private portalHostNode: HTMLDivElement | null = null;
+  private portalRoot: ReturnType<typeof createRoot> | null = null;
+  private portalEntries: Map<string, PortalEntry> = new Map();
 
   constructor() {
     this.loaded = false;
@@ -192,6 +112,45 @@ class ChatRenderer {
     });
     // Flush the queue
     this.tryFlushQueue();
+
+    this.ensurePortalRoot();
+    this.renderPortals();
+  }
+
+  private ensurePortalRoot() {
+    if (this.portalRoot) {
+      return;
+    }
+    this.portalHostNode = document.createElement('div');
+    // Portals render into mount elements; this node is only a stable root container.
+    // Keep it out of the chat root so `rootNode.textContent = ''` doesn't delete it.
+    document.body.appendChild(this.portalHostNode);
+    this.portalRoot = createRoot(this.portalHostNode);
+  }
+
+  private renderPortals(options: { flush?: boolean } = {}) {
+    if (!this.portalRoot) {
+      return;
+    }
+    const doRender = () => {
+      this.portalRoot!.render(
+        <PortalHost entries={[...this.portalEntries.values()]} />,
+      );
+    };
+    if (options.flush) {
+      flushSync(doRender);
+    } else {
+      doRender();
+    }
+  }
+
+  private deletePortalEntries(keys: string[] | undefined) {
+    if (!keys || keys.length === 0) {
+      return;
+    }
+    for (const key of keys) {
+      this.portalEntries.delete(key);
+    }
   }
 
   onStateLoaded() {
@@ -379,6 +338,8 @@ class ChatRenderer {
     const fragment = document.createDocumentFragment();
     const countByType = {};
     let node;
+    let didAddPortals = false;
+    const newMessageNodes: Array<{ message: any; node: HTMLElement }> = [];
     for (const payload of batch) {
       const message = createMessage(payload);
       // Combine messages
@@ -411,76 +372,43 @@ class ChatRenderer {
         }
         // Get all nodes in this message that want to be rendered like jsx
         const nodes = node.querySelectorAll('[data-component]');
+        const messagePortalKeys: string[] = [];
+        const messageKeyBase = String(
+          (message as any).id ?? (message as any).createdAt ?? Date.now(),
+        );
         for (let i = 0; i < nodes.length; i++) {
-          const childNode = nodes[i];
-          const targetName = childNode.getAttribute('data-component');
-          // Let's pull out the attibute info we need
-          const outputProps = {};
-          for (let j = 0; j < childNode.attributes.length; j++) {
-            const attribute = childNode.attributes[j];
+          const mountEl = nodes[i];
 
-            let working_value = attribute.nodeValue;
-            // We can't do the "if it has no value it's truthy" trick
-            // Because getAttribute returns "", not null. Hate IE
-            if (working_value === '$true') {
-              working_value = true;
-            } else if (working_value === '$false') {
-              working_value = false;
-            } else if (!Number.isNaN(working_value)) {
-              const parsed_float = parseFloat(working_value);
-              if (!Number.isNaN(parsed_float)) {
-                working_value = parsed_float;
-              }
-            }
-
-            let canon_name = attribute.nodeName.replace('data-', '');
-            // html attributes don't support upper case chars, so we need to map
-            canon_name = TGUI_CHAT_ATTRIBUTES_TO_PROPS[canon_name];
-            outputProps[canon_name] = working_value;
+          const targetName = mountEl.getAttribute('data-component');
+          if (!targetName) {
+            continue;
           }
-          const oldHtml = { __html: childNode.innerHTML };
-          while (childNode.firstChild) {
-            childNode.removeChild(childNode.firstChild);
+          const Element =
+            TGUI_CHAT_COMPONENTS[
+              targetName as keyof typeof TGUI_CHAT_COMPONENTS
+            ];
+          if (!Element) {
+            logger.error(`Unknown injectable component: ${targetName}`);
+            continue;
           }
-          const Element = TGUI_CHAT_COMPONENTS[targetName];
 
-          const reactRoot = createRoot(childNode);
+          const props = parseProps(mountEl);
+          const html = mountEl.innerHTML;
 
-          reactRoot.render(
-            <Element {...outputProps}>
-              {/** biome-ignore lint/security/noDangerouslySetInnerHtml: its fine */}
-              <span dangerouslySetInnerHTML={oldHtml} />
-            </Element>,
-          );
+          // Clear the mount point contents; React will fill it.
+          mountEl.textContent = '';
+
+          const key = `${messageKeyBase}:${i}`; // stable + unique per message
+          this.portalEntries.set(key, { key, mountEl, Element, props, html });
+          messagePortalKeys.push(key);
+          didAddPortals = true;
         }
 
-        // Highlight text
-        if (!message.avoidHighlighting && this.highlightParsers) {
-          this.highlightParsers.forEach((parser) => {
-            const highlighted = highlightNode(
-              node,
-              parser.highlightRegex,
-              parser.highlightWords,
-              (text) => createHighlightNode(text, parser.highlightColor),
-            );
-            if (highlighted && parser.highlightWholeMessage) {
-              node.className += ' ChatMessage--highlighted';
-            }
-          });
+        if (messagePortalKeys.length > 0) {
+          (message as any).portalKeys = messagePortalKeys;
         }
-        // Linkify text
-        const linkifyNodes = node.querySelectorAll('.linkify');
-        for (let i = 0; i < linkifyNodes.length; ++i) {
-          linkifyNode(linkifyNodes[i]);
-        }
-        // Assign an image error handler
-        if (now < message.createdAt + IMAGE_RETRY_MESSAGE_AGE) {
-          const imgNodes = node.querySelectorAll('img');
-          for (let i = 0; i < imgNodes.length; i++) {
-            const imgNode = imgNodes[i];
-            imgNode.addEventListener('error', handleImageError);
-          }
-        }
+
+        newMessageNodes.push({ message, node });
       }
       // Store the node in the message
       message.node = node;
@@ -518,6 +446,43 @@ class ChatRenderer {
     if (notifyListeners) {
       this.events.emit('batchProcessed', countByType);
     }
+
+    if (didAddPortals) {
+      this.ensurePortalRoot();
+      // Ensure portal content is mounted before we run highlight/linkify.
+      this.renderPortals({ flush: true });
+    }
+
+    // Post-process newly created nodes (after portals are mounted)
+    for (const { message, node } of newMessageNodes) {
+      // Highlight text
+      if (!message.avoidHighlighting && this.highlightParsers) {
+        this.highlightParsers.forEach((parser) => {
+          const highlighted = highlightNode(
+            node,
+            parser.highlightRegex,
+            parser.highlightWords,
+            (text) => createHighlightNode(text, parser.highlightColor),
+          );
+          if (highlighted && parser.highlightWholeMessage) {
+            node.className += ' ChatMessage--highlighted';
+          }
+        });
+      }
+      // Linkify text
+      const linkifyNodes = node.querySelectorAll('.linkify');
+      for (let i = 0; i < linkifyNodes.length; ++i) {
+        linkifyNode(linkifyNodes[i]);
+      }
+      // Assign an image error handler
+      if (now < message.createdAt + IMAGE_RETRY_MESSAGE_AGE) {
+        const imgNodes = node.querySelectorAll('img');
+        for (let i = 0; i < imgNodes.length; i++) {
+          const imgNode = imgNodes[i];
+          imgNode.addEventListener('error', handleImageError);
+        }
+      }
+    }
   }
 
   pruneMessages() {
@@ -539,6 +504,7 @@ class ChatRenderer {
         for (let i = 0; i < fromIndex; i++) {
           const message = messages[i];
           this.rootNode!.removeChild(message.node);
+          this.deletePortalEntries(message.portalKeys);
           // Mark this message as pruned
           message.node = 'pruned';
         }
@@ -557,10 +523,16 @@ class ChatRenderer {
         this.messages.length - MAX_PERSISTED_MESSAGES,
       );
       if (fromIndex > 0) {
+        const pruned = this.messages.slice(0, fromIndex);
+        for (const message of pruned) {
+          this.deletePortalEntries(message.portalKeys);
+        }
         this.messages = this.messages.slice(fromIndex);
         logger.log(`pruned ${fromIndex} stored messages`);
       }
     }
+
+    this.renderPortals();
   }
 
   rebuildChat() {
@@ -581,6 +553,9 @@ class ChatRenderer {
     this.rootNode!.textContent = '';
     this.messages = [];
     this.visibleMessages = [];
+
+    this.portalEntries.clear();
+    this.renderPortals();
     // Repopulate the chat log
     this.processBatch(messages, {
       notifyListeners: false,
@@ -600,6 +575,7 @@ class ChatRenderer {
     for (let i = 0; i < messages.length; i++) {
       const message = messages[i];
       this.rootNode!.removeChild(message.node);
+      this.deletePortalEntries(message.portalKeys);
       // Mark this message as pruned
       message.node = 'pruned';
     }
@@ -608,6 +584,8 @@ class ChatRenderer {
       (message) => message.node !== 'pruned',
     );
     logger.log(`Cleared chat`);
+
+    this.renderPortals();
   }
 
   saveToDisk() {
