@@ -4,9 +4,7 @@
  * @license MIT
  */
 
-import { createRoot } from 'react-dom/client';
 import { createLogger } from 'tgui/logging';
-import { Tooltip } from 'tgui-core/components';
 import { EventEmitter } from 'tgui-core/events';
 import { classes } from 'tgui-core/react';
 import {
@@ -31,17 +29,62 @@ const logger = createLogger('chatRenderer');
 // that is still trackable.
 const SCROLL_TRACKING_TOLERANCE = 24;
 
-// List of injectable component names to the actual type
-export const TGUI_CHAT_COMPONENTS = {
-  Tooltip,
-};
+function normalizeTooltipPosition(position: string | null) {
+  switch (position) {
+    case 'top':
+    case 'bottom':
+    case 'left':
+    case 'right':
+      return position;
+    default:
+      return 'top';
+  }
+}
 
-// List of injectable attibute names mapped to their proper prop
-// We need this because attibutes don't support lowercase names
-export const TGUI_CHAT_ATTRIBUTES_TO_PROPS = {
-  position: 'position',
-  content: 'content',
-};
+function injectHtmlTooltips(messageNode: HTMLElement) {
+  const tooltipNodes = messageNode.querySelectorAll(
+    '[data-component="Tooltip"]',
+  );
+
+  for (let i = 0; i < tooltipNodes.length; i++) {
+    const tooltipNode = tooltipNodes[i] as HTMLElement;
+    const content = tooltipNode.getAttribute('data-content') || '';
+    if (!content) {
+      tooltipNode.removeAttribute('data-component');
+      tooltipNode.removeAttribute('data-content');
+      tooltipNode.removeAttribute('data-position');
+      continue;
+    }
+
+    const position = normalizeTooltipPosition(
+      tooltipNode.getAttribute('data-position'),
+    );
+
+    const trigger = document.createElement('span');
+    trigger.className = 'ChatTooltip__trigger';
+
+    while (tooltipNode.firstChild) {
+      trigger.appendChild(tooltipNode.firstChild);
+    }
+
+    const bubble = document.createElement('span');
+    bubble.className = 'ChatTooltip__bubble';
+    bubble.setAttribute('role', 'tooltip');
+    bubble.textContent = content;
+
+    tooltipNode.textContent = '';
+    tooltipNode.classList.add('ChatTooltip', `ChatTooltip--${position}`);
+    tooltipNode.appendChild(trigger);
+    tooltipNode.appendChild(bubble);
+
+    tooltipNode.removeAttribute('data-component');
+    tooltipNode.removeAttribute('data-content');
+    tooltipNode.removeAttribute('data-position');
+    if (!tooltipNode.hasAttribute('tabindex')) {
+      tooltipNode.setAttribute('tabindex', '0');
+    }
+  }
+}
 
 function findNearestScrollableParent(startingNode) {
   const body = document.body;
@@ -409,50 +452,8 @@ class ChatRenderer {
         } else {
           logger.error('Error: message is missing text payload', message);
         }
-        // Get all nodes in this message that want to be rendered like jsx
-        const nodes = node.querySelectorAll('[data-component]');
-        for (let i = 0; i < nodes.length; i++) {
-          const childNode = nodes[i];
-          const targetName = childNode.getAttribute('data-component');
-          // Let's pull out the attibute info we need
-          const outputProps = {};
-          for (let j = 0; j < childNode.attributes.length; j++) {
-            const attribute = childNode.attributes[j];
-
-            let working_value = attribute.nodeValue;
-            // We can't do the "if it has no value it's truthy" trick
-            // Because getAttribute returns "", not null. Hate IE
-            if (working_value === '$true') {
-              working_value = true;
-            } else if (working_value === '$false') {
-              working_value = false;
-            } else if (!Number.isNaN(working_value)) {
-              const parsed_float = parseFloat(working_value);
-              if (!Number.isNaN(parsed_float)) {
-                working_value = parsed_float;
-              }
-            }
-
-            let canon_name = attribute.nodeName.replace('data-', '');
-            // html attributes don't support upper case chars, so we need to map
-            canon_name = TGUI_CHAT_ATTRIBUTES_TO_PROPS[canon_name];
-            outputProps[canon_name] = working_value;
-          }
-          const oldHtml = { __html: childNode.innerHTML };
-          while (childNode.firstChild) {
-            childNode.removeChild(childNode.firstChild);
-          }
-          const Element = TGUI_CHAT_COMPONENTS[targetName];
-
-          const reactRoot = createRoot(childNode);
-
-          reactRoot.render(
-            <Element {...outputProps}>
-              {/** biome-ignore lint/security/noDangerouslySetInnerHtml: its fine */}
-              <span dangerouslySetInnerHTML={oldHtml} />
-            </Element>,
-          );
-        }
+        // Convert embedded chat tooltips to plain HTML/CSS tooltips.
+        injectHtmlTooltips(node);
 
         // Highlight text
         if (!message.avoidHighlighting && this.highlightParsers) {

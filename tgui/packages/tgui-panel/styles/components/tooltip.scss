@@ -1,0 +1,64 @@
+.ChatTooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.ChatTooltip__trigger {
+  display: inline;
+}
+
+.ChatTooltip__bubble {
+  position: absolute;
+  z-index: 1000;
+  max-width: 20.8333em;
+  padding: var(--space-m) var(--space-l);
+
+  -webkit-backdrop-filter: var(--tooltip-blur);
+  backdrop-filter: var(--tooltip-blur);
+  background-color: var(--tooltip-background);
+  border-radius: var(--tooltip-border-radius);
+  color: var(--tooltip-color);
+  text-align: left;
+  box-shadow: 0.1em 0.1em 1.25em -0.1em rgba(0, 0, 0, 0.5);
+
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0.25em);
+  transition:
+    opacity var(--transition-time-fast) ease,
+    transform var(--transition-time-fast) ease,
+    visibility 0s linear var(--transition-time-fast);
+}
+
+.ChatTooltip:hover .ChatTooltip__bubble,
+.ChatTooltip:focus-within .ChatTooltip__bubble {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+
+.ChatTooltip--top .ChatTooltip__bubble {
+  bottom: 100%;
+  left: 50%;
+  transform: translate(-50%, -0.5em);
+}
+
+.ChatTooltip--bottom .ChatTooltip__bubble {
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 0.5em);
+}
+
+.ChatTooltip--left .ChatTooltip__bubble {
+  right: 100%;
+  top: 50%;
+  transform: translate(-0.5em, -50%);
+}
+
+.ChatTooltip--right .ChatTooltip__bubble {
+  left: 100%;
+  top: 50%;
+  transform: translate(0.5em, -50%);
+}
