@@ -7,7 +7,6 @@
 // Themes
 import './styles/main.scss';
 
-import { perf } from 'common/perf';
 import { EventBus } from 'tgui-core/eventbus';
 import { setupGlobalEvents } from 'tgui-core/events';
 import { setupHotKeys } from 'tgui-core/hotkeys';
@@ -16,9 +15,6 @@ import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { App } from './App';
 import { listeners } from './events/listeners';
 import { render } from './renderer';
-
-perf.mark('inception', window.performance?.timeOrigin);
-perf.mark('init');
 
 export const bus = new EventBus(listeners);
 

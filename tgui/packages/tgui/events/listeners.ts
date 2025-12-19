@@ -1,4 +1,5 @@
-import { loadMappings, loadStyleSheet } from './handlers/assets';
+import { loadStyleSheet } from 'common/assets';
+import { handleLoadAssets } from './handlers/assets';
 import {
   acknowledgeChunk,
   createQueue,
@@ -20,7 +21,7 @@ import { update } from './handlers/update';
  */
 export const listeners = {
   // Assets
-  'asset/mappings': loadMappings,
+  'asset/mappings': handleLoadAssets,
   'asset/stylesheet': loadStyleSheet,
   // Standard window events
   ping,

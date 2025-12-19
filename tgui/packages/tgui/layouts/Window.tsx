@@ -18,7 +18,6 @@ import type { KeyEvent } from 'tgui-core/events';
 import { KEY_ALT } from 'tgui-core/keycodes';
 import { type BooleanLike, classes } from 'tgui-core/react';
 import { decodeHtmlEntities } from 'tgui-core/string';
-import { bus } from '..';
 import { useBackend } from '../backend';
 import {
   dragStartHandler,
@@ -28,6 +27,7 @@ import {
   setWindowPosition,
   storeWindowGeometry,
 } from '../drag';
+import { suspendStart } from '../events/handlers/suspense';
 import { createLogger } from '../logging';
 import { Layout } from './Layout';
 import { TitleBar } from './TitleBar';
@@ -116,11 +116,7 @@ export const Window = (props: Props) => {
         title={title || decodeHtmlEntities(config.title)}
         status={config.status}
         onDragStart={dragStartHandler}
-        onClose={() => {
-          bus.dispatch({
-            type: 'suspendStart',
-          });
-        }}
+        onClose={suspendStart}
         canClose={canClose}
       >
         {buttons}

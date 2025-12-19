@@ -19,10 +19,8 @@ type Props = Partial<{
 
 export function Pane(props: Props) {
   const { theme, children, className, ...rest } = props;
-  const {
-    debug: { debugLayout },
-    suspended,
-  } = useBackend();
+  const { debug, suspended } = useBackend();
+  const debugLayout = debug?.debugLayout ?? false;
 
   return (
     <Layout className={classes(['Window', className])} theme={theme} {...rest}>
