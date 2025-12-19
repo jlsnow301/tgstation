@@ -5,18 +5,19 @@
  */
 
 import { Section, Stack, Tabs } from 'tgui-core/components';
-import { ChatPageSettings } from '../chat';
-import { useDispatch, useSelector } from '../store/backend';
-import { changeSettingsTab } from './actions';
+import { ChatPageSettings } from '../chat/ChatPageSettings';
 import { SETTINGS_TABS } from './constants';
 import { SettingsGeneral } from './SettingsGeneral';
 import { SettingsStatPanel } from './SettingsStatPanel';
-import { selectActiveTab } from './selectors';
 import { TextHighlightSettings } from './TextHighlight';
+import { useSettings } from './use-settings';
 
 export function SettingsPanel(props) {
-  const activeTab = useSelector(selectActiveTab);
-  const dispatch = useDispatch();
+  const {
+    settings: { view },
+    updateSettings,
+  } = useSettings();
+  const { activeTab } = view;
 
   return (
     <Stack fill>
@@ -28,11 +29,12 @@ export function SettingsPanel(props) {
                 key={tab.id}
                 selected={tab.id === activeTab}
                 onClick={() =>
-                  dispatch(
-                    changeSettingsTab({
-                      tabId: tab.id,
-                    }),
-                  )
+                  updateSettings({
+                    view: {
+                      ...view,
+                      activeTab: tab.id,
+                    },
+                  })
                 }
               >
                 {tab.name}

@@ -1,41 +1,25 @@
+import { loadStyleSheet } from 'common/assets';
+import { playMusic, stopMusic } from '../audio/handlers';
+import { chatMessage } from '../chat/handlers';
+import { pingReply, pingSoft } from '../ping/handlers';
+import {
+  handleTelemetryData,
+  telemetryRequest,
+  testTelemetryCommand,
+} from '../telemetry/handlers';
+import { handleLoadAssets } from './handlers/assets';
+import { roundrestart } from './handlers/roundrestart';
+
 export const listeners = {
-  // Audio
-  'audio/playing': () => {},
-  'audio/playMusic': () => {},
-  'audio/stopMusic': () => {},
-  'audio/stopped': () => {},
-  'audio/toggle': () => {},
-  // Chat
-  'chat/changeScrollTracking': () => {},
-  'chat/clear': () => {},
-  'chat/load': () => {},
-  'chat/message': () => {},
-  'chat/movePageRight': () => {},
-  'chat/rebuild': () => {},
-  'chat/removePage': () => {},
-  'chat/saveToDisk': () => {},
-  'chat/updateMessageCount': () => {},
-  'chat/updatePage': () => {},
-  // Game
-  'game/connectionLost': () => {},
-  'game/connectionRestored': () => {},
-  roundrestart: () => {},
-  // Ping
-  'ping/fail': () => {},
-  'ping/reply': () => {},
-  'ping/soft': () => {},
-  'ping/success': () => {},
-  // Settings
-  'settings/addHighlightSetting': () => {},
-  'settings/changeTab': () => {},
-  'settings/export': () => {},
-  'settings/import': () => {},
-  'settings/load': () => {},
-  'settings/openChatTab': () => {},
-  'settings/removeHighlightSetting': () => {},
-  'settings/update': () => {},
-  'settings/updateHighlightSetting': () => {},
-  // Telemetry
-  'telemetry/request': () => {},
-  testTelementryCommand: () => {},
+  'asset/stylesheet': loadStyleSheet,
+  'asset/mappings': handleLoadAssets,
+  'audio/playMusic': playMusic,
+  'audio/stopMusic': stopMusic,
+  'chat/message': chatMessage,
+  'ping/reply': pingReply,
+  'ping/soft': pingSoft,
+  roundrestart,
+  'telemetry/request': telemetryRequest,
+  testTelemetryCommand,
+  update: handleTelemetryData,
 } as const;
