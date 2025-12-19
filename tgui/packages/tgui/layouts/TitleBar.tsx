@@ -3,8 +3,7 @@ import { Button, Icon } from 'tgui-core/components';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from 'tgui-core/constants';
 import { type BooleanLike, classes } from 'tgui-core/react';
 import { toTitleCase } from 'tgui-core/string';
-
-import { bus } from '..';
+import { bus } from '../events/listeners';
 
 type TitleBarProps = Partial<{
   className: string;

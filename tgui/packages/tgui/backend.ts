@@ -1,6 +1,6 @@
 import { useAtomValue } from 'jotai';
-import { bus } from '.';
 import { sendAct } from './events/act';
+import { bus } from './events/listeners';
 import { backendStateAtom, sharedAtom, store } from './events/store';
 import type { BackendState } from './events/types';
 

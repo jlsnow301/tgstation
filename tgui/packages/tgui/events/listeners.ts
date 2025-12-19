@@ -1,4 +1,5 @@
 import { loadStyleSheet } from 'common/assets';
+import { EventBus } from 'tgui-core/eventbus';
 import { handleLoadAssets } from './handlers/assets';
 import {
   acknowledgeChunk,
@@ -19,7 +20,7 @@ import { update } from './handlers/update';
  * A string/handler map.
  * Ideally, these reference a function named after the respective event type.
  */
-export const listeners = {
+const listeners = {
   // Assets
   'asset/mappings': handleLoadAssets,
   'asset/stylesheet': loadStyleSheet,
@@ -39,3 +40,5 @@ export const listeners = {
   // Shared States
   setSharedState,
 } as const;
+
+export const bus = new EventBus(listeners);

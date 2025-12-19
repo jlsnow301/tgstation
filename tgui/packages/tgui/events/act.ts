@@ -1,5 +1,5 @@
-import { bus } from '..';
 import { logger } from '../logging';
+import { bus } from './listeners';
 
 /**
  * Sends an action to `ui_act` on `src_object` that this tgui window

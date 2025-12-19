@@ -4,7 +4,6 @@ import { logger } from '../../logging';
 import { resumeRenderer } from '../../renderer';
 import {
   configAtom,
-  fancyAtom,
   gameDataAtom,
   gameStaticDataAtom,
   sharedAtom,
@@ -18,7 +17,6 @@ type UpdatePayload = Omit<BackendState<Record<string, unknown>>, 'act'> & {
 };
 
 export function update(payload: UpdatePayload): void {
-  setFancy(payload);
   if (store.get(suspendedAtom)) {
     resume(payload);
     store.set(suspendedAtom, false);
@@ -53,21 +51,6 @@ function resume(payload: UpdatePayload): void {
       logger.log('visible in', perf.measure('render/finish', 'resume/finish'));
     }
   });
-}
-
-/** React to changes in fancy mode */
-function setFancy(payload: UpdatePayload): void {
-  const fancy = !!payload.config?.window?.fancy;
-  const fancyState = store.get(fancyAtom);
-
-  if (fancyState !== fancy) {
-    store.set(fancyAtom, fancy);
-
-    Byond.winset(Byond.windowId, {
-      titlebar: !fancy,
-      'can-resize': !fancy,
-    });
-  }
 }
 
 /** Delegates update data to the appropriate store */

@@ -4,7 +4,6 @@ import type { Config } from './types';
 export const chunkingAtom = atom<Record<string, any>>({});
 export const configAtom = atom<Config>({} as Config);
 export const debugLayoutAtom = atom(false);
-export const fancyAtom = atom(false);
 export const gameDataAtom = atom<Record<string, any>>({});
 export const gameStaticDataAtom = atom<Record<string, any>>({});
 export const kitchenSinkAtom = atom(false);
@@ -22,7 +21,6 @@ export const backendStateAtom = atom((get) => ({
     debugLayout: get(debugLayoutAtom),
     kitchenSink: get(kitchenSinkAtom),
   },
-  fancy: get(fancyAtom),
   outgoingPayloadQueues: get(chunkingAtom),
   shared: get(sharedAtom),
   staticData: get(gameStaticDataAtom),

@@ -7,16 +7,13 @@
 // Themes
 import './styles/main.scss';
 
-import { EventBus } from 'tgui-core/eventbus';
 import { setupGlobalEvents } from 'tgui-core/events';
 import { setupHotKeys } from 'tgui-core/hotkeys';
 import { captureExternalLinks } from 'tgui-core/links';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { App } from './App';
-import { listeners } from './events/listeners';
+import { bus } from './events/listeners';
 import { render } from './renderer';
-
-export const bus = new EventBus(listeners);
 
 function setupApp() {
   // Delay setup
@@ -34,7 +31,7 @@ function setupApp() {
   });
   captureExternalLinks();
 
-  Byond.subscribe((type, payload) => bus.dispatch({ type, payload } as any));
+  Byond.subscribe((type, payload) => bus.dispatch({ type, payload }));
 
   render(<App />);
 
