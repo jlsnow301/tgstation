@@ -12,11 +12,12 @@ import {
   useLayoutEffect,
   useState,
 } from 'react';
-import type { Box } from 'tgui-core/components';
+import { type Box, KeyListener } from 'tgui-core/components';
 import { UI_DISABLED, UI_INTERACTIVE } from 'tgui-core/constants';
+import type { KeyEvent } from 'tgui-core/events';
+import { KEY_ALT } from 'tgui-core/keycodes';
 import { type BooleanLike, classes } from 'tgui-core/react';
 import { decodeHtmlEntities } from 'tgui-core/string';
-
 import { bus } from '..';
 import { useBackend } from '../backend';
 import {
@@ -24,6 +25,8 @@ import {
   recallWindowGeometry,
   resizeStartHandler,
   setWindowKey,
+  setWindowPosition,
+  storeWindowGeometry,
 } from '../drag';
 import { createLogger } from '../logging';
 import { Layout } from './Layout';
@@ -100,8 +103,6 @@ export const Window = (props: Props) => {
     };
   }, [isReadyToRender, width, height, scale]);
 
-  const fancy = config.window?.fancy;
-
   // Determine when to show dimmer
   const showDimmer =
     config.user &&
@@ -114,7 +115,6 @@ export const Window = (props: Props) => {
       <TitleBar
         title={title || decodeHtmlEntities(config.title)}
         status={config.status}
-        fancy={fancy}
         onDragStart={dragStartHandler}
         onClose={() => {
           bus.dispatch({
@@ -134,22 +134,18 @@ export const Window = (props: Props) => {
         {!suspended && children}
         {showDimmer && <div className="Window__dimmer" />}
       </div>
-      {fancy && (
-        <>
-          <div
-            className="Window__resizeHandle__e"
-            onMouseDown={resizeStartHandler(1, 0) as any}
-          />
-          <div
-            className="Window__resizeHandle__s"
-            onMouseDown={resizeStartHandler(0, 1) as any}
-          />
-          <div
-            className="Window__resizeHandle__se"
-            onMouseDown={resizeStartHandler(1, 1) as any}
-          />
-        </>
-      )}
+      <div
+        className="Window__resizeHandle__e"
+        onMouseDown={resizeStartHandler(1, 0) as any}
+      />
+      <div
+        className="Window__resizeHandle__s"
+        onMouseDown={resizeStartHandler(0, 1) as any}
+      />
+      <div
+        className="Window__resizeHandle__se"
+        onMouseDown={resizeStartHandler(1, 1) as any}
+      />
     </Layout>
   );
 };
@@ -165,12 +161,39 @@ type ContentProps = Partial<{
 
 const WindowContent = (props: ContentProps) => {
   const { className, fitted, children, ...rest } = props;
+  const [altDown, setAltDown] = useState(false);
 
+  var dragStartIfAltHeld = (event) => {
+    if (altDown) {
+      dragStartHandler(event);
+    }
+  };
+
+  Byond.subscribeTo('resetposition', (payload) => {
+    setWindowPosition([0, 0]);
+    storeWindowGeometry();
+  });
   return (
     <Layout.Content
+      onMouseDown={dragStartIfAltHeld}
       className={classes(['Window__content', className])}
       {...rest}
     >
+      <KeyListener
+        onKeyDown={(e: KeyEvent) => {
+          if (KEY_ALT === e.code) {
+            setAltDown(true);
+            logger.log(`alt on ${altDown}`);
+          }
+        }}
+        onKeyUp={(e: KeyEvent) => {
+          if (KEY_ALT === e.code) {
+            setAltDown(false);
+            logger.log(`alt off ${altDown}`);
+          }
+        }}
+      />
+
       {(fitted && children) || (
         <div className="Window__contentPadding">{children}</div>
       )}
