@@ -1,4 +1,3 @@
-import { useAtomValue } from 'jotai';
 import { sendAct } from './events/act';
 import { bus } from './events/listeners';
 import { backendStateAtom, sharedAtom, store } from './events/store';
@@ -6,25 +5,19 @@ import type { BackendState } from './events/types';
 
 /**
  * Reactive backend state hook. Please use a type to define what the data is
- * intended to be.
+ * intended to be, e.g.:
+ *
+ * ```ts
+ * type Data = {
+ *  username: string;
+ * };
+ *
+ * const { data } = useBackend<Data>();
+ *
+ * console.log(data.username); // You'll get type safety here
+ * ```
  */
 export function useBackend<
-  TData extends Record<string, unknown>,
->(): BackendState<TData> {
-  const state = useAtomValue(backendStateAtom);
-
-  return {
-    act: sendAct,
-    ...state,
-    data: state.data as TData,
-  };
-}
-
-/**
- * This is a holdover for UIs breaking the rule of hooks.
- * It doesn't respond to state updates!
- */
-export function getNonreactiveBackend<
   TData extends Record<string, unknown>,
 >(): BackendState<TData> {
   const state = store.get(backendStateAtom);
@@ -42,7 +35,7 @@ export function getNonreactiveBackend<
 type StateWithSetter<T> = [T, (nextState: T) => void];
 
 /**
- * Allocates state on Zustand store without sharing it with other clients.
+ * Allocates state in the Jotai store without sharing it with other clients.
  *
  * Use it when you want to have a stateful variable in your component
  * that persists between renders, but will be forgotten after you close
@@ -59,7 +52,7 @@ export const useLocalState = <TState>(
   key: string,
   initialState: TState,
 ): StateWithSetter<TState> => {
-  const sharedStates = useAtomValue(sharedAtom);
+  const sharedStates = store.get(sharedAtom);
   const sharedState = key in sharedStates ? sharedStates[key] : initialState;
 
   return [
@@ -67,7 +60,6 @@ export const useLocalState = <TState>(
     (nextState) => {
       bus.dispatch({
         type: 'setSharedState',
-
         payload: {
           key,
           nextState:
@@ -98,7 +90,7 @@ export const useSharedState = <TState>(
   key: string,
   initialState: TState,
 ): StateWithSetter<TState> => {
-  const sharedStates = useAtomValue(sharedAtom);
+  const sharedStates = store.get(sharedAtom);
   const sharedState = key in sharedStates ? sharedStates[key] : initialState;
 
   return [
@@ -106,7 +98,6 @@ export const useSharedState = <TState>(
     (nextState) => {
       Byond.sendMessage({
         type: 'setSharedState',
-
         key,
         value:
           JSON.stringify(

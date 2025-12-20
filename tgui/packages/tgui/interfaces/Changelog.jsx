@@ -13,7 +13,7 @@ import {
 import { classes } from 'tgui-core/react';
 
 import { resolveAsset } from '../assets';
-import { getNonreactiveBackend } from '../backend';
+import { useBackend } from '../backend';
 import { sendAct as act } from '../events/act';
 import { Window } from '../layouts';
 
@@ -98,12 +98,12 @@ export class Changelog extends Component {
   componentDidMount() {
     const {
       data: { dates = [] },
-    } = getNonreactiveBackend();
+    } = useBackend();
 
     if (dates) {
-      dates.forEach((date) =>
-        this.dateChoices.push(dateformat(date, 'mmmm yyyy', true)),
-      );
+      dates.forEach((date) => {
+        this.dateChoices.push(dateformat(date, 'mmmm yyyy', true));
+      });
       this.setSelectedDate(this.dateChoices[0]);
       this.getData(dates[0]);
     }
@@ -113,7 +113,7 @@ export class Changelog extends Component {
     const { data, selectedDate, selectedIndex } = this.state;
     const {
       data: { dates },
-    } = getNonreactiveBackend();
+    } = useBackend();
     const { dateChoices } = this;
 
     const dateDropdown = dateChoices.length > 0 && (

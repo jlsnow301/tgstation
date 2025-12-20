@@ -6,11 +6,6 @@ import {
   createQueue,
   oversizeResponse,
 } from './handlers/chunking';
-import {
-  openExternalBrowser,
-  toggleDebugLayout,
-  toggleKitchenSink,
-} from './handlers/debug';
 import { ping } from './handlers/ping';
 import { setSharedState } from './handlers/shared';
 import { suspend, suspendStart } from './handlers/suspense';
@@ -33,10 +28,6 @@ const listeners = {
   acknowledgeChunk,
   createQueue,
   oversizeResponse,
-  // Debug
-  openExternalBrowser,
-  toggleDebugLayout,
-  toggleKitchenSink,
   // Shared States
   setSharedState,
 } as const;

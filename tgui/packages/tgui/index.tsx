@@ -15,6 +15,7 @@ import { App } from './App';
 import { setDebugHotKeys } from './debug/use-debug';
 import { bus } from './events/listeners';
 import { render } from './renderer';
+import { createStackAugmentor } from './stack';
 
 function setupApp() {
   // Delay setup
@@ -22,6 +23,8 @@ function setupApp() {
     document.addEventListener('DOMContentLoaded', setupApp);
     return;
   }
+
+  window.__augmentStack__ = createStackAugmentor;
 
   setupGlobalEvents();
   setupHotKeys({
