@@ -18,7 +18,7 @@ type Props = Partial<{
   BoxProps;
 
 export function Pane(props: Props) {
-  const { theme, children, canSuspend, className, ...rest } = props;
+  const { theme, canSuspend, children, className, ...rest } = props;
   const { suspended } = useBackend();
 
   const isSuspended = canSuspend && suspended;
