@@ -23,8 +23,7 @@ function setupApp() {
     document.addEventListener('DOMContentLoaded', setupApp);
     return;
   }
-
-  window.__augmentStack__ = createStackAugmentor;
+  window.__augmentStack__ = createStackAugmentor();
 
   setupGlobalEvents();
   setupHotKeys({

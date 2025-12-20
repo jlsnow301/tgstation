@@ -5,17 +5,13 @@ import { kitchenSinkAtom, store } from '../events/store';
 
 export function setDebugHotKeys(): void {
   acquireHotKey(KEY_F11);
-  acquireHotKey(KEY_F12);
+  acquireHotKey(KEY_F12); // Just to avoid the HUD disappearing on F12
 
   globalEvents.on('keydown', (evt) => {
     if (evt.code === KEY_F11) {
       store.set(kitchenSinkAtom, (prev) => !prev);
-      evt.preventDefault();
     }
-    if (evt.code === KEY_F12) {
-      // For triggering the dev tools without causing the hud to disappear
-      evt.preventDefault();
-    }
+
     if (evt.ctrl && evt.alt && evt.code === KEY_BACKSPACE) {
       // NOTE: We need to call this in a timeout, because we need a clean
       // stack in order for this to be a fatal error.
