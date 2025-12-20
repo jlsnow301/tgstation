@@ -9,24 +9,9 @@ import {
   suspendingAtom,
 } from '../store';
 
+/// --------- Handlers ------------------------------------------------------///
+
 let suspendInterval: NodeJS.Timeout | null = null;
-
-const TWO_SECONDS = 2000;
-
-function suspendMsg(): void {
-  Byond.sendMessage('suspend');
-}
-
-/** Signals Byond to dismiss the window */
-export function suspendStart(): void {
-  if (suspendInterval) clearInterval(suspendInterval);
-
-  store.set(suspendingAtom, true);
-
-  logger.log(`suspending (${Byond.windowId})`);
-  suspendMsg();
-  suspendInterval = setInterval(suspendMsg, TWO_SECONDS);
-}
 
 /** Resets all state and refocuses byond window */
 export function suspend(): void {
@@ -48,4 +33,23 @@ export function suspend(): void {
   });
 
   focusMap();
+}
+
+/// --------- Helpers -------------------------------------------------------///
+
+const TWO_SECONDS = 2000;
+
+function suspendMsg(): void {
+  Byond.sendMessage('suspend');
+}
+
+/** Signals Byond to dismiss the window */
+export function suspendStart(): void {
+  if (suspendInterval) clearInterval(suspendInterval);
+
+  store.set(suspendingAtom, true);
+
+  logger.log(`suspending (${Byond.windowId})`);
+  suspendMsg();
+  suspendInterval = setInterval(suspendMsg, TWO_SECONDS);
 }

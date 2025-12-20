@@ -2,13 +2,11 @@ import { loadStyleSheet } from 'common/assets';
 import { EventBus } from 'tgui-core/eventbus';
 import { handleLoadAssets } from './handlers/assets';
 import {
-  acknowledgeChunk,
-  createQueue,
-  oversizeResponse,
+  acknowledgePayloadChunk,
+  oversizePayloadResponse,
 } from './handlers/chunking';
 import { ping } from './handlers/ping';
-import { setSharedState } from './handlers/shared';
-import { suspend, suspendStart } from './handlers/suspense';
+import { suspend } from './handlers/suspense';
 import { update } from './handlers/update';
 
 /**
@@ -22,14 +20,10 @@ const listeners = {
   // Standard window events
   ping,
   suspend,
-  suspendStart,
   update,
   // Chunking
-  acknowledgeChunk,
-  createQueue,
-  oversizeResponse,
-  // Shared States
-  setSharedState,
+  oversizePayloadResponse,
+  acknowledgePayloadChunk,
 } as const;
 
 export const bus = new EventBus(listeners);

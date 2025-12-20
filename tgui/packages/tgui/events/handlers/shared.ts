@@ -1,5 +1,7 @@
 import { sharedAtom, store } from '../store';
 
+/// --------- Helpers ------------------------------------------------------///
+
 type SharedPayload = {
   key: string;
   nextState: any;

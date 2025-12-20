@@ -12,6 +12,8 @@ import {
 } from '../store';
 import type { BackendState } from '../types';
 
+/// --------- Handlers ------------------------------------------------------///
+
 type UpdatePayload = Omit<BackendState<Record<string, unknown>>, 'act'> & {
   static_data: Record<string, unknown>;
 };
@@ -23,6 +25,8 @@ export function update(payload: UpdatePayload): void {
   }
   updateData(payload);
 }
+
+/// --------- Helpers -------------------------------------------------------///
 
 /** Resumes the tgui window if suspended */
 function resume(payload: UpdatePayload): void {

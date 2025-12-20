@@ -1,5 +1,5 @@
 import { sendAct } from './events/act';
-import { bus } from './events/listeners';
+import { setSharedState } from './events/handlers/shared';
 import { backendStateAtom, sharedAtom, store } from './events/store';
 import type { BackendState } from './events/types';
 
@@ -58,15 +58,10 @@ export const useLocalState = <TState>(
   return [
     sharedState,
     (nextState) => {
-      bus.dispatch({
-        type: 'setSharedState',
-        payload: {
-          key,
-          nextState:
-            typeof nextState === 'function'
-              ? nextState(sharedState)
-              : nextState,
-        },
+      setSharedState({
+        key,
+        nextState:
+          typeof nextState === 'function' ? nextState(sharedState) : nextState,
       });
     },
   ];

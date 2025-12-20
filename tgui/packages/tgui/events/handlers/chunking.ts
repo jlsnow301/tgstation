@@ -1,25 +1,13 @@
 import { chunkingAtom, store } from '../store';
 
-type CreateQueuePayload = {
-  id: string;
-  chunks: string[];
-};
-
-export function createQueue(payload: CreateQueuePayload): void {
-  const { id, chunks } = payload;
-
-  store.set(chunkingAtom, (prev) => ({
-    ...prev,
-    [id]: chunks,
-  }));
-}
+/// --------- Handlers ------------------------------------------------------///
 
 type OversizePayload = {
   allow: boolean;
   id: string;
 };
 
-export function oversizeResponse(payload: OversizePayload): void {
+export function oversizePayloadResponse(payload: OversizePayload): void {
   const { allow, id } = payload;
 
   if (allow) {
@@ -32,7 +20,7 @@ export function oversizeResponse(payload: OversizePayload): void {
   }
 }
 
-export function acknowledgeChunk(payload: OversizePayload): void {
+export function acknowledgePayloadChunk(payload: OversizePayload): void {
   const { id } = payload;
 
   store.set(chunkingAtom, (prev) => {
@@ -49,6 +37,8 @@ export function acknowledgeChunk(payload: OversizePayload): void {
   nextChunk(id);
 }
 
+/// --------- Helpers -------------------------------------------------------///
+
 function nextChunk(id: string): void {
   const queues = store.get(chunkingAtom);
   const chunk = queues[id]?.[0];
@@ -59,4 +49,18 @@ function nextChunk(id: string): void {
       chunk,
     });
   }
+}
+
+type CreateQueueParams = {
+  id: string;
+  chunks: string[];
+};
+
+export function createQueue(payload: CreateQueueParams): void {
+  const { id, chunks } = payload;
+
+  store.set(chunkingAtom, (prev) => ({
+    ...prev,
+    [id]: chunks,
+  }));
 }

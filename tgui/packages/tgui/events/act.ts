@@ -1,11 +1,14 @@
 import { logger } from '../logging';
-import { bus } from './listeners';
+import { createQueue } from './handlers/chunking';
 
 /**
  * Sends an action to `ui_act` on `src_object` that this tgui window
  * is associated with.
  */
-export function sendAct(action: string, payload?: Record<string, unknown>) {
+export function sendAct(
+  action: string,
+  payload?: Record<string, unknown>,
+): void {
   // Validate that payload is an object
   const isObject =
     typeof payload === 'object' && payload !== null && !Array.isArray(payload);
@@ -30,7 +33,7 @@ export function sendAct(action: string, payload?: Record<string, unknown>) {
   if (urlSize > 2048) {
     const chunks: string[] = stringifiedPayload.split(chunkSplitter);
     const id = `${Date.now()}`;
-    bus.dispatch({ type: 'createQueue', payload: { id, chunks } });
+    createQueue({ id, chunks });
     Byond.sendMessage('oversizedPayloadRequest', {
       type: `act/${action}`,
       id,
