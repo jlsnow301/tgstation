@@ -4,8 +4,9 @@
  * @license MIT
  */
 
-import { useBackend } from './backend';
+import { useAtomValue } from 'jotai';
 import { KitchenSink } from './debug/KitchenSink';
+import { backendStateAtom } from './events/store';
 import { LoadingScreen } from './interfaces/common/LoadingScreen';
 import { Window } from './layouts';
 
@@ -93,7 +94,7 @@ export function getRoutedComponent(name: string) {
 }
 
 export function RoutedComponent() {
-  const { suspended, config, debug } = useBackend();
+  const { suspended, config, debug } = useAtomValue(backendStateAtom);
 
   if (suspended) {
     return <SuspendedWindow />;

@@ -2,12 +2,14 @@
 
 ## Philosophy
 
-This event system is designed to stay as close to vanilla JavaScript as possible. The abstractions are intentionally kept simple. It uses a plain object to map event types to their respective handlers, making replacement easy.
+In the previous TGUI backend state, both DM messages and UI actions were handled through an event message system using actions, selectors, reducers, and middleware. This event systems is designed to handle only DM messages - separating UI actions into direct state access (eg setSomeState(true)) or helpers (eg updateSetting({ thing: true})).
 
-There are three layers to this:
+The idea behind this was to reduce the amount of abstractions needed and draw a clear line between what is a server message and what is a UI action.
+
+There are three layers to this system:
 
 1. The event bus, which maintains the list of handlers.
-2. The handlers, which delegate actions and update application state.
+2. The handlers, which delegate backend calls and update application state.
 3. The store, ie the application state.
 
 ## Usage
@@ -27,7 +29,7 @@ export function someFunc(payload: ExpectedPayload) {
 }
 ```
 
-### 2. Registering the event handler:
+### 2. Building the event handler:
 
 > events/listeners.ts
 
@@ -57,9 +59,14 @@ export const listeners = {
 
 ```ts
 import { EventBus } from 'common/eventbus';
-import { listeners } from 'events/listeners';
 
-const busName = new EventBus(listeners);
+const listeners = {
+	myType,
+	'some/Thing': someThingHandler, // valid
+	'other/Thing': () => store.setState(true); // technically okay but can get messy :).
+};
+
+export const busName = new EventBus(listeners);
 ```
 
 ### 4. Subscribe to byond events
@@ -71,17 +78,37 @@ const busName = new EventBus(listeners);
 Byond.subscribe((type, payload) => busName.dispatch({ type, payload } as any));
 ```
 
-Why use 'as any'? While the dispatch event is typesafe, messages from external sources are unpredictable. The typesafety is primarily for manually dispatched events. For example, clicking the X button on a window triggers the 'suspendStart' event, which is a known type. If mistyped, it will result in a compiler error, ensuring correctness for predefined event types.
+## Converting the old system over
 
-See:
+This process takes time! But it's not impossible. For the most part, backend calls can be directly extracted into a function with similar state management.
+
+> middleware.js
+
+Ex:
 
 ```ts
-import { busName } from 'index.tsx';
-
-busName.dispatch({
-	type: 'eventType', // This must match the key in the listeners object or it will throw a TypeScript error.
-	payload: {
-		greeting: 'Hello, world!',
-	},
-});
+if (type === 'audio/playMusic') {
+	const { url, ...options } = payload;
+	player.play(url, options);
+	return next(action);
+}
 ```
+
+Becomes:
+
+```ts
+function audioPlayMusic(payload: PayloadType): void {
+	const { url, ...options } = payload;
+	player.play(url, options);
+
+	// no need to call next, it's all handled here
+}
+```
+
+### When to use store.set/get vs useAtom
+
+Functionally, there is no difference. If it makes it simpler, you can leave UI actions as external javascript helpers with store.set/get. I've only wrapped functions into React components as the 'technically correct' way to do things. The React way tends to be more concise in the long run.
+
+### When to create handlers vs direct state access
+
+Is it a backend call from DM? Put it on the event bus! If it isn't, there's no reason not to have your UI directly interface with a function or the state directly.
