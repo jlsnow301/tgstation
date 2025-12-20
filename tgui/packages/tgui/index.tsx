@@ -12,6 +12,7 @@ import { setupHotKeys } from 'tgui-core/hotkeys';
 import { captureExternalLinks } from 'tgui-core/links';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { App } from './App';
+import { setDebugHotKeys } from './debug/use-debug';
 import { bus } from './events/listeners';
 import { render } from './renderer';
 
@@ -37,6 +38,7 @@ function setupApp() {
 
   // Enable hot module reloading
   if (import.meta.webpackHot) {
+    setDebugHotKeys();
     setupHotReloading();
     import.meta.webpackHot.accept(['./layouts', './routes', './App'], () =>
       render(<App />),
