@@ -45,7 +45,7 @@ export const TGUI_CHAT_ATTRIBUTES_TO_PROPS = {
   content: 'content',
 };
 
-function createHighlightNode(text, color) {
+function createHighlightNode(text: string, color: string): HTMLSpanElement {
   const node = document.createElement('span');
   node.className = 'Chat__highlight';
   node.setAttribute('style', `background-color:${color}`);
@@ -53,34 +53,33 @@ function createHighlightNode(text, color) {
   return node;
 }
 
-function createMessageNode() {
+function createMessageNode(): HTMLDivElement {
   const node = document.createElement('div');
   node.className = 'ChatMessage';
   return node;
 }
 
-function createReconnectedNode() {
+function createReconnectedNode(): HTMLDivElement {
   const node = document.createElement('div');
   node.className = 'Chat__reconnected';
   return node;
 }
 
-function handleImageError(e) {
+function handleImageError(e: Event): void {
   setTimeout(() => {
-    /** @type {HTMLImageElement} */
-    const node = e.target;
+    const node = e.target as HTMLImageElement;
     if (!node) {
       return;
     }
-    const attempts = parseInt(node.getAttribute('data-reload-n'), 10) || 0;
+    const attempts = parseInt(node.getAttribute('data-reload-n')!, 10) || 0;
     if (attempts >= IMAGE_RETRY_LIMIT) {
       logger.error(`failed to load an image after ${attempts} attempts`);
       return;
     }
     const src = node.src;
-    node.src = null;
+    node.src = '';
     node.src = `${src}#${attempts}`;
-    node.setAttribute('data-reload-n', attempts + 1);
+    node.setAttribute('data-reload-n', `${attempts + 1}`);
   }, IMAGE_RETRY_DELAY);
 }
 
@@ -359,7 +358,7 @@ class ChatRenderer {
     // Insert messages
     const fragment = document.createDocumentFragment();
     const countByType = {};
-    let node;
+    let node: HTMLElement;
     for (const payload of batch) {
       const message = createMessage(payload);
       // Combine messages
@@ -394,21 +393,23 @@ class ChatRenderer {
         const nodes = node.querySelectorAll('[data-component]');
         for (let i = 0; i < nodes.length; i++) {
           const childNode = nodes[i];
-          const targetName = childNode.getAttribute('data-component');
+          const targetName = childNode.getAttribute('data-component')!;
           // Let's pull out the attibute info we need
           const outputProps = {};
           for (let j = 0; j < childNode.attributes.length; j++) {
             const attribute = childNode.attributes[j];
 
-            let working_value = attribute.nodeValue;
-            // We can't do the "if it has no value it's truthy" trick
-            // Because getAttribute returns "", not null. Hate IE
-            if (working_value === '$true') {
+            let working_value;
+            const attrValue = attribute.value;
+            // We can't do the "if it has no value it's truthy" trick.
+            // In HTML, attributes without an explicit value (incl. boolean attributes)
+            // are normalized to the empty string (""), not `null`.
+            if (attrValue === '$true') {
               working_value = true;
-            } else if (working_value === '$false') {
+            } else if (attrValue === '$false') {
               working_value = false;
-            } else if (!Number.isNaN(working_value)) {
-              const parsed_float = parseFloat(working_value);
+            } else if (!Number.isNaN(attrValue)) {
+              const parsed_float = parseFloat(attrValue);
               if (!Number.isNaN(parsed_float)) {
                 working_value = parsed_float;
               }
@@ -484,6 +485,7 @@ class ChatRenderer {
         this.visibleMessages.push(message);
       }
     }
+    // @ts-expect-error Node will exist, no worries
     if (node) {
       const firstChild = this.rootNode!.childNodes[0];
       if (prepend && firstChild) {

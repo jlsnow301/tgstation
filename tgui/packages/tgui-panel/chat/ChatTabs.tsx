@@ -55,6 +55,7 @@ export function ChatTabs(props) {
             setSettingsVisible(true);
           }}
         />
+        <i onError={(e) => {e.timeStamp}} />
       </Stack.Item>
     </Stack>
   );
